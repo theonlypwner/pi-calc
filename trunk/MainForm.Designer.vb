@@ -22,9 +22,13 @@ Partial Class MainForm
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Me.components = New System.ComponentModel.Container
         Me.MenuBar = New System.Windows.Forms.MenuStrip
         Me.lblCPUtxt = New System.Windows.Forms.Label
         Me.lblCPU = New System.Windows.Forms.Label
+        Me.copyText = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.copyTextBtn = New System.Windows.Forms.ToolStripMenuItem
+        Me.copyText.SuspendLayout()
         Me.SuspendLayout()
         '
         'MenuBar
@@ -50,12 +54,25 @@ Partial Class MainForm
         'lblCPU
         '
         Me.lblCPU.AutoSize = True
+        Me.lblCPU.ContextMenuStrip = Me.copyText
         Me.lblCPU.Location = New System.Drawing.Point(60, 24)
         Me.lblCPU.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblCPU.Name = "lblCPU"
-        Me.lblCPU.Size = New System.Drawing.Size(272, 20)
+        Me.lblCPU.Size = New System.Drawing.Size(476, 20)
         Me.lblCPU.TabIndex = 1
-        Me.lblCPU.Text = "Intel Core i7 920 (4 cores), 4011 MHz"
+        Me.lblCPU.Text = "Intel(R) Core(TM) i5 CPU750  @ 2.67GHz, 1.1v, 4 cores, 4 threads"
+        '
+        'copyText
+        '
+        Me.copyText.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.copyTextBtn})
+        Me.copyText.Name = "copyText"
+        Me.copyText.Size = New System.Drawing.Size(128, 26)
+        '
+        'copyTextBtn
+        '
+        Me.copyTextBtn.Name = "copyTextBtn"
+        Me.copyTextBtn.Size = New System.Drawing.Size(152, 22)
+        Me.copyTextBtn.Text = "Copy Text"
         '
         'MainForm
         '
@@ -70,6 +87,7 @@ Partial Class MainForm
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
         Me.Name = "MainForm"
         Me.Text = "Pi Calculator"
+        Me.copyText.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -77,5 +95,7 @@ Partial Class MainForm
     Friend WithEvents MenuBar As System.Windows.Forms.MenuStrip
     Friend WithEvents lblCPUtxt As System.Windows.Forms.Label
     Friend WithEvents lblCPU As System.Windows.Forms.Label
+    Friend WithEvents copyText As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents copyTextBtn As System.Windows.Forms.ToolStripMenuItem
 
 End Class
