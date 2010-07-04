@@ -8,11 +8,11 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Pi")> 
-<Assembly: AssemblyDescription("")> 
-<Assembly: AssemblyCompany("Microsoft")> 
-<Assembly: AssemblyProduct("Pi")> 
-<Assembly: AssemblyCopyright("Copyright © Microsoft 2010")> 
+<Assembly: AssemblyTitle("Pi Calculator")> 
+<Assembly: AssemblyDescription("Calculates Pi")> 
+<Assembly: AssemblyCompany("Victor")> 
+<Assembly: AssemblyProduct("Pi Calculator")> 
+<Assembly: AssemblyCopyright("Copyright © Victor 2010 - at the same time copyleft GNU General Public License v3")> 
 <Assembly: AssemblyTrademark("")> 
 
 <Assembly: ComVisible(False)>
