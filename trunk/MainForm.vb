@@ -14,6 +14,13 @@
             End If
         Next
         lblCPU.Text = s & ", " & i & " cores, " & i2 & " threads"
+        ' OS Information
+        q = New ObjectQuery("SELECT * FROM Win32_OperatingSystem")
+        p = New ManagementObjectSearcher(q)
+        For Each os As ManagementObject In p.Get()
+            lblOS.Text = os("Caption") & " " & os("Version") & " " & os("OSArchitecture")
+            Exit For ' stupid collection doesn't let me do p.Get()[0]
+        Next
     End Sub
 
     Private Sub copyTextBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles copyTextBtn.Click
