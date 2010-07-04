@@ -15,4 +15,8 @@
         Next
         lblCPU.Text = s & ", " & i & " cores, " & i2 & " threads"
     End Sub
+
+    Private Sub copyTextBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles copyTextBtn.Click
+        Clipboard.SetText(CType(CType(CType(sender, ToolStripMenuItem).Owner, ContextMenuStrip).SourceControl, Control).Text)
+    End Sub
 End Class
