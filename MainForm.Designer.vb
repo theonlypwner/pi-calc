@@ -38,6 +38,8 @@ Partial Class MainForm
         Me.numPrecision = New System.Windows.Forms.NumericUpDown
         Me.cmbPrecision = New System.Windows.Forms.ComboBox
         Me.cmbDScale = New System.Windows.Forms.ComboBox
+        Me.btnGo = New System.Windows.Forms.Button
+        Me.btnStop = New System.Windows.Forms.Button
         Me.MenuBar.SuspendLayout()
         Me.copyText.SuspendLayout()
         CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -192,11 +194,33 @@ Partial Class MainForm
         Me.cmbDScale.Size = New System.Drawing.Size(121, 24)
         Me.cmbDScale.TabIndex = 6
         '
+        'btnGo
+        '
+        Me.btnGo.Location = New System.Drawing.Point(371, 82)
+        Me.btnGo.Name = "btnGo"
+        Me.btnGo.Size = New System.Drawing.Size(75, 23)
+        Me.btnGo.TabIndex = 7
+        Me.btnGo.Text = "Calculate"
+        Me.btnGo.UseVisualStyleBackColor = True
+        '
+        'btnStop
+        '
+        Me.btnStop.Enabled = False
+        Me.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup
+        Me.btnStop.Location = New System.Drawing.Point(452, 82)
+        Me.btnStop.Name = "btnStop"
+        Me.btnStop.Size = New System.Drawing.Size(75, 23)
+        Me.btnStop.TabIndex = 7
+        Me.btnStop.Text = "Break"
+        Me.btnStop.UseVisualStyleBackColor = True
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(552, 197)
+        Me.ClientSize = New System.Drawing.Size(552, 360)
+        Me.Controls.Add(Me.btnStop)
+        Me.Controls.Add(Me.btnGo)
         Me.Controls.Add(Me.cmbPrecision)
         Me.Controls.Add(Me.numPrecision)
         Me.Controls.Add(Me.lblDigits)
@@ -239,5 +263,7 @@ Partial Class MainForm
     Friend WithEvents numPrecision As System.Windows.Forms.NumericUpDown
     Friend WithEvents cmbPrecision As System.Windows.Forms.ComboBox
     Friend WithEvents cmbDScale As System.Windows.Forms.ComboBox
+    Friend WithEvents btnGo As System.Windows.Forms.Button
+    Friend WithEvents btnStop As System.Windows.Forms.Button
 
 End Class
