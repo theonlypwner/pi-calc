@@ -117,12 +117,13 @@ Partial Class MainForm
         'lblMemory
         '
         Me.lblMemory.AutoSize = True
+        Me.lblMemory.ContextMenuStrip = Me.copyText
         Me.lblMemory.Location = New System.Drawing.Point(102, 64)
         Me.lblMemory.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblMemory.Name = "lblMemory"
-        Me.lblMemory.Size = New System.Drawing.Size(144, 20)
+        Me.lblMemory.Size = New System.Drawing.Size(132, 20)
         Me.lblMemory.TabIndex = 1
-        Me.lblMemory.Text = "some if it is running"
+        Me.lblMemory.Text = "DDR3-1333 8GB"
         '
         'MainForm
         '

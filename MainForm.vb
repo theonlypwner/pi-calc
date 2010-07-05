@@ -39,6 +39,7 @@
                     Case Else ' Assume unknown memory (Case 0) to be DDR3
                         s = "DDR3"
                 End Select
+                s &= "-" & mm("Speed")
             End If
         Next
         Dim sf As Char() = {"K"c, "M"c, "G"c}
