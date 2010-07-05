@@ -123,4 +123,16 @@
             numPrecision.Value = CInt(cmbPrecision.SelectedItem)
         End If
     End Sub
+
+    Private Sub btnGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGo.Click
+        ' insert operation start code here
+        btnGo.Enabled = False
+        btnStop.Enabled = True
+    End Sub
+
+    Private Sub btnStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+        ' insert operation stop code here
+        btnGo.Enabled = True
+        btnStop.Enabled = False
+    End Sub
 End Class
