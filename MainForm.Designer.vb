@@ -179,7 +179,7 @@ Partial Class MainForm
         Me.cmbPrecision.Items.AddRange(New Object() {"?", "32", "64", "128", "256", "512", "1K", "2K", "4K", "8K", "16K", "32K", "64K", "128K", "256K", "512K", "1M", "2M", "4M", "8M", "16M", "32M", "64M", "128M", "256M", "257M"})
         Me.cmbPrecision.Location = New System.Drawing.Point(178, 83)
         Me.cmbPrecision.Name = "cmbPrecision"
-        Me.cmbPrecision.Size = New System.Drawing.Size(54, 24)
+        Me.cmbPrecision.Size = New System.Drawing.Size(60, 24)
         Me.cmbPrecision.TabIndex = 5
         '
         'cmbDScale
@@ -187,7 +187,7 @@ Partial Class MainForm
         Me.cmbDScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
         Me.cmbDScale.FormattingEnabled = True
         Me.cmbDScale.Items.AddRange(New Object() {"K: 1024; M - 1024K", "k: 1000; m - 1000k"})
-        Me.cmbDScale.Location = New System.Drawing.Point(238, 83)
+        Me.cmbDScale.Location = New System.Drawing.Point(244, 83)
         Me.cmbDScale.Name = "cmbDScale"
         Me.cmbDScale.Size = New System.Drawing.Size(121, 24)
         Me.cmbDScale.TabIndex = 6
@@ -200,9 +200,9 @@ Partial Class MainForm
         Me.Controls.Add(Me.cmbPrecision)
         Me.Controls.Add(Me.numPrecision)
         Me.Controls.Add(Me.lblDigits)
-        Me.Controls.Add(Me.cmbDScale)
         Me.Controls.Add(Me.lblSep)
         Me.Controls.Add(Me.lblMemorytxt)
+        Me.Controls.Add(Me.cmbDScale)
         Me.Controls.Add(Me.lblOS)
         Me.Controls.Add(Me.MenuBar)
         Me.Controls.Add(Me.lblCPUtxt)
