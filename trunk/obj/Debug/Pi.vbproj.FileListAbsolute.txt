@@ -1,0 +1,10 @@
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\bin\Debug\Pi.exe
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\bin\Debug\Pi.pdb
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\bin\Debug\Pi.xml
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\ResolveAssemblyReference.cache
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.MainForm.resources
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.Resources.resources
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.vbproj.GenerateResource.Cache
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.exe
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.xml
+C:\Users\Victor\Documents\Visual Studio 2008\Projects\Pi\obj\Debug\Pi.pdb
