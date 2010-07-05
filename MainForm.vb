@@ -51,6 +51,7 @@
         ' ComboBox Initalization - Visual Studio doesn't have these important properties available for ComboBox controls
         cmbPrecision.SelectedIndex = 6
         cmbDScale.SelectedIndex = 0
+        cmbBuffer.SelectedIndex = 1
     End Sub
 
     Private Sub copyTextBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles copyTextBtn.Click
