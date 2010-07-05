@@ -138,8 +138,10 @@ Partial Class MainForm
         Me.Controls.Add(Me.lblCPUtxt)
         Me.Controls.Add(Me.lblOStxt)
         Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 12.0!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
         Me.MainMenuStrip = Me.MenuBar
         Me.Margin = New System.Windows.Forms.Padding(4, 5, 4, 5)
+        Me.MaximizeBox = False
         Me.Name = "MainForm"
         Me.Text = "Pi Calculator"
         Me.copyText.ResumeLayout(False)
