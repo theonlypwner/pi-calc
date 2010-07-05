@@ -59,32 +59,68 @@
     End Sub
 
     Private Sub numPrecision_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrecision.ValueChanged
-        If cmbDScale.SelectedIndex = 0 Then
+        If cmbDScale.SelectedIndex = 0 Then ' IndexOf Note: [compare] 0 because -1 is not there, 0 is first char
             ' 1024s
             If numPrecision.Value Mod 1048576 = 0 Then
-                ' m
-                ' match numPrecision.Value / 1048576
-                'For Each i As String In cmbPrecision.Items
-                For i As Byte = 0 To CByte(cmbPrecision.Items.Count - 1)
-                    If cmbPrecision.Items(i).IndexOf("M") >= 0 Then
-                        ' this
+                ' M
+                Dim j As UInteger = numPrecision.Value / 1048576
+                For Each i As String In cmbPrecision.Items
+                    If i.IndexOf("M"c) > 0 And i.Replace("M", "") = CStr(j) Then
+                        cmbPrecision.SelectedItem = i
+                        Exit Sub
                     End If
                 Next
             End If
             If numPrecision.Value Mod 1024 = 0 Then
-                ' k
+                ' K
+                Dim j As UInteger = numPrecision.Value / 1024
+                For Each i As String In cmbPrecision.Items
+                    If i.IndexOf("K"c) > 0 And i.Replace("K", "") = CStr(j) Then
+                        cmbPrecision.SelectedItem = i
+                        Exit Sub
+                    End If
+                Next
             End If
         Else
             ' 1000s
             If numPrecision.Value Mod 1000000 = 0 Then
                 ' m
+                Dim j As UInteger = numPrecision.Value / 1000000
+                For Each i As String In cmbPrecision.Items
+                    If i.IndexOf("M"c) > 0 And i.Replace("M", "") = CStr(j) Then
+                        cmbPrecision.SelectedItem = i
+                        Exit Sub
+                    End If
+                Next
             ElseIf numPrecision.Value Mod 1000 = 0 Then
                 ' k
+                Dim j As UInteger = numPrecision.Value / 1000
+                For Each i As String In cmbPrecision.Items
+                    If i.IndexOf("K"c) > 0 And i.Replace("K", "") = CStr(j) Then
+                        cmbPrecision.SelectedItem = i
+                        Exit Sub
+                    End If
+                Next
             End If
         End If
+        For Each i As String In cmbPrecision.Items
+            If i.IndexOf("K"c) < 0 And i.IndexOf("M"c) < 0 And i = CStr(numPrecision.Value) Then
+                cmbPrecision.SelectedItem = i
+                Exit Sub
+            End If
+        Next
+        cmbPrecision.SelectedItem = "?"
     End Sub
 
-    Private Sub cmbPrecision_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbPrecision.SelectedIndexChanged
-
+    Private Sub precisionComboChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbPrecision.SelectedIndexChanged, cmbDScale.SelectedIndexChanged
+        If cmbPrecision.SelectedIndex = 0 Then
+            numPrecision_ValueChanged(sender, New EventArgs)
+        ElseIf CStr(cmbPrecision.SelectedItem).IndexOf("M"c) > 0 Then
+            numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("M", "")) * If(cmbDScale.SelectedIndex = 0, 1048576, 1000000)
+        ElseIf CStr(cmbPrecision.SelectedItem).IndexOf("K"c) > 0 Then
+            numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("K", "")) * If(cmbDScale.SelectedIndex = 0, 1024, 1000)
+        Else
+            numPrecision.Value = CInt(cmbPrecision.SelectedItem)
+        End If
     End Sub
 End Class
