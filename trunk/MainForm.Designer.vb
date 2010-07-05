@@ -34,8 +34,13 @@ Partial Class MainForm
         Me.lblMemorytxt = New System.Windows.Forms.Label
         Me.lblMemory = New System.Windows.Forms.Label
         Me.lblSep = New System.Windows.Forms.Label
+        Me.lblDigits = New System.Windows.Forms.Label
+        Me.numPrecision = New System.Windows.Forms.NumericUpDown
+        Me.cmbPrecision = New System.Windows.Forms.ComboBox
+        Me.cmbDScale = New System.Windows.Forms.ComboBox
         Me.MenuBar.SuspendLayout()
         Me.copyText.SuspendLayout()
+        CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.SuspendLayout()
         '
         'MenuBar
@@ -58,7 +63,7 @@ Partial Class MainForm
         '
         Me.lblCPUtxt.AutoSize = True
         Me.lblCPUtxt.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblCPUtxt.Location = New System.Drawing.Point(30, 24)
+        Me.lblCPUtxt.Location = New System.Drawing.Point(37, 24)
         Me.lblCPUtxt.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblCPUtxt.Name = "lblCPUtxt"
         Me.lblCPUtxt.Size = New System.Drawing.Size(47, 16)
@@ -93,7 +98,7 @@ Partial Class MainForm
         '
         Me.lblOStxt.AutoSize = True
         Me.lblOStxt.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblOStxt.Location = New System.Drawing.Point(40, 40)
+        Me.lblOStxt.Location = New System.Drawing.Point(47, 40)
         Me.lblOStxt.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblOStxt.Name = "lblOStxt"
         Me.lblOStxt.Size = New System.Drawing.Size(37, 16)
@@ -116,7 +121,7 @@ Partial Class MainForm
         '
         Me.lblMemorytxt.AutoSize = True
         Me.lblMemorytxt.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.lblMemorytxt.Location = New System.Drawing.Point(6, 56)
+        Me.lblMemorytxt.Location = New System.Drawing.Point(13, 56)
         Me.lblMemorytxt.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
         Me.lblMemorytxt.Name = "lblMemorytxt"
         Me.lblMemorytxt.Size = New System.Drawing.Size(71, 16)
@@ -145,11 +150,57 @@ Partial Class MainForm
         Me.lblSep.Size = New System.Drawing.Size(557, 2)
         Me.lblSep.TabIndex = 2
         '
+        'lblDigits
+        '
+        Me.lblDigits.AutoSize = True
+        Me.lblDigits.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.lblDigits.Location = New System.Drawing.Point(13, 85)
+        Me.lblDigits.Margin = New System.Windows.Forms.Padding(4, 0, 4, 0)
+        Me.lblDigits.Name = "lblDigits"
+        Me.lblDigits.Size = New System.Drawing.Size(52, 16)
+        Me.lblDigits.TabIndex = 3
+        Me.lblDigits.Text = "Digits:"
+        Me.lblDigits.TextAlign = System.Drawing.ContentAlignment.TopRight
+        '
+        'numPrecision
+        '
+        Me.numPrecision.Location = New System.Drawing.Point(72, 83)
+        Me.numPrecision.Maximum = New Decimal(New Integer() {269484032, 0, 0, 0})
+        Me.numPrecision.Minimum = New Decimal(New Integer() {3, 0, 0, 0})
+        Me.numPrecision.Name = "numPrecision"
+        Me.numPrecision.Size = New System.Drawing.Size(100, 22)
+        Me.numPrecision.TabIndex = 4
+        Me.numPrecision.Value = New Decimal(New Integer() {1024, 0, 0, 0})
+        '
+        'cmbPrecision
+        '
+        Me.cmbPrecision.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbPrecision.FormattingEnabled = True
+        Me.cmbPrecision.Items.AddRange(New Object() {"?", "32", "64", "128", "256", "512", "1K", "2K", "4K", "8K", "16K", "32K", "64K", "128K", "256K", "512K", "1M", "2M", "4M", "8M", "16M", "32M", "64M", "128M", "256M", "257M"})
+        Me.cmbPrecision.Location = New System.Drawing.Point(178, 83)
+        Me.cmbPrecision.Name = "cmbPrecision"
+        Me.cmbPrecision.Size = New System.Drawing.Size(54, 24)
+        Me.cmbPrecision.TabIndex = 5
+        '
+        'cmbDScale
+        '
+        Me.cmbDScale.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbDScale.FormattingEnabled = True
+        Me.cmbDScale.Items.AddRange(New Object() {"K: 1024; M - 1024K", "k: 1000; m - 1000k"})
+        Me.cmbDScale.Location = New System.Drawing.Point(238, 83)
+        Me.cmbDScale.Name = "cmbDScale"
+        Me.cmbDScale.Size = New System.Drawing.Size(121, 24)
+        Me.cmbDScale.TabIndex = 6
+        '
         'MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(552, 180)
+        Me.ClientSize = New System.Drawing.Size(552, 197)
+        Me.Controls.Add(Me.cmbPrecision)
+        Me.Controls.Add(Me.numPrecision)
+        Me.Controls.Add(Me.lblDigits)
+        Me.Controls.Add(Me.cmbDScale)
         Me.Controls.Add(Me.lblSep)
         Me.Controls.Add(Me.lblMemorytxt)
         Me.Controls.Add(Me.lblOS)
@@ -168,6 +219,7 @@ Partial Class MainForm
         Me.MenuBar.ResumeLayout(False)
         Me.MenuBar.PerformLayout()
         Me.copyText.ResumeLayout(False)
+        CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).EndInit()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -183,5 +235,9 @@ Partial Class MainForm
     Friend WithEvents lblMemory As System.Windows.Forms.Label
     Friend WithEvents menuFile As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents lblSep As System.Windows.Forms.Label
+    Friend WithEvents lblDigits As System.Windows.Forms.Label
+    Friend WithEvents numPrecision As System.Windows.Forms.NumericUpDown
+    Friend WithEvents cmbPrecision As System.Windows.Forms.ComboBox
+    Friend WithEvents cmbDScale As System.Windows.Forms.ComboBox
 
 End Class

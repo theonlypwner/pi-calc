@@ -48,9 +48,43 @@
             i2 += 1
         Loop
         lblMemory.Text = s & " " & (i / (1024 ^ i2)) & If(i2 > 0, sf(CInt(i2 - 1)), "") & "B"
+        ' ComboBox Initalization - Visual Studio doesn't have these important properties available for ComboBox controls
+        cmbPrecision.SelectedIndex = 6
+        cmbDScale.SelectedIndex = 0
     End Sub
 
     Private Sub copyTextBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles copyTextBtn.Click
+        ' Copy the static label text
         Clipboard.SetText(CType(CType(CType(sender, ToolStripMenuItem).Owner, ContextMenuStrip).SourceControl, Control).Text)
+    End Sub
+
+    Private Sub numPrecision_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrecision.ValueChanged
+        If cmbDScale.SelectedIndex = 0 Then
+            ' 1024s
+            If numPrecision.Value Mod 1048576 = 0 Then
+                ' m
+                ' match numPrecision.Value / 1048576
+                'For Each i As String In cmbPrecision.Items
+                For i As Byte = 0 To CByte(cmbPrecision.Items.Count - 1)
+                    If cmbPrecision.Items(i).IndexOf("M") >= 0 Then
+                        ' this
+                    End If
+                Next
+            End If
+            If numPrecision.Value Mod 1024 = 0 Then
+                ' k
+            End If
+        Else
+            ' 1000s
+            If numPrecision.Value Mod 1000000 = 0 Then
+                ' m
+            ElseIf numPrecision.Value Mod 1000 = 0 Then
+                ' k
+            End If
+        End If
+    End Sub
+
+    Private Sub cmbPrecision_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbPrecision.SelectedIndexChanged
+
     End Sub
 End Class
