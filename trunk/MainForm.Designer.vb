@@ -25,6 +25,8 @@ Partial Class MainForm
         Me.components = New System.ComponentModel.Container
         Me.MenuBar = New System.Windows.Forms.MenuStrip
         Me.menuFile = New System.Windows.Forms.ToolStripMenuItem
+        Me.menuSave = New System.Windows.Forms.ToolStripMenuItem
+        Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox
         Me.lblCPUtitle = New System.Windows.Forms.Label
         Me.lblCPU = New System.Windows.Forms.Label
         Me.copyText = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -40,12 +42,11 @@ Partial Class MainForm
         Me.cmbDScale = New System.Windows.Forms.ComboBox
         Me.btnGo = New System.Windows.Forms.Button
         Me.btnStop = New System.Windows.Forms.Button
-        Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox
         Me.StatusBar = New System.Windows.Forms.StatusStrip
+        Me.progressText = New System.Windows.Forms.ToolStripStatusLabel
+        Me.progress = New System.Windows.Forms.ToolStripProgressBar
         Me.lblCalcTitle = New System.Windows.Forms.Label
         Me.lblDispTitle = New System.Windows.Forms.Label
-        Me.progress = New System.Windows.Forms.ToolStripProgressBar
-        Me.progressText = New System.Windows.Forms.ToolStripStatusLabel
         Me.lblCalc = New System.Windows.Forms.Label
         Me.Label1 = New System.Windows.Forms.Label
         Me.lblCRCtitle = New System.Windows.Forms.Label
@@ -53,7 +54,6 @@ Partial Class MainForm
         Me.txtResult = New System.Windows.Forms.TextBox
         Me.lblPriority = New System.Windows.Forms.Label
         Me.lblPriorityTitle = New System.Windows.Forms.Label
-        Me.menuSave = New System.Windows.Forms.ToolStripMenuItem
         Me.MenuBar.SuspendLayout()
         Me.copyText.SuspendLayout()
         CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -75,6 +75,19 @@ Partial Class MainForm
         Me.menuFile.Name = "menuFile"
         Me.menuFile.Size = New System.Drawing.Size(37, 23)
         Me.menuFile.Text = "File"
+        '
+        'menuSave
+        '
+        Me.menuSave.Name = "menuSave"
+        Me.menuSave.Size = New System.Drawing.Size(98, 22)
+        Me.menuSave.Text = "Save"
+        '
+        'cmbBuffer
+        '
+        Me.cmbBuffer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.cmbBuffer.Items.AddRange(New Object() {"No buffer", "Buffer in memory", "First 1000 to textbox", "Buffer in textbox"})
+        Me.cmbBuffer.Name = "cmbBuffer"
+        Me.cmbBuffer.Size = New System.Drawing.Size(121, 23)
         '
         'lblCPUtitle
         '
@@ -236,13 +249,6 @@ Partial Class MainForm
         Me.btnStop.Text = "Break"
         Me.btnStop.UseVisualStyleBackColor = True
         '
-        'cmbBuffer
-        '
-        Me.cmbBuffer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbBuffer.Items.AddRange(New Object() {"No buffer", "Buffer in memory", "First 1000 to textbox", "Buffer in textbox"})
-        Me.cmbBuffer.Name = "cmbBuffer"
-        Me.cmbBuffer.Size = New System.Drawing.Size(121, 23)
-        '
         'StatusBar
         '
         Me.StatusBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.progressText, Me.progress})
@@ -252,6 +258,20 @@ Partial Class MainForm
         Me.StatusBar.Size = New System.Drawing.Size(551, 22)
         Me.StatusBar.SizingGrip = False
         Me.StatusBar.TabIndex = 8
+        '
+        'progressText
+        '
+        Me.progressText.Name = "progressText"
+        Me.progressText.Size = New System.Drawing.Size(35, 17)
+        Me.progressText.Text = "100%"
+        '
+        'progress
+        '
+        Me.progress.Name = "progress"
+        Me.progress.Size = New System.Drawing.Size(510, 16)
+        Me.progress.Style = System.Windows.Forms.ProgressBarStyle.Continuous
+        Me.progress.Tag = "(width difference)"
+        Me.progress.Value = 100
         '
         'lblCalcTitle
         '
@@ -278,19 +298,6 @@ Partial Class MainForm
         Me.lblDispTitle.TabIndex = 3
         Me.lblDispTitle.Text = "Display Time:"
         Me.lblDispTitle.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'progress
-        '
-        Me.progress.Name = "progress"
-        Me.progress.Size = New System.Drawing.Size(510, 16)
-        Me.progress.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.progress.Value = 100
-        '
-        'progressText
-        '
-        Me.progressText.Name = "progressText"
-        Me.progressText.Size = New System.Drawing.Size(35, 17)
-        Me.progressText.Text = "100%"
         '
         'lblCalc
         '
@@ -380,12 +387,6 @@ Partial Class MainForm
         Me.lblPriorityTitle.TabIndex = 1
         Me.lblPriorityTitle.Text = "Priority: "
         Me.lblPriorityTitle.TextAlign = System.Drawing.ContentAlignment.TopRight
-        '
-        'menuSave
-        '
-        Me.menuSave.Name = "menuSave"
-        Me.menuSave.Size = New System.Drawing.Size(152, 22)
-        Me.menuSave.Text = "Save"
         '
         'MainForm
         '
