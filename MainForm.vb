@@ -52,6 +52,13 @@
         cmbPrecision.SelectedIndex = 6
         cmbDScale.SelectedIndex = 0
         cmbBuffer.SelectedIndex = 1
+        ' Store progress size difference
+        progress.Tag = Me.Width - progress.Width
+    End Sub
+
+    ' Fix for the size of the progressbar in the status bar
+    Private Sub MainForm_SizeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.SizeChanged
+        If IsNumeric(progress.Tag) Then progress.Size = New Drawing.Size(Me.Width - CInt(progress.Tag), progress.Height)
     End Sub
 
     Private Sub copyTextBtn_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles copyTextBtn.Click
