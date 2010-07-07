@@ -1,5 +1,8 @@
 ﻿Public Class MainForm
 
+    Protected Friend t As Thread
+    Protected piCalc As CalculatePi
+
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' CPU Information
         Dim q As New ObjectQuery("SELECT * FROM Win32_Processor")
@@ -51,7 +54,7 @@
         ' ComboBox Initalization - Visual Studio doesn't have these important properties available for ComboBox controls
         cmbPrecision.SelectedIndex = 6
         cmbDScale.SelectedIndex = 0
-        cmbBuffer.SelectedIndex = 1
+        cmbBuffer.SelectedIndex = 2
         ' Store progress size difference
         progress.Tag = Me.Width - progress.Width
     End Sub
@@ -133,14 +136,22 @@
     End Sub
 
     Private Sub btnGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGo.Click
-        ' insert operation start code here
+        ' update GUI to allow stop
         btnGo.Enabled = False
         btnStop.Enabled = True
+        ' start thread
+        piCalc = New CalculatePi(Me, numPrecision.Value)
+        t = New Thread(AddressOf piCalc.Process)
+        t.Start()
     End Sub
 
-    Private Sub btnStop_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
-        ' insert operation stop code here
+    Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+        ' update GUI to allow start
         btnGo.Enabled = True
         btnStop.Enabled = False
+        ' delete piCalc and the thread
+        piCalc = Nothing
+        t.Abort() ' stop thread before delete
+        t = Nothing ' delete the instance, .NET will reclaim the memory for me
     End Sub
 End Class

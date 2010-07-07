@@ -55,9 +55,11 @@
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
     <Import Include="System.Management" />
+    <Import Include="System.Threading" />
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CalculatePi.vb" />
     <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
     </Compile>
