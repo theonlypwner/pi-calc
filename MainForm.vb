@@ -1,7 +1,8 @@
 ﻿Public Class MainForm
 
     Protected Friend t As Thread
-    Protected piCalc As CalculatePi
+    Protected WithEvents piCalc As CalculatePi
+    Public Const CrLf As String = Chr(13) & Chr(10) ' CR & LF = Windows New Line
 
     Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
         ' CPU Information
@@ -139,19 +140,35 @@
         ' update GUI to allow stop
         btnGo.Enabled = False
         btnStop.Enabled = True
+        ' lock GUI
+        numPrecision.Enabled = False
+        cmbDScale.Enabled = False
+        cmbPrecision.Enabled = False
         ' start thread
-        piCalc = New CalculatePi(Me, numPrecision.Value)
+        piCalc = New CalculatePi(Me, numPrecision.Value, cmbBuffer.SelectedIndex > 0)
         t = New Thread(AddressOf piCalc.Process)
         t.Start()
     End Sub
 
-    Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click
+    Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
+
+    Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click, piCalc.onComplete
+        If Me.InvokeRequired Then
+            Me.Invoke(New controlEventInvoker(AddressOf stopThread), sender, e)
+            Exit Sub
+        End If
         ' update GUI to allow start
         btnGo.Enabled = True
         btnStop.Enabled = False
-        ' delete piCalc and the thread
-        piCalc = Nothing
+        ' unlock GUI
+        numPrecision.Enabled = True
+        cmbDScale.Enabled = True
+        cmbPrecision.Enabled = True
+        ' delete thread
         t.Abort() ' stop thread before delete
         t = Nothing ' delete the instance, .NET will reclaim the memory for me
+        ' retrieve data and delete piCalc
+        txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "")
+        piCalc = Nothing
     End Sub
 End Class
