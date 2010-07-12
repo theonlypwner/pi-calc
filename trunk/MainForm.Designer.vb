@@ -85,7 +85,7 @@ Partial Class MainForm
         'cmbBuffer
         '
         Me.cmbBuffer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-        Me.cmbBuffer.Items.AddRange(New Object() {"No buffer", "Buffer in memory", "First 1000 to textbox", "Buffer in textbox"})
+        Me.cmbBuffer.Items.AddRange(New Object() {"No buffer", "Buffer in memory", "First 2000 to display", "Save as File"})
         Me.cmbBuffer.Name = "cmbBuffer"
         Me.cmbBuffer.Size = New System.Drawing.Size(121, 23)
         '
@@ -240,6 +240,7 @@ Partial Class MainForm
         '
         'btnStop
         '
+        Me.btnStop.DialogResult = System.Windows.Forms.DialogResult.Cancel
         Me.btnStop.Enabled = False
         Me.btnStop.FlatStyle = System.Windows.Forms.FlatStyle.Popup
         Me.btnStop.Location = New System.Drawing.Point(452, 91)
@@ -270,7 +271,7 @@ Partial Class MainForm
         Me.progress.Name = "progress"
         Me.progress.Size = New System.Drawing.Size(510, 16)
         Me.progress.Style = System.Windows.Forms.ProgressBarStyle.Continuous
-        Me.progress.Tag = "(width difference)"
+        Me.progress.Tag = "<width difference>"
         Me.progress.Value = 100
         '
         'lblCalcTitle
@@ -392,6 +393,7 @@ Partial Class MainForm
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.CancelButton = Me.btnStop
         Me.ClientSize = New System.Drawing.Size(551, 395)
         Me.Controls.Add(Me.MenuBar)
         Me.Controls.Add(Me.btnStop)
