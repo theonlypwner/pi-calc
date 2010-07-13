@@ -52,6 +52,20 @@
             i2 += 1
         Loop
         lblMemory.Text = s & " " & (i / (1024 ^ i2)) & If(i2 > 0, sf(CInt(i2 - 1)), "") & "B"
+        i2 = 0 ' now counting elements to pop
+        Select Case i ' bytes of memory
+            Case Is < 256 * 1024 ^ 2 ' You should have at least 256 MB of RAM
+                Me.Close() ' should not use this program
+            Case 256 * 1024 ^ 2 To 512 * 1024 ^ 2 ' 256MB to 512MB
+                i2 = 5 ' not suitable for more than 16M
+        End Select
+        For i = 1 To i2
+            MsgBox("rem")
+            cmbPrecision.Items.RemoveAt(cmbPrecision.Items.Count - 1)
+        Next
+        If i2 > 0 Then ' popped elements, update maximum
+            maxValChanged(Me, Nothing)
+        End If
         ' ComboBox Initalization - Visual Studio doesn't have these important properties available for ComboBox controls
         cmbPrecision.SelectedIndex = 6
         cmbDScale.SelectedIndex = 0
@@ -71,7 +85,7 @@
     End Sub
 
     Private Sub numPrecision_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrecision.ValueChanged
-        If cmbDScale.SelectedIndex = 0 Then ' IndexOf Note: [compare] 0 because -1 is not there, 0 is first char
+        If cmbDScale.SelectedIndex = 0 Then ' IndexOf Note: [compare not] 0 because -1 is not there, 0 is first char
             ' 1024s
             If numPrecision.Value Mod 1048576 = 0 Then
                 ' M
@@ -136,6 +150,18 @@
         End If
     End Sub
 
+    Private Sub maxValChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbDScale.SelectedIndexChanged
+        Dim l As String = CStr(cmbPrecision.Items(cmbPrecision.Items.Count - 1))
+        If l.IndexOf("M"c) > 0 Then
+            l = l.Replace("M", "")
+            l = CStr(CInt(l) * If(cmbDScale.SelectedIndex = 0, 1048576, 1000000))
+        ElseIf l.IndexOf("K"c) > 0 Then
+            l = l.Replace("K", "")
+            l = CStr(CInt(l) * If(cmbDScale.SelectedIndex = 0, 1024, 1000))
+        End If
+        numPrecision.Maximum = CDec(l)
+    End Sub
+
     Private Sub btnGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnGo.Click
         ' update GUI to allow stop
         btnGo.Enabled = False
@@ -144,13 +170,15 @@
         numPrecision.Enabled = False
         cmbDScale.Enabled = False
         cmbPrecision.Enabled = False
+        ' update progress bar
+        progress.Maximum = numPrecision.Value
         ' start thread
-        piCalc = New CalculatePi(Me, numPrecision.Value, cmbBuffer.SelectedIndex > 0)
+        piCalc = New CalculatePi(numPrecision.Value, cmbBuffer.SelectedIndex > 0)
         t = New Thread(AddressOf piCalc.Process)
         t.Start()
     End Sub
 
-    Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
+    Public Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
     Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click, piCalc.onComplete
         If Me.InvokeRequired Then
@@ -164,11 +192,23 @@
         numPrecision.Enabled = True
         cmbDScale.Enabled = True
         cmbPrecision.Enabled = True
+        ' fill progress bar
+        progress.Value = 1
+        progress.Maximum = 1
         ' delete thread
         t.Abort() ' stop thread before delete
         t = Nothing ' delete the instance, .NET will reclaim the memory for me
         ' retrieve data and delete piCalc
         txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "")
         piCalc = Nothing
+    End Sub
+
+    Public Delegate Sub oneParamInvoker(ByVal i)
+
+    Protected Friend Sub calcProgress(ByVal p As UInteger) Handles piCalc.onProgress
+        If Me.InvokeRequired Then
+            Me.Invoke(New oneParamInvoker(AddressOf calcProgress), p)
+        End If
+        progress.Value = p
     End Sub
 End Class
