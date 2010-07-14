@@ -4,36 +4,36 @@ Public Class CalculatePi
 	Public Const CrLf As String = Chr(13) & Chr(10) ' CR & LF = Windows New Line
 
 	''' <summary>How many digits of pi to compute</summary>
-	Public precision As UShort
+	Public precision As UInteger
 	''' <summary>If the result buffer should be filled</summary>
 	Protected store As Boolean
-	''' <summary>temp unsigned 16-bit integer</summary>
-	Private i As UInt16
+	''' <summary>temp unsigned 64-bit integer</summary>
+	Private i As UInt64
 	''' <summary>Contains the results</summary>
-	Protected result As ArrayList
+	Protected result As Array
 
 	''' <summary>Raised upon thread completion</summary>
 	Public Event onComplete(ByVal sender As System.Object, ByVal e As System.EventArgs)
 	''' <summary>Raised upon progress update</summary>
-	Public Event onProgress(ByVal p As UShort)
+	Public Event onProgress(ByVal p As UInteger)
 
 	''' <param name="p">Precision to calculate pi</param>
 	''' <param name="s">Store in memory or not</param>
-	Public Sub New(ByVal p As UShort, ByVal s As Boolean)
+	Public Sub New(ByVal p As UInteger, ByVal s As Boolean)
 		precision = p
 		store = s
-		result = New ArrayList()
+		result = New Byte(p) {}
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
 		Do
-			i = CUShort(i + 1)
+			i = CUInt(i + 1)
 			If i > precision Then
 				RaiseEvent onComplete(Me, Nothing)
 				Exit Sub
 			End If
-			If store Then result.Add(i Mod 10)
+			If store Then result(i) = (i Mod 10)
 			RaiseEvent onProgress(i)
 			' Thread.CurrentThread.Sleep(ms)
 		Loop
@@ -55,7 +55,7 @@ Public Class CalculatePi
 	Protected Friend Function ResultDataNoDelete(Optional ByVal n As ResultType = ResultType.None) As TimedResult
 		Dim ret As TimedResult
 		ret.timeStart = Now.Ticks
-		If (Not store) Or result.Count < 1 Then
+		If (Not store) Or result.Length < 1 Then
 			ret.s = "No buffer"
 			Return ret
 		ElseIf n = ResultType.None Then
@@ -66,9 +66,10 @@ Public Class CalculatePi
 		If n = ResultType.First2000 And precision > 2000 Then
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
-		Dim j As Object() = result.ToArray
-		For i As UShort = 0 To If(n = ResultType.First2000 And precision > 2000, Math.Min(j.Length, 2000), j.Length) - 1
-			ret.s &= CStr(j(i))
+		'Dim j As Object() = result.ToArray
+		'For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(j.Length, 2000), j.Length) - 1)
+		For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 1)
+			ret.s &= CStr(result(CInt(i)))
 		Next
 		Return ret
 	End Function

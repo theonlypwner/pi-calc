@@ -262,9 +262,11 @@ Partial Class MainForm
 		'
 		'progressText
 		'
+		Me.progressText.AutoSize = False
 		Me.progressText.Name = "progressText"
 		Me.progressText.Size = New System.Drawing.Size(35, 17)
 		Me.progressText.Text = "100%"
+		Me.progressText.TextAlign = System.Drawing.ContentAlignment.MiddleLeft
 		'
 		'progress
 		'
