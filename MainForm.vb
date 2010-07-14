@@ -172,9 +172,11 @@
 		cmbDScale.Enabled = False
 		cmbPrecision.Enabled = False
 		' update progress bar
+		progress.Value = 0
 		progress.Maximum = CInt(numPrecision.Value)
+		progressText.Text = "0%"
 		' start thread
-		piCalc = New CalculatePi(CUShort(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
+		piCalc = New CalculatePi(CUInt(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
 		t = New Thread(AddressOf piCalc.Process)
 		t.Start()
 	End Sub
@@ -196,24 +198,27 @@
 		' fill progress bar
 		progress.Value = 1
 		progress.Maximum = 1
+		' update progress text
+		progressText.Text = "Idle"
 		' delete thread
 		If t.IsAlive Then t.Abort() ' stop thread before delete
 		t = Nothing ' delete the instance, .NET will reclaim the memory for me
 		' retrieve data and delete piCalc
 		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.None))
-		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED" & CrLf & r.s
+		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
 		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
-		' [debug] msgbox
-		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & CStr(Math.Round(r.timeDiff.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		' ticks = 100-nanoseconds
+		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & CStr(Math.Round(r.timeDiff.Ticks / 10) Mod 1000).PadLeft(3, "0"c) & "µs"
 		piCalc = Nothing
 	End Sub
 
 	Public Delegate Sub oneParamInvoker(ByVal i As Object)
 
-	Protected Friend Sub calcProgress(ByVal p As UShort) Handles piCalc.onProgress
+	Protected Friend Sub calcProgress(ByVal p As UInteger) Handles piCalc.onProgress
 		If Me.InvokeRequired Then
 			Me.Invoke(New oneParamInvoker(AddressOf calcProgress), p)
 		End If
-		progress.Value = CInt(p)
+		progress.Value = CInt(p) ' progress bar
+		progressText.Text = CStr(Math.Round(p * 100 / progress.Maximum)) + "%" ' progress text
 	End Sub
 End Class
