@@ -364,6 +364,7 @@ Partial Class MainForm
 		Me.txtResult.Multiline = True
 		Me.txtResult.Name = "txtResult"
 		Me.txtResult.ReadOnly = True
+		Me.txtResult.ScrollBars = System.Windows.Forms.ScrollBars.Vertical
 		Me.txtResult.Size = New System.Drawing.Size(527, 218)
 		Me.txtResult.TabIndex = 9
 		'
