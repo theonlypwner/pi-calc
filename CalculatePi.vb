@@ -11,6 +11,10 @@ Public Class CalculatePi
 	Private i As UInt64
 	''' <summary>Contains the results</summary>
 	Protected result As Array
+	''' <summary>Ticks when calculation started</summary>
+	Protected Friend startTicks As Long
+	''' <summary>Ticks used to process</summary>
+	Protected Friend diffTicks As TimeSpan
 
 	''' <summary>Raised upon thread completion</summary>
 	Public Event onComplete(ByVal sender As System.Object, ByVal e As System.EventArgs)

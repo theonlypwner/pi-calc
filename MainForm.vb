@@ -177,6 +177,7 @@
 		progressText.Text = "0%"
 		' start thread
 		piCalc = New CalculatePi(CUInt(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
+		piCalc.startTicks = Now.Ticks
 		t = New Thread(AddressOf piCalc.Process)
 		t.Start()
 	End Sub
@@ -206,9 +207,14 @@
 		' retrieve data and delete piCalc
 		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.None))
 		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
-		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
 		' ticks = 100-nanoseconds
-		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & CStr(Math.Round(r.timeDiff.Ticks / 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
+		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
+		 CStr(Math.Round(r.timeDiff.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		piCalc.diffTicks = New TimeSpan(Now.Ticks - piCalc.startTicks)
+		lblCalc.Text = piCalc.diffTicks.Hours.ToString.PadLeft(2, "0"c) & "h " & piCalc.diffTicks.Minutes.ToString.PadLeft(2, "0"c) & "m " & _
+		 piCalc.diffTicks.Seconds.ToString.PadLeft(2, "0"c) & "s " & piCalc.diffTicks.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
+		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
 		piCalc = Nothing
 	End Sub
 
