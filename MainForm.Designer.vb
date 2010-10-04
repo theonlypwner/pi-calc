@@ -22,38 +22,38 @@ Partial Class MainForm
 	'Do not modify it using the code editor.
 	<System.Diagnostics.DebuggerStepThrough()> _
 	Private Sub InitializeComponent()
-		Me.components = New System.ComponentModel.Container
-		Me.MenuBar = New System.Windows.Forms.MenuStrip
-		Me.menuFile = New System.Windows.Forms.ToolStripMenuItem
-		Me.menuSave = New System.Windows.Forms.ToolStripMenuItem
-		Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox
-		Me.lblCPUtitle = New System.Windows.Forms.Label
-		Me.lblCPU = New System.Windows.Forms.Label
+		Me.components = New System.ComponentModel.Container()
+		Me.MenuBar = New System.Windows.Forms.MenuStrip()
+		Me.menuFile = New System.Windows.Forms.ToolStripMenuItem()
+		Me.menuSave = New System.Windows.Forms.ToolStripMenuItem()
+		Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox()
+		Me.lblCPUtitle = New System.Windows.Forms.Label()
+		Me.lblCPU = New System.Windows.Forms.Label()
 		Me.copyText = New System.Windows.Forms.ContextMenuStrip(Me.components)
-		Me.copyTextBtn = New System.Windows.Forms.ToolStripMenuItem
-		Me.lblOStitle = New System.Windows.Forms.Label
-		Me.lblOS = New System.Windows.Forms.Label
-		Me.lblMemoryTitle = New System.Windows.Forms.Label
-		Me.lblMemory = New System.Windows.Forms.Label
-		Me.lblSep = New System.Windows.Forms.Label
-		Me.lblDigits = New System.Windows.Forms.Label
-		Me.numPrecision = New System.Windows.Forms.NumericUpDown
-		Me.cmbPrecision = New System.Windows.Forms.ComboBox
-		Me.cmbDScale = New System.Windows.Forms.ComboBox
-		Me.btnGo = New System.Windows.Forms.Button
-		Me.btnStop = New System.Windows.Forms.Button
-		Me.StatusBar = New System.Windows.Forms.StatusStrip
-		Me.progressText = New System.Windows.Forms.ToolStripStatusLabel
-		Me.progress = New System.Windows.Forms.ToolStripProgressBar
-		Me.lblCalcTitle = New System.Windows.Forms.Label
-		Me.lblDispTitle = New System.Windows.Forms.Label
-		Me.lblCalc = New System.Windows.Forms.Label
-		Me.lblDisplay = New System.Windows.Forms.Label
-		Me.lblCRCtitle = New System.Windows.Forms.Label
-		Me.lblCRC = New System.Windows.Forms.Label
-		Me.txtResult = New System.Windows.Forms.TextBox
-		Me.lblPriority = New System.Windows.Forms.Label
-		Me.lblPriorityTitle = New System.Windows.Forms.Label
+		Me.copyTextBtn = New System.Windows.Forms.ToolStripMenuItem()
+		Me.lblOStitle = New System.Windows.Forms.Label()
+		Me.lblOS = New System.Windows.Forms.Label()
+		Me.lblMemoryTitle = New System.Windows.Forms.Label()
+		Me.lblMemory = New System.Windows.Forms.Label()
+		Me.lblSep = New System.Windows.Forms.Label()
+		Me.lblDigits = New System.Windows.Forms.Label()
+		Me.numPrecision = New System.Windows.Forms.NumericUpDown()
+		Me.cmbPrecision = New System.Windows.Forms.ComboBox()
+		Me.cmbDScale = New System.Windows.Forms.ComboBox()
+		Me.btnGo = New System.Windows.Forms.Button()
+		Me.btnStop = New System.Windows.Forms.Button()
+		Me.StatusBar = New System.Windows.Forms.StatusStrip()
+		Me.progressText = New System.Windows.Forms.ToolStripStatusLabel()
+		Me.progress = New System.Windows.Forms.ToolStripProgressBar()
+		Me.lblCalcTitle = New System.Windows.Forms.Label()
+		Me.lblDispTitle = New System.Windows.Forms.Label()
+		Me.lblCalc = New System.Windows.Forms.Label()
+		Me.lblDisplay = New System.Windows.Forms.Label()
+		Me.lblCRCtitle = New System.Windows.Forms.Label()
+		Me.lblCRC = New System.Windows.Forms.Label()
+		Me.txtResult = New System.Windows.Forms.TextBox()
+		Me.lblPriority = New System.Windows.Forms.Label()
+		Me.lblPriorityTitle = New System.Windows.Forms.Label()
 		Me.MenuBar.SuspendLayout()
 		Me.copyText.SuspendLayout()
 		CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -428,7 +428,7 @@ Partial Class MainForm
 		Me.MaximizeBox = False
 		Me.MinimumSize = New System.Drawing.Size(567, 414)
 		Me.Name = "MainForm"
-		Me.Text = "Pi Calculator"
+		Me.Text = "Pi Calculator (changed in code at runtime)"
 		Me.MenuBar.ResumeLayout(False)
 		Me.MenuBar.PerformLayout()
 		Me.copyText.ResumeLayout(False)

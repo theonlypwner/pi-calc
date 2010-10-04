@@ -1,13 +1,13 @@
 ﻿Public Class MainForm
 
-	Protected Friend t(PiSettings.Cores) As Thread
+	Protected Friend t As Thread
 	Protected WithEvents piCalc As CalculatePi
 	''' <summary>CR &amp; LF = Windows New Line</summary>
 	Public Const CrLf As String = Chr(13) & Chr(10)
 
 	Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 		' Title information
-		Me.Text = "Pi Calculator (" & PiSettings.Cores.ToString & " Threads)"
+		Me.Text = "Pi Calculator (Single Thread)"
 		' CPU Information
 		Dim q As New ObjectQuery("SELECT * FROM Win32_Processor")
 		Dim p As New ManagementObjectSearcher(q)
@@ -180,10 +180,10 @@
 		' start thread
 		piCalc = New CalculatePi(CUInt(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
 		piCalc.startTicks = Now.Ticks
-		For i As Byte = 0 To PiSettings.Cores - 1
-			t(i) = New Thread(AddressOf piCalc.Process)
-			t(i).Start()
-		Next
+		' create the thread
+		t = New Thread(AddressOf piCalc.Process)
+		t.Start()
+		t.Name = "Pi Calculator Calculation Thread"
 	End Sub
 
 	Public Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -206,10 +206,8 @@
 		' update progress text
 		progressText.Text = "Idle"
 		' delete threads
-		For i As Byte = 0 To PiSettings.Cores - 1
-			If t(i).IsAlive Then t(i).Abort() ' stop thread before delete
-			t(i) = Nothing	' delete the instance, .NET will reclaim the memory for me
-		Next
+		If t.IsAlive Then t.Abort() ' stop thread before delete
+		t = Nothing	' delete the instance, .NET will reclaim the memory for me
 		' retrieve data and delete piCalc
 		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.None))
 		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
