@@ -1,18 +1,20 @@
 ﻿Public Class MainForm
 
-	Protected Friend t As Thread
+	Protected Friend t(PiSettings.Cores) As Thread
 	Protected WithEvents piCalc As CalculatePi
 	''' <summary>CR &amp; LF = Windows New Line</summary>
 	Public Const CrLf As String = Chr(13) & Chr(10)
 
 	Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+		' Title information
+		Me.Text = "Pi Calculator (" & PiSettings.Cores.ToString & " Threads)"
 		' CPU Information
 		Dim q As New ObjectQuery("SELECT * FROM Win32_Processor")
 		Dim p As New ManagementObjectSearcher(q)
 		Dim i, i2 As Long ' Long Is Int64
 		Dim s As String = Nothing
-		For Each cpu As ManagementObject In p.Get() ' there could be more than one processor, like a server?
-			i += CInt(cpu("NumberOfCores")) ' counts cores ' reminds me when I used i += 1, "why doesn't VB have i++ like c++?"
+		For Each cpu As ManagementObject In p.Get()	' there could be more than one processor, like a server?
+			i += CInt(cpu("NumberOfCores"))	' counts cores ' reminds me when I used i += 1, "why doesn't VB have i++ like c++?"
 			i2 += CInt(cpu("NumberOfLogicalProcessors")) ' counts threads
 			If s Is Nothing Then ' CPU name
 				s = cpu("Name").ToString.Replace("   ", "") & ", " & (CInt(cpu("CurrentVoltage")) / 10) & "v"
@@ -55,9 +57,9 @@
 		lblMemory.Text = s & " " & (i / (1024 ^ i2)) & If(i2 > 0, sf(CInt(i2 - 1)), "") & "B"
 		i2 = 0 ' now counting elements to pop
 		Select Case i ' bytes of memory
-			Case Is < 268435456 ' You should have at least 256 MB of RAM
+			Case Is < 268435456	' You should have at least 256 MB of RAM
 				Me.Close() ' should not use this program
-			Case 268435456 To 536870912 ' 256MB to 512MB
+			Case 268435456 To 536870912	' 256MB to 512MB
 				i2 = 5 ' not suitable for more than 16M
 		End Select
 		For i = 1 To i2
@@ -178,8 +180,10 @@
 		' start thread
 		piCalc = New CalculatePi(CUInt(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
 		piCalc.startTicks = Now.Ticks
-		t = New Thread(AddressOf piCalc.Process)
-		t.Start()
+		For i As Byte = 0 To PiSettings.Cores - 1
+			t(i) = New Thread(AddressOf piCalc.Process)
+			t(i).Start()
+		Next
 	End Sub
 
 	Public Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
@@ -201,9 +205,11 @@
 		progress.Maximum = 1
 		' update progress text
 		progressText.Text = "Idle"
-		' delete thread
-		If t.IsAlive Then t.Abort() ' stop thread before delete
-		t = Nothing ' delete the instance, .NET will reclaim the memory for me
+		' delete threads
+		For i As Byte = 0 To PiSettings.Cores - 1
+			If t(i).IsAlive Then t(i).Abort() ' stop thread before delete
+			t(i) = Nothing	' delete the instance, .NET will reclaim the memory for me
+		Next
 		' retrieve data and delete piCalc
 		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.None))
 		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
@@ -224,7 +230,7 @@
 		If Me.InvokeRequired Then
 			Me.Invoke(New oneParamInvoker(AddressOf calcProgress), p)
 		End If
-		progress.Value = CInt(p) ' progress bar
+		progress.Value = CInt(p)	' progress bar
 		progressText.Text = CStr(Math.Round(p * 100 / progress.Maximum)) + "%" ' progress text
 	End Sub
 End Class
