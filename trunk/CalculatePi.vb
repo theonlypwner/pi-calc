@@ -38,7 +38,7 @@ Public Class CalculatePi
 				Exit Sub
 			End If
 			If store Then result(i) = (i Mod 10)
-			RaiseEvent onProgress(i)
+			If Not (i Mod 10) Then RaiseEvent onProgress(i)
 			' Thread.CurrentThread.Sleep(ms)
 		Loop
 	End Sub
