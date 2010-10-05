@@ -5,10 +5,12 @@ Public Class CalculatePi
 
 	''' <summary>How many digits of pi to compute</summary>
 	Public precision As UInteger
+	''' <summary>How many digits of pi to compute before updating the progress bar</summary>
+	Public progressUpdateInterval As UInteger
 	''' <summary>If the result buffer should be filled</summary>
 	Protected store As Boolean
-	''' <summary>temp unsigned 64-bit integer</summary>
-	Private i As UInt64
+	''' <summary>Unsigned integer for processed number of numbers</summary>
+	Private i As UInteger
 	''' <summary>Contains the results</summary>
 	Protected result As Array
 	''' <summary>Ticks when calculation started</summary>
@@ -26,11 +28,13 @@ Public Class CalculatePi
 	Public Sub New(ByVal p As UInteger, ByVal s As Boolean)
 		precision = p
 		store = s
+		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
 		result = New Byte(p) {}
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
+		i = 0
 		Do
 			i = CUInt(i + 1)
 			If i > precision Then
@@ -38,7 +42,7 @@ Public Class CalculatePi
 				Exit Sub
 			End If
 			If store Then result(i) = (i Mod 10)
-			If Not (i Mod 10) Then RaiseEvent onProgress(i)
+			If Not (i Mod progressUpdateInterval) Then RaiseEvent onProgress(i)
 			' Thread.CurrentThread.Sleep(ms)
 		Loop
 	End Sub
