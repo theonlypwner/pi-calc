@@ -173,6 +173,8 @@
 		numPrecision.Enabled = False
 		cmbDScale.Enabled = False
 		cmbPrecision.Enabled = False
+		' say processing
+		txtResult.Text = "Processing"
 		' update progress bar
 		progress.Value = 0
 		progress.Maximum = CInt(numPrecision.Value)
@@ -188,7 +190,8 @@
 
 	Public Delegate Sub controlEventInvoker(ByVal sender As System.Object, ByVal e As System.EventArgs)
 
-	Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click, piCalc.onComplete
+	Protected Friend Sub stopThread(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles btnStop.Click, piCalc.onComplete, Me.FormClosing
+		If btnGo.Enabled Then Exit Sub
 		If Me.InvokeRequired Then
 			Me.Invoke(New controlEventInvoker(AddressOf stopThread), sender, e)
 			Exit Sub
@@ -228,7 +231,7 @@
 		If Me.InvokeRequired Then
 			Me.Invoke(New oneParamInvoker(AddressOf calcProgress), p)
 		End If
-		progress.Value = CInt(p)	' progress bar
+		progress.Value = CInt(p) ' progress bar
 		progressText.Text = CStr(Math.Round(p * 100 / progress.Maximum)) + "%" ' progress text
 	End Sub
 End Class
