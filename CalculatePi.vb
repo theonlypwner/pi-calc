@@ -29,7 +29,7 @@ Public Class CalculatePi
 		precision = p
 		store = s
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
-		result = New Byte(p) {}
+		result = New Byte(CInt(p)) {}
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
@@ -41,8 +41,8 @@ Public Class CalculatePi
 				RaiseEvent onComplete(Me, Nothing)
 				Exit Sub
 			End If
-			If store Then result(i) = (i Mod 10)
-			If Not (i Mod progressUpdateInterval) Then RaiseEvent onProgress(i)
+			If store Then result.SetValue(CByte(i Mod 10), CLng(i)) ' temp storage
+			If (i Mod progressUpdateInterval) = 0 Then RaiseEvent onProgress(i)
 			' Thread.CurrentThread.Sleep(ms)
 		Loop
 	End Sub
@@ -77,7 +77,7 @@ Public Class CalculatePi
 		'Dim j As Object() = result.ToArray
 		'For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(j.Length, 2000), j.Length) - 1)
 		For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 1)
-			ret.s &= CStr(result(CInt(i)))
+			ret.s &= CStr(result.GetValue(CInt(i)))
 		Next
 		Return ret
 	End Function
