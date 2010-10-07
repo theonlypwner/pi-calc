@@ -225,11 +225,11 @@
 		piCalc = Nothing
 	End Sub
 
-	Public Delegate Sub oneParamInvoker(ByVal i As Object)
+	Public Delegate Sub oneParamTypeInvoker(Of paramType)(ByVal i As paramType)
 
 	Protected Friend Sub calcProgress(ByVal p As UInteger) Handles piCalc.onProgress
 		If Me.InvokeRequired Then
-			Me.Invoke(New oneParamInvoker(AddressOf calcProgress), p)
+			Me.Invoke(New oneParamTypeInvoker(Of UInteger)(AddressOf calcProgress), p)
 		End If
 		progress.Value = CInt(p) ' progress bar
 		progressText.Text = CStr(Math.Round(p * 100 / progress.Maximum)) + "%" ' progress text
