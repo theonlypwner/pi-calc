@@ -12,6 +12,8 @@ Public Class CalculatePi
 	Protected targetValue() As SByte
 	''' <summary>Second storage variable</summary>
 	Protected sourceValue() As SByte
+	''' <summary>Result storage</summary>
+	Protected Friend result() As SByte
 
 	''' <summary>Ticks when calculation started</summary>
 	Protected Friend startTicks As Long
@@ -36,6 +38,10 @@ Public Class CalculatePi
 		ArcTangent(targetValue, sourceValue, 2)
 		ArcTangent(targetValue, sourceValue, 3)
 		ArrayMult(targetValue, 4)
+		result = New SByte(precision - 3) {}
+		For digitIndex As Integer = 0 To precision - 4
+			result(digitIndex) = targetValue(digitIndex)
+		Next
 	End Sub
 
 	Public Enum ResultType
@@ -92,14 +98,14 @@ Public Class CalculatePi
 
 	''' <summary>Multiply an array number by another number by hand. The product remains in the array number.</summary>
 	Protected Sub ArrayMult(ByRef baseNumber() As SByte, ByRef multiplier As Integer)
-		Dim carry As Byte
+		Dim carry As Integer
 		Dim position As Integer
 		Dim holdDigit As Integer
 		' Multiple each base digit, from right to left.
 		For position = precision To 0 Step -1
 			' If the multiplication went past 9, carry the tens value to the next column.
 			holdDigit = (baseNumber(position) * multiplier) + carry
-			carry = CByte(holdDigit \ 10)
+			carry = holdDigit \ 10
 			baseNumber(position) = CSByte(holdDigit Mod 10)
 		Next position
 	End Sub
