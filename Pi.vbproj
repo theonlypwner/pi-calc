@@ -76,9 +76,12 @@
     <Import Include="System.Management" />
     <Import Include="System.Threading" />
     <Import Include="System.Windows.Forms" />
+    <Import Include="W3b.Sine" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArrayMath.vb" />
     <Compile Include="CalculatePi.vb" />
+    <Compile Include="ClassTest.vb" />
     <Compile Include="EventArgsAssist.vb" />
     <Compile Include="MainForm.vb">
       <SubType>Form</SubType>
