@@ -180,7 +180,7 @@
 		progress.Maximum = CInt(numPrecision.Value)
 		progressText.Text = "0%"
 		' start thread
-		piCalc = New CalculatePi(CUInt(numPrecision.Value), Not cmbBuffer.SelectedIndex = 0)
+		piCalc = New CalculatePi(CInt(numPrecision.Value))
 		piCalc.startTicks = Now.Ticks
 		' create the thread
 		t = New Thread(AddressOf piCalc.Process)
@@ -212,7 +212,7 @@
 		If t.IsAlive Then t.Abort() ' stop thread before delete
 		t = Nothing	' delete the instance, .NET will reclaim the memory for me
 		' retrieve data and delete piCalc
-		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.None))
+		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.BufferOnly))
 		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
 		' ticks = 100-nanoseconds
 		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)

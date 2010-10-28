@@ -85,7 +85,7 @@ Partial Class MainForm
 		'cmbBuffer
 		'
 		Me.cmbBuffer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
-		Me.cmbBuffer.Items.AddRange(New Object() {"No buffer", "Buffer in memory", "First 2000 to display", "Save as File"})
+		Me.cmbBuffer.Items.AddRange(New Object() {"Buffer in memory", "First 2000 to display", "Save as File"})
 		Me.cmbBuffer.Name = "cmbBuffer"
 		Me.cmbBuffer.Size = New System.Drawing.Size(121, 23)
 		'
