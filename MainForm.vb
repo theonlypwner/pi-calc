@@ -7,7 +7,7 @@
 
 	Private Sub Form1_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 		' Title information
-		Me.Text = "Pi Calculator (Single Thread)"
+		Me.Text = "Pi Calculator (" & IntToCPUCount(1, True) & ")"
 		' CPU Information
 		Dim q As New ObjectQuery("SELECT * FROM Win32_Processor")
 		Dim p As New ManagementObjectSearcher(q)
@@ -76,6 +76,30 @@
 		' Store progress size difference
 		progress.Tag = Me.Width - progress.Width
 	End Sub
+
+	''' <summary>Converts an integer to the number of threads (CPU thread count: 0, single, double, triple, quad, five...)</summary>
+	''' <param name="i">The integer to convert</param>
+	''' <param name="capital">If the result should be capital</param>
+	Function IntToCPUCount(ByVal i As Integer, Optional ByVal capital As Boolean = False) As String
+		Dim result As String = i.ToString
+		Select Case i
+			Case 1 : result = "single"
+			Case 2 : result = "double"
+			Case 3 : result = "triple"
+			Case 4 : result = "quad"
+			Case 5 : result = "five"
+			Case 6 : result = "six"
+			Case 7 : result = "seven"
+			Case 8 : result = "eight"
+			Case 9 : result = "nine"
+			Case 10 : result = "ten"
+			Case 11 : result = "eleven"
+			Case 12 : result = "twelve"
+		End Select
+		result &= " thread" & If(i = 1, "", "s")
+		If capital Then result = StrConv(result, VbStrConv.ProperCase) Else result = result.ToLower
+		Return (result)
+	End Function
 
 	' Fix for the size of the progressbar in the status bar
 	Private Sub MainForm_SizeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.SizeChanged
