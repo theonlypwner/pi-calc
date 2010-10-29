@@ -80,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CalculatePi.vb" />
-    <Compile Include="ClassTest.vb" />
     <Compile Include="EventArgsAssist.vb" />
     <Compile Include="MainForm.vb">
       <SubType>Form</SubType>

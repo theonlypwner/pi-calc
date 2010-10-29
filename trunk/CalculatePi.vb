@@ -40,8 +40,11 @@ Public Class CalculatePi
 		ArrayMult(targetValue, 4)
 		result = New SByte(precision - 3) {}
 		For digitIndex As Integer = 0 To precision - 4
-			result(digitIndex) = targetValue(digitIndex)
+			result(digitIndex) = targetValue(digitIndex + 1)
 		Next
+		targetValue = Nothing
+		sourceValue = Nothing
+		RaiseEvent onComplete(Me, New EventArgs)
 	End Sub
 
 	Public Enum ResultType
