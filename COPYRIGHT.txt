@@ -1,4 +1,4 @@
-pi-calc: Pi Calculator - Calculate Pi to as many digits ad you want!
+pi-calc: Pi Calculator - Calculate Pi to as many digits as you want!
 Copyright (C) 2011 Victor Zheng
 
 This program is free software: you can redistribute it and/or modify
