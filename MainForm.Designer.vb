@@ -24,8 +24,7 @@ Partial Class MainForm
 	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
 		Me.MenuBar = New System.Windows.Forms.MenuStrip()
-		Me.menuFile = New System.Windows.Forms.ToolStripMenuItem()
-		Me.menuSave = New System.Windows.Forms.ToolStripMenuItem()
+		Me.menuClose = New System.Windows.Forms.ToolStripMenuItem()
 		Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox()
 		Me.lblCPUtitle = New System.Windows.Forms.Label()
 		Me.lblCPU = New System.Windows.Forms.Label()
@@ -54,6 +53,8 @@ Partial Class MainForm
 		Me.txtResult = New System.Windows.Forms.TextBox()
 		Me.lblPriority = New System.Windows.Forms.Label()
 		Me.lblPriorityTitle = New System.Windows.Forms.Label()
+		Me.saveDialog = New System.Windows.Forms.SaveFileDialog()
+		Me.menuBuffer = New System.Windows.Forms.ToolStripMenuItem()
 		Me.MenuBar.SuspendLayout()
 		Me.copyText.SuspendLayout()
 		CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -62,25 +63,18 @@ Partial Class MainForm
 		'
 		'MenuBar
 		'
-		Me.MenuBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuFile, Me.cmbBuffer})
+		Me.MenuBar.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuBuffer, Me.cmbBuffer, Me.menuClose})
 		Me.MenuBar.Location = New System.Drawing.Point(0, 0)
 		Me.MenuBar.Name = "MenuBar"
 		Me.MenuBar.Padding = New System.Windows.Forms.Padding(8, 2, 0, 2)
 		Me.MenuBar.Size = New System.Drawing.Size(551, 27)
 		Me.MenuBar.TabIndex = 0
 		'
-		'menuFile
+		'menuClose
 		'
-		Me.menuFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.menuSave})
-		Me.menuFile.Name = "menuFile"
-		Me.menuFile.Size = New System.Drawing.Size(37, 23)
-		Me.menuFile.Text = "File"
-		'
-		'menuSave
-		'
-		Me.menuSave.Name = "menuSave"
-		Me.menuSave.Size = New System.Drawing.Size(98, 22)
-		Me.menuSave.Text = "Save"
+		Me.menuClose.Name = "menuClose"
+		Me.menuClose.Size = New System.Drawing.Size(48, 23)
+		Me.menuClose.Text = "Close"
 		'
 		'cmbBuffer
 		'
@@ -392,8 +386,20 @@ Partial Class MainForm
 		Me.lblPriorityTitle.Text = "Priority: "
 		Me.lblPriorityTitle.TextAlign = System.Drawing.ContentAlignment.TopRight
 		'
+		'saveDialog
+		'
+		Me.saveDialog.DefaultExt = "txt"
+		Me.saveDialog.Filter = "Test File|*.txt|Other|*.*"
+		'
+		'menuBuffer
+		'
+		Me.menuBuffer.Name = "menuBuffer"
+		Me.menuBuffer.Size = New System.Drawing.Size(67, 23)
+		Me.menuBuffer.Text = "Buffer in:"
+		'
 		'MainForm
 		'
+		Me.AcceptButton = Me.btnGo
 		Me.AutoScaleDimensions = New System.Drawing.SizeF(8.0!, 16.0!)
 		Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
 		Me.CancelButton = Me.btnStop
@@ -448,7 +454,7 @@ Partial Class MainForm
 	Friend WithEvents lblOS As System.Windows.Forms.Label
 	Friend WithEvents lblMemoryTitle As System.Windows.Forms.Label
 	Friend WithEvents lblMemory As System.Windows.Forms.Label
-	Friend WithEvents menuFile As System.Windows.Forms.ToolStripMenuItem
+	Friend WithEvents menuClose As System.Windows.Forms.ToolStripMenuItem
 	Friend WithEvents lblSep As System.Windows.Forms.Label
 	Friend WithEvents lblDigits As System.Windows.Forms.Label
 	Friend WithEvents numPrecision As System.Windows.Forms.NumericUpDown
@@ -469,6 +475,7 @@ Partial Class MainForm
 	Friend WithEvents txtResult As System.Windows.Forms.TextBox
 	Friend WithEvents lblPriority As System.Windows.Forms.Label
 	Friend WithEvents lblPriorityTitle As System.Windows.Forms.Label
-	Friend WithEvents menuSave As System.Windows.Forms.ToolStripMenuItem
+	Friend WithEvents saveDialog As System.Windows.Forms.SaveFileDialog
+	Friend WithEvents menuBuffer As System.Windows.Forms.ToolStripMenuItem
 
 End Class

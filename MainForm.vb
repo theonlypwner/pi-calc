@@ -248,9 +248,11 @@
 		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
 		If cmbBuffer.SelectedIndex > 1 Then	' save to file
 			If sender Is btnStop Then
-				MsgBox("Calculation was stopped; not saving your calculation")
+				MsgBox("Calculation was stopped; not saving your calculation", MsgBoxStyle.Critical)
 			Else
-				' show box
+				If saveDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+					MsgBox("Add me", MsgBoxStyle.Information)
+				End If
 			End If
 		End If
 		piCalc = Nothing
@@ -264,5 +266,9 @@
 		End If
 		progress.Value = p ' progress bar
 		progressText.Text = p & "%"	' progress text
+	End Sub
+
+	Private Sub menuClose_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles menuClose.Click
+		Me.Close()
 	End Sub
 End Class
