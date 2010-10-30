@@ -1,0 +1,15 @@
+CHANGELOG
+A summary of the changes through out releases
+========================================
+Alpha 2
+	- Not many changes other than one bug fix
+	*- Can save files
+	@- Still malfunctioning progress bar
+Alpha 1
+	@- Progress bar doesn't work
+	!- Cannot save files
+========================================
+Key
+! First Priority
+@ Second Priority
+* Fixed
