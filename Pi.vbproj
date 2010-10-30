@@ -76,6 +76,7 @@
     <Import Include="System.Collections.Generic" />
     <Import Include="System.Drawing" />
     <Import Include="System.Diagnostics" />
+    <Import Include="System.IO" />
     <Import Include="System.Management" />
     <Import Include="System.Threading" />
     <Import Include="System.Windows.Forms" />

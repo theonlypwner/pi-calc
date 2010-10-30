@@ -396,7 +396,7 @@ Partial Class MainForm
 		'saveDialog
 		'
 		Me.saveDialog.DefaultExt = "txt"
-		Me.saveDialog.Filter = "Test File|*.txt|Other|*.*"
+		Me.saveDialog.Filter = "Text File|*.txt|Binary file|*.bin|Other|*.*"
 		'
 		'MainForm
 		'

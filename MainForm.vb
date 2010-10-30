@@ -248,10 +248,15 @@
 		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
 		If cmbBuffer.SelectedIndex > 1 Then	' save to file
 			If sender Is btnStop Then
-				MsgBox("Calculation was stopped; not saving your calculation", MsgBoxStyle.Critical)
+				MsgBox("Calculation was stopped; not saving your calculation", MsgBoxStyle.Critical, "Cannot save file!")
 			Else
+				saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
 				If saveDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
-					MsgBox("Add me", MsgBoxStyle.Information)
+					Dim sPath As String = saveDialog.FileName
+					If sPath.Length > 33 Then sPath = "..." & sPath.Substring(sPath.Length - 30)
+					MsgBox(sPath, MsgBoxStyle.Information, "File saved to:")
+					r = piCalc.ResultData(CalculatePi.ResultType.All)
+					File.WriteAllText(saveDialog.FileName, r.s)
 				End If
 			End If
 		End If
