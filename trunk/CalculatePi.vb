@@ -9,11 +9,9 @@ Public Class CalculatePi
 	Public progressUpdateInterval As UInteger
 
 	''' <summary>First storage variable</summary>
-	Protected targetValue() As SByte
+	Protected Friend result() As SByte
 	''' <summary>Second storage variable</summary>
 	Protected sourceValue() As SByte
-	''' <summary>Result storage</summary>
-	Protected Friend result() As SByte
 
 	''' <summary>Ticks when calculation started</summary>
 	Protected Friend startTicks As Long
@@ -23,26 +21,21 @@ Public Class CalculatePi
 	''' <summary>Raised upon thread completion</summary>
 	Public Event onComplete(ByVal sender As System.Object, ByVal e As System.EventArgs)
 	''' <summary>Raised upon progress update</summary>
-	Public Event onProgress(ByVal p As UInteger)
+	Public Event onProgress(ByVal p As Byte)
 
 	''' <param name="p">Precision to calculate pi</param>
 	Public Sub New(ByVal p As Integer)
 		precision = p + 2
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
-		targetValue = New SByte(precision) {}
+		result = New SByte(precision) {}
 		sourceValue = New SByte(precision) {}
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
-		ArcTangent(targetValue, sourceValue, 2)
-		ArcTangent(targetValue, sourceValue, 3)
-		ArrayMult(targetValue, 4)
-		result = New SByte(precision - 3) {}
-		For digitIndex As Integer = 0 To precision - 4
-			result(digitIndex) = targetValue(digitIndex + 1)
-		Next
-		targetValue = Nothing
+		ArcTangent(result, sourceValue, 2)
+		ArcTangent(result, sourceValue, 3)
+		ArrayMult(result, 4)
 		sourceValue = Nothing
 		RaiseEvent onComplete(Me, New EventArgs)
 	End Sub
@@ -74,9 +67,8 @@ Public Class CalculatePi
 		If n = ResultType.First2000 And precision > 2000 Then
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
-		'Dim j As Object() = result.ToArray
-		'For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(j.Length, 2000), j.Length) - 1)
-		For i As UInteger = 0 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 1)
+
+		For i As UInteger = 1 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 1)
 			ret.s &= CStr(result.GetValue(CInt(i)))
 		Next
 		Return ret
@@ -84,7 +76,7 @@ Public Class CalculatePi
 
 	Protected Friend ReadOnly Property ResultData(Optional ByVal n As ResultType = ResultType.All) As TimedResult
 		Get
-			Dim r = Me.ResultDataNoDelete(n)
+			Dim r As TimedResult = Me.ResultDataNoDelete(n)
 			result = Nothing
 			Return r
 		End Get
@@ -216,6 +208,11 @@ Public Class CalculatePi
 			ArrayDivide(sourceValue, workingFactor)
 			ArrayAdd(targetValue, sourceValue)
 		Loop Until ArrayZero(sourceValue)
+		If divFactor < 3 Then
+			RaiseEvent onProgress(33)
+		Else
+			RaiseEvent onProgress(66)
+		End If
 	End Sub
 #End Region
 

@@ -70,9 +70,9 @@
 			maxValChanged(Me, Nothing)
 		End If
 		' ComboBox Initalization - Visual Studio doesn't have these important properties available for ComboBox controls
-		cmbPrecision.SelectedIndex = 6
+		cmbPrecision.SelectedIndex = 7
 		cmbDScale.SelectedIndex = 0
-		cmbBuffer.SelectedIndex = 2
+		cmbBuffer.SelectedIndex = 1
 		' Store progress size difference
 		progress.Tag = Me.Width - progress.Width
 	End Sub
@@ -201,7 +201,7 @@
 		txtResult.Text = "Processing"
 		' update progress bar
 		progress.Value = 0
-		progress.Maximum = CInt(numPrecision.Value)
+		progress.Maximum = 100
 		progressText.Text = "0%"
 		' start thread
 		piCalc = New CalculatePi(CInt(numPrecision.Value))
@@ -236,8 +236,8 @@
 		If t.IsAlive Then t.Abort() ' stop thread before delete
 		t = Nothing	' delete the instance, .NET will reclaim the memory for me
 		' retrieve data and delete piCalc
-		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 1, CalculatePi.ResultType.First2000, CalculatePi.ResultType.BufferOnly))
-		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & "NOT FINISHED CODING" & CrLf & r.s
+		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 0, CalculatePi.ResultType.First2000, CalculatePi.ResultType.BufferOnly))
+		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & r.s
 		' ticks = 100-nanoseconds
 		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
 		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
@@ -246,16 +246,23 @@
 		lblCalc.Text = piCalc.diffTicks.Hours.ToString.PadLeft(2, "0"c) & "h " & piCalc.diffTicks.Minutes.ToString.PadLeft(2, "0"c) & "m " & _
 		 piCalc.diffTicks.Seconds.ToString.PadLeft(2, "0"c) & "s " & piCalc.diffTicks.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
 		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		If cmbBuffer.SelectedIndex > 1 Then	' save to file
+			If sender Is btnStop Then
+				MsgBox("Calculation was stopped; not saving your calculation")
+			Else
+				' show box
+			End If
+		End If
 		piCalc = Nothing
 	End Sub
 
 	Public Delegate Sub oneParamTypeInvoker(Of paramType)(ByVal i As paramType)
 
-	Protected Friend Sub calcProgress(ByVal p As UInteger) Handles piCalc.onProgress
+	Protected Friend Sub calcProgress(ByVal p As Byte) Handles piCalc.onProgress
 		If Me.InvokeRequired Then
-			Me.Invoke(New oneParamTypeInvoker(Of UInteger)(AddressOf calcProgress), p)
+			Me.Invoke(New oneParamTypeInvoker(Of Byte)(AddressOf calcProgress), p)
 		End If
-		progress.Value = CInt(p) ' progress bar
-		progressText.Text = CStr(Math.Round(p * 100 / progress.Maximum)) + "%" ' progress text
+		progress.Value = p ' progress bar
+		progressText.Text = p & "%"	' progress text
 	End Sub
 End Class
