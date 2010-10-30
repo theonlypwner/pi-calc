@@ -23,9 +23,11 @@ Partial Class MainForm
 	<System.Diagnostics.DebuggerStepThrough()> _
 	Private Sub InitializeComponent()
 		Me.components = New System.ComponentModel.Container()
+		Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MainForm))
 		Me.MenuBar = New System.Windows.Forms.MenuStrip()
-		Me.menuClose = New System.Windows.Forms.ToolStripMenuItem()
+		Me.menuBuffer = New System.Windows.Forms.ToolStripMenuItem()
 		Me.cmbBuffer = New System.Windows.Forms.ToolStripComboBox()
+		Me.menuClose = New System.Windows.Forms.ToolStripMenuItem()
 		Me.lblCPUtitle = New System.Windows.Forms.Label()
 		Me.lblCPU = New System.Windows.Forms.Label()
 		Me.copyText = New System.Windows.Forms.ContextMenuStrip(Me.components)
@@ -54,7 +56,6 @@ Partial Class MainForm
 		Me.lblPriority = New System.Windows.Forms.Label()
 		Me.lblPriorityTitle = New System.Windows.Forms.Label()
 		Me.saveDialog = New System.Windows.Forms.SaveFileDialog()
-		Me.menuBuffer = New System.Windows.Forms.ToolStripMenuItem()
 		Me.MenuBar.SuspendLayout()
 		Me.copyText.SuspendLayout()
 		CType(Me.numPrecision, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -70,11 +71,11 @@ Partial Class MainForm
 		Me.MenuBar.Size = New System.Drawing.Size(551, 27)
 		Me.MenuBar.TabIndex = 0
 		'
-		'menuClose
+		'menuBuffer
 		'
-		Me.menuClose.Name = "menuClose"
-		Me.menuClose.Size = New System.Drawing.Size(48, 23)
-		Me.menuClose.Text = "Close"
+		Me.menuBuffer.Name = "menuBuffer"
+		Me.menuBuffer.Size = New System.Drawing.Size(67, 23)
+		Me.menuBuffer.Text = "Buffer in:"
 		'
 		'cmbBuffer
 		'
@@ -82,6 +83,12 @@ Partial Class MainForm
 		Me.cmbBuffer.Items.AddRange(New Object() {"Buffer in memory", "First 2000 to display", "Save as File"})
 		Me.cmbBuffer.Name = "cmbBuffer"
 		Me.cmbBuffer.Size = New System.Drawing.Size(121, 23)
+		'
+		'menuClose
+		'
+		Me.menuClose.Name = "menuClose"
+		Me.menuClose.Size = New System.Drawing.Size(48, 23)
+		Me.menuClose.Text = "Close"
 		'
 		'lblCPUtitle
 		'
@@ -391,12 +398,6 @@ Partial Class MainForm
 		Me.saveDialog.DefaultExt = "txt"
 		Me.saveDialog.Filter = "Test File|*.txt|Other|*.*"
 		'
-		'menuBuffer
-		'
-		Me.menuBuffer.Name = "menuBuffer"
-		Me.menuBuffer.Size = New System.Drawing.Size(67, 23)
-		Me.menuBuffer.Text = "Buffer in:"
-		'
 		'MainForm
 		'
 		Me.AcceptButton = Me.btnGo
@@ -429,6 +430,7 @@ Partial Class MainForm
 		Me.Controls.Add(Me.lblCPU)
 		Me.Controls.Add(Me.lblPriority)
 		Me.Font = New System.Drawing.Font("Microsoft Sans Serif", 9.75!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+		Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
 		Me.MainMenuStrip = Me.MenuBar
 		Me.Margin = New System.Windows.Forms.Padding(4)
 		Me.MaximizeBox = False
