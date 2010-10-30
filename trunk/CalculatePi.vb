@@ -25,10 +25,9 @@ Public Class CalculatePi
 
 	''' <param name="p">Precision to calculate pi</param>
 	Public Sub New(ByVal p As Integer)
-		precision = p + 2
+		precision = p - 2
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
-		result = New SByte(precision) {}
-		sourceValue = New SByte(precision) {}
+		ReDim result(precision), sourceValue(precision)
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
