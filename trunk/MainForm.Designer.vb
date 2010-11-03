@@ -204,7 +204,7 @@ Partial Class MainForm
 		'
 		Me.numPrecision.Location = New System.Drawing.Point(72, 89)
 		Me.numPrecision.Maximum = New Decimal(New Integer() {269484032, 0, 0, 0})
-		Me.numPrecision.Minimum = New Decimal(New Integer() {3, 0, 0, 0})
+		Me.numPrecision.Minimum = New Decimal(New Integer() {2, 0, 0, 0})
 		Me.numPrecision.Name = "numPrecision"
 		Me.numPrecision.Size = New System.Drawing.Size(100, 22)
 		Me.numPrecision.TabIndex = 4

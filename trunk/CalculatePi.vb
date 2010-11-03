@@ -25,7 +25,7 @@ Public Class CalculatePi
 
 	''' <param name="p">Precision to calculate pi</param>
 	Public Sub New(ByVal p As Integer)
-		precision = p - 2
+		precision = p - 1
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
 		ReDim result(precision), sourceValue(precision)
 	End Sub
