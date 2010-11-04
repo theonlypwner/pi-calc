@@ -112,49 +112,26 @@
 	End Sub
 
 	Private Sub numPrecision_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles numPrecision.ValueChanged
-		If cmbDScale.SelectedIndex = 0 Then ' IndexOf Note: [compare not] 0 because -1 is not there, 0 is first char
-			' 1024s
-			If numPrecision.Value Mod 1048576 = 0 Then
-				' M
-				Dim j As UInteger = CUInt(numPrecision.Value / 1048576)
-				For Each i As String In cmbPrecision.Items
-					If i.IndexOf("M"c) > 0 And i.Replace("M", "") = CStr(j) Then
-						cmbPrecision.SelectedItem = i
-						Exit Sub
-					End If
-				Next
-			End If
-			If numPrecision.Value Mod 1024 = 0 Then
-				' K
-				Dim j As UInteger = CUInt(numPrecision.Value / 1024)
-				For Each i As String In cmbPrecision.Items
-					If i.IndexOf("K"c) > 0 And i.Replace("K", "") = CStr(j) Then
-						cmbPrecision.SelectedItem = i
-						Exit Sub
-					End If
-				Next
-			End If
-		Else
-			' 1000s
-			If numPrecision.Value Mod 1000000 = 0 Then
-				' m
-				Dim j As UInteger = CUInt(numPrecision.Value / 1000000)
-				For Each i As String In cmbPrecision.Items
-					If i.IndexOf("M"c) > 0 And i.Replace("M", "") = CStr(j) Then
-						cmbPrecision.SelectedItem = i
-						Exit Sub
-					End If
-				Next
-			ElseIf numPrecision.Value Mod 1000 = 0 Then
-				' k
-				Dim j As UInteger = CUInt(numPrecision.Value / 1000)
-				For Each i As String In cmbPrecision.Items
-					If i.IndexOf("K"c) > 0 And i.Replace("K", "") = CStr(j) Then
-						cmbPrecision.SelectedItem = i
-						Exit Sub
-					End If
-				Next
-			End If
+		' IndexOf Note: [compare not] 0 because -1 is not there, 0 is first char
+		If numPrecision.Value Mod KprecisionP(2) = 0 Then
+			' M
+			Dim j As UInteger = CUInt(numPrecision.Value / KprecisionP(2))
+			For Each i As String In cmbPrecision.Items
+				If i.IndexOf("M"c) > 0 And i.Replace("M", "") = CStr(j) Then
+					cmbPrecision.SelectedItem = i
+					Exit Sub
+				End If
+			Next
+		End If
+		If numPrecision.Value Mod KprecisionP() = 0 Then
+			' K
+			Dim j As UInteger = CUInt(numPrecision.Value / KprecisionP())
+			For Each i As String In cmbPrecision.Items
+				If i.IndexOf("K"c) > 0 And i.Replace("K", "") = CStr(j) Then
+					cmbPrecision.SelectedItem = i
+					Exit Sub
+				End If
+			Next
 		End If
 		For Each i As String In cmbPrecision.Items
 			If i.IndexOf("K"c) < 0 And i.IndexOf("M"c) < 0 And i = CStr(numPrecision.Value) Then
@@ -169,22 +146,26 @@
 		If cmbPrecision.SelectedIndex = 0 Then
 			numPrecision_ValueChanged(sender, New EventArgs)
 		ElseIf CStr(cmbPrecision.SelectedItem).IndexOf("M"c) > 0 Then
-			numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("M", "")) * If(cmbDScale.SelectedIndex = 0, 1048576, 1000000)
+			numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("M", "")) * KprecisionP(2)
 		ElseIf CStr(cmbPrecision.SelectedItem).IndexOf("K"c) > 0 Then
-			numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("K", "")) * If(cmbDScale.SelectedIndex = 0, 1024, 1000)
+			numPrecision.Value = CInt(CStr(cmbPrecision.SelectedItem).Replace("K", "")) * KprecisionP()
 		Else
 			numPrecision.Value = CInt(cmbPrecision.SelectedItem)
 		End If
 	End Sub
 
+	Public Function KprecisionP(Optional ByVal pow As Byte = 1) As ULong
+		Return CULng(Math.Pow(If(cmbDScale.SelectedIndex = 0, 1024, 1000), pow))
+	End Function
+
 	Private Sub maxValChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbDScale.SelectedIndexChanged
 		Dim l As String = CStr(cmbPrecision.Items(cmbPrecision.Items.Count - 1))
 		If l.IndexOf("M"c) > 0 Then
 			l = l.Replace("M", "")
-			l = CStr(CInt(l) * If(cmbDScale.SelectedIndex = 0, 1048576, 1000000))
+			l = CStr(CInt(l) * KprecisionP(2))
 		ElseIf l.IndexOf("K"c) > 0 Then
 			l = l.Replace("K", "")
-			l = CStr(CInt(l) * If(cmbDScale.SelectedIndex = 0, 1024, 1000))
+			l = CStr(CInt(l) * KprecisionP())
 		End If
 		numPrecision.Maximum = CDec(l)
 	End Sub
@@ -236,7 +217,7 @@
 		If t.IsAlive Then t.Abort() ' stop thread before delete
 		t = Nothing	' delete the instance, .NET will reclaim the memory for me
 		' retrieve data and delete piCalc
-		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 0, CalculatePi.ResultType.First2000, CalculatePi.ResultType.BufferOnly))
+		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 0, CalculatePi.ResultType.First2K, CalculatePi.ResultType.BufferOnly))
 		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & r.s
 		' ticks = 100-nanoseconds
 		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)

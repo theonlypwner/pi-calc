@@ -5,6 +5,8 @@ Public Class CalculatePi
 
 	''' <summary>How many digits of pi to compute</summary>
 	Public precision As Integer
+	''' <summary>How many EXTRA digits of pi to compute for improved accuracy</summary>
+	Public Const pExtra As Byte = 3
 	''' <summary>How many digits of pi to compute before updating the progress bar</summary>
 	Public progressUpdateInterval As UInteger
 
@@ -25,7 +27,7 @@ Public Class CalculatePi
 
 	''' <param name="p">Precision to calculate pi</param>
 	Public Sub New(ByVal p As Integer)
-		precision = p + 1
+		precision = p + pExtra - 2
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
 		ReDim result(precision), sourceValue(precision)
 	End Sub
@@ -40,9 +42,9 @@ Public Class CalculatePi
 	End Sub
 
 	Public Enum ResultType
-		BufferOnly = 0
-		First2000 = 1
-		All = 2
+		BufferOnly
+		First2K
+		All
 	End Enum
 
 	''' <summary>Holds a result string with start timestamp and difference to finish</summary>
@@ -63,11 +65,12 @@ Public Class CalculatePi
 			Return ret
 		End If
 		ret.s = "3."
-		If n = ResultType.First2000 And precision > 2000 Then
+		If n = ResultType.First2K And precision - pExtra > MainForm.KprecisionP * 2 Then
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
 
-		For i As UInteger = 1 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 3)
+		For i As UInteger = 1 To CUInt( _
+		 If(n = ResultType.First2K And precision > MainForm.KprecisionP * 2, Math.Min(result.Length, MainForm.KprecisionP * 2), result.Length) - pExtra)
 			ret.s &= CStr(result.GetValue(CInt(i)))
 		Next
 		Return ret
