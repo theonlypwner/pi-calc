@@ -25,7 +25,7 @@ Public Class CalculatePi
 
 	''' <param name="p">Precision to calculate pi</param>
 	Public Sub New(ByVal p As Integer)
-		precision = p - 1
+		precision = p + 1
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
 		ReDim result(precision), sourceValue(precision)
 	End Sub
@@ -67,7 +67,7 @@ Public Class CalculatePi
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
 
-		For i As UInteger = 1 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 1)
+		For i As UInteger = 1 To CUInt(If(n = ResultType.First2000 And precision > 2000, Math.Min(result.Length, 2000), result.Length) - 3)
 			ret.s &= CStr(result.GetValue(CInt(i)))
 		Next
 		Return ret
