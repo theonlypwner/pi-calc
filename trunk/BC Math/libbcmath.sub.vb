@@ -1,5 +1,5 @@
 ﻿Partial Public Class libbcmath
-	Public Shared Function Subtract(ByRef factor As BCNum, ByRef multiplyer As BCNum) As BCNum
+	Public Shared Function Subtract(ByRef minuend As BCNum, ByRef subtrahend As BCNum) As BCNum
 		'var diff; // bc_num
 		'var cmp_res, res_scale; //int
 		'if (n1.n_sign != n2.n_sign) {
