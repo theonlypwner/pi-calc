@@ -83,6 +83,10 @@
     <Import Include="W3b.Sine" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BC Math\BCMath.vb" />
+    <Compile Include="BC Math\libbcmath.mem.vb" />
+    <Compile Include="BC Math\libbcmath.mul.vb" />
+    <Compile Include="BC Math\libbcmath.vb" />
     <Compile Include="CalculatePi.vb" />
     <Compile Include="EventArgsAssist.vb" />
     <Compile Include="MainForm.vb">
