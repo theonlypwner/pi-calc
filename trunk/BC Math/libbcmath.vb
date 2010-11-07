@@ -94,49 +94,54 @@
 			Return init_num() ' invalid number, return zero
 		End If
 
-		'      /* Adjust numbers and allocate storage and initialize fields. */
-		'      strscale = libbcmath.MIN(strscale, scale);
-		'      if (digits === 0) {
-		'          zero_int = true;
-		'          digits = 1;
-		'      }
+		' Adjust numbers and allocate storage and initialize fields.
+		strscale = Math.Min(strscale, scale)
+		If digits = 0 Then
+			zero_int = True
+			digits = 1
+		End If
 
-		'      num = libbcmath.bc_new_num(digits, strscale);
+		num = new_num(digits, strscale)
 
-		'      /* Build the whole number. */
-		'      ptr = 0; // str
-		'      if (str[ptr] === '-') {
-		'          num.n_sign = libbcmath.MINUS;
-		'          //(*num)->n_sign = MINUS;
-		'          ptr++;
-		'      } else {
-		'          num.n_sign = libbcmath.PLUS;
-		'          //(*num)->n_sign = PLUS;
-		'          if (str[ptr] === '+') {
-		'              ptr++;
-		'          }
-		'      }
-		'      while (str[ptr] === '0') {
-		'          ptr++;            /* Skip leading zeros. */
-		'      }
+		' Build the whole number
+		ptr = 1
+		If str(0) = MINUS Then : num.sign = MINUS
+		Else
+			num.sign = PLUS
+			If Not str(0) = PLUS Then ptr = 0
+		End If
 
-		'      nptr = 0; //(*num)->n_value;
-		'      if (zero_int) {
-		'          num.n_value[nptr++] = 0;
-		'          digits = 0;
-		'      }
-		'      for (;digits > 0; digits--) {
-		'          num.n_value[nptr++] = libbcmath.CH_VAL(str[ptr++]);
-		'          //*nptr++ = CH_VAL(*ptr++);
-		'      }
+		' now we start all over again with the counting :(
+		While str(ptr) = "0"c ' skip leading zeros again
+			ptr += 1
+		End While
 
-		'      /* Build the fractional part. */
-		'      if (strscale > 0) {
-		'          ptr++;  /* skip the decimal point! */
-		'          for (;strscale > 0; strscale--) {
-		'              num.n_value[nptr++] = libbcmath.CH_VAL(str[ptr++]);
-		'          }
-		'      }
+		' Everything before the decimal
+		nptr = 0 ' destination pointer
+		If zero_int Then
+			num.value(0) = 0
+			nptr += 1
+			digits = 0
+		End If
+		While digits > 0
+			num.value(nptr) = CByte(Val(str(ptr)))
+			nptr += 1
+			ptr += 1
+			digits -= 1
+		End While
+
+		' Build the fractional part
+		If strscale > 0 Then
+			ptr += 1 ' skip the decimal point!
+			While strscale > 0
+				num.value(nptr) = CByte(Val(str(ptr)))
+				nptr += 1
+				ptr += 1
+				strscale -= 1
+			End While
+		End If
+
+		' Finally, return the result
 		Return num
 	End Function
 
