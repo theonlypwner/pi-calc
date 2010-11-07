@@ -1,5 +1,5 @@
 ﻿Partial Public Class libbcmath
-	Public Shared Function Add(ByRef factor As BCNum, ByRef multiplyer As BCNum) As BCNum
+	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum) As BCNum
 		'var sum, cmp_res, res_scale;
 
 		'if (n1.n_sign === n2.n_sign) {
