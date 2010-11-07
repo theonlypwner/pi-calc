@@ -1,4 +1,7 @@
 ﻿Partial Public Class libbcmath
+	''' <summary>Adds two arbitrary precision numbers</summary>
+	''' <param name="base">The first number</param>
+	''' <param name="addend">The number to add onto it</param>
 	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum) As BCNum
 		'var sum, cmp_res, res_scale;
 
