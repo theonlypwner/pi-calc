@@ -145,13 +145,13 @@
 		Return num
 	End Function
 
-	''' <summary>Determines if a number is odd or even</summary>
+	''' <summary>Determines if a number (up to Long) is odd or even</summary>
 	''' <param name="a">The number to see if it is odd</param>
 	Public Shared Function Odd(ByVal a As Long) As Boolean
 		Return (a And 1) > 0
 	End Function
 
-	''' <summary>Determine if the number specified is zero or not</summary>
+	''' <summary>Determine if the arbitrary precision number specified is zero or not</summary>
 	''' <param name="num">The number to check</param>
 	Public Shared Function IsZero(ByRef num As BCNum) As Boolean
 		Dim count As Integer = num.length + num.scale, nptr As Integer = 0
