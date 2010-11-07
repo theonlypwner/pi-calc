@@ -1,4 +1,7 @@
 ﻿Partial Public Class libbcmath
+	''' <summary>Subtracts two arbitrary precision numbers</summary>
+	''' <param name="minuend">The big (base) number</param>
+	''' <param name="subtrahend">The number to subtract from it</param>
 	Public Shared Function Subtract(ByRef minuend As BCNum, ByRef subtrahend As BCNum) As BCNum
 		'var diff; // bc_num
 		'var cmp_res, res_scale; //int
