@@ -84,8 +84,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BC Math\BCMath.vb" />
+    <Compile Include="BC Math\libbcmath.add.vb" />
+    <Compile Include="BC Math\libbcmath.das.vb" />
+    <Compile Include="BC Math\libbcmath.div.vb" />
     <Compile Include="BC Math\libbcmath.mem.vb" />
     <Compile Include="BC Math\libbcmath.mul.vb" />
+    <Compile Include="BC Math\libbcmath.sub.vb" />
     <Compile Include="BC Math\libbcmath.vb" />
     <Compile Include="CalculatePi.vb" />
     <Compile Include="EventArgsAssist.vb" />
