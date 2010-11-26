@@ -146,56 +146,55 @@
 		borrow = 0
 
 		' Take care of the longer scaled number.
-		'if (n1.n_scale != min_scale) {
-		'	// n1 has the longer scale
-		'	for (count = n1.n_scale - min_scale; count > 0; count--) {
-		'		diff.n_value[diffptr--] = n1.n_value[n1ptr--];
-		'		// *diffptr-- = *n1ptr--;
-		'	}
-		'} else {
-		'	// n2 has the longer scale
-		'	for (count = n2.n_scale - min_scale; count > 0; count--) {
-		'		val = 0 - n2.n_value[n2ptr--] - borrow;
-		'		//val = - *n2ptr-- - borrow;
-		'		if (val < 0) {
-		'			val += libbcmath.BASE;
-		'			borrow = 1;
-		'		} else {
-		'			borrow = 0;
-		'			diff.n_value[diffptr--] = val;
-		'			//*diffptr-- = val;
-		'		}
-		'	}
-		'}
+		If n1.scale <> min_scale Then ' n1 has the longer scale
+			For count = n1.scale - min_scale To 1 Step -1
+				diff.value(diffptr) = n1.value(n1ptr) ' *diffptr-- = *n1ptr--;
+				diffptr -= 1
+				n1ptr -= 1
+			Next
+		Else ' n2 has the longer scale
+			For count = n2.scale - min_scale To 1 Step -1
+				val = n2.value(n2ptr) - borrow ' val = - *n2ptr-- - borrow;
+				n2ptr -= 1
+				If val < 0 Then
+					val += BASE
+					borrow = 1
+				Else
+					borrow = 0
+					diff.value(diffptr) = CByte(val) ' *diffptr-- = val;
+					diffptr -= 1
+				End If
+			Next
+		End If
 
 		' Now do the equal length scale and integer parts.
-		'for (count = 0; count < min_len + min_scale; count++) {
-		'	val = n1.n_value[n1ptr--] - n2.n_value[n2ptr--] - borrow;
-		'	//val = *n1ptr-- - *n2ptr-- - borrow;
-		'	if (val < 0) {
-		'		val += libbcmath.BASE;
-		'		borrow = 1;
-		'	} else {
-		'		borrow = 0;
-		'	}
-		'	diff.n_value[diffptr--] = val;
-		'	//*diffptr-- = val;
-		'}
+		For count = 0 To min_len + min_scale - 1
+			val = n1.value(n1ptr) - n2.value(n2ptr) - borrow ' val = *n1ptr-- - *n2ptr-- - borrow;
+			n1ptr -= 1
+			n2ptr -= 1
+			If val < 0 Then
+				val += BASE
+				borrow = 1
+			Else : borrow = 0
+			End If
+			diff.value(diffptr) = CByte(val) ' *diffptr-- = val;
+			diffptr -= 1
+		Next
 
 		' If n1 has more digits then n2, we now do that subtract.
-		'if (diff_len != min_len) {
-		'	for (count = diff_len - min_len; count > 0; count--) {
-		'		val = n1.n_value[n1ptr--] - borrow;
-		'		// val = *n1ptr-- - borrow;
-		'		if (val < 0) {
-		'			val += libbcmath.BASE;
-		'			borrow = 1;
-		'		} else {
-		'			borrow = 0;
-		'		}
-		'		diff.n_value[diffptr--] = val;
-		'	}
-		'}
+		If diff_len <> min_len Then
+			'	for (count = diff_len - min_len; count > 0; count--) {
+			'		val = n1.n_value[n1ptr--] - borrow;
+			'		// val = *n1ptr-- - borrow;
+			'		if (val < 0) {
+			'			val += libbcmath.BASE;
+			'			borrow = 1;
+			'		} else {
+			'			borrow = 0;
+			'		}
+			'		diff.n_value[diffptr--] = val;
+			'	}
+		End If
 
 		' Clean up and return.
 		RemoveLeadingZeros(diff)
