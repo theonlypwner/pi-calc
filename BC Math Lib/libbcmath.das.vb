@@ -16,14 +16,13 @@
 		sum = new_num(sum_digits, Math.Max(sum_scale, scale_min))
 
 
-		'/* Not needed? [Still in C++]
+		' Not needed? [Still in C++]
 		'if (scale_min > sum_scale) {
 		'	sumptr = (char *) (sum->n_value + sum_scale + sum_digits);
 		'	for (count = scale_min - sum_scale; count > 0; count--) {
 		'		*sumptr++ = 0;
 		'	}
 		'}
-		'*/
 
 		' Start with the fraction part. Initialize the pointers.
 		n1bytes = n1.scale
@@ -112,42 +111,41 @@
 	End Function
 
 	''' <summary>Performs a raw subtraction iteration</summary>
-	''' <param name="minuend">The big number to subtract from</param>
-	''' <param name="subtrahend">The small number to subtract</param>
+	''' <param name="n1">The big number to subtract from</param>
+	''' <param name="n2">The small number to subtract</param>
 	''' <param name="scale_min">The minimum scale to use</param>
-	Protected Shared Function DoSub(ByRef minuend As BCNum, ByRef subtrahend As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
-		'var diff; //bc_num
-		'var diff_scale, diff_len; // int
-		'var min_scale, min_len; // int
-		'var n1ptr, n2ptr, diffptr; // int
-		'var borrow, count, val; // int
+	Protected Shared Function DoSub(ByRef n1 As BCNum, ByRef n2 As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+		Dim diff As New BCNum
+		Dim diff_scale, diff_len As Integer
+		Dim min_scale, min_len As Integer
+		Dim n1ptr, n2ptr, diffptr As Integer
+		Dim borrow, count, val As Integer
 
-		'// Allocate temporary storage.
-		'diff_len    = libbcmath.MAX(n1.n_len,   n2.n_len);
-		'diff_scale  = libbcmath.MAX(n1.n_scale, n2.n_scale);
-		'min_len     = libbcmath.MIN(n1.n_len,   n2.n_len);
-		'min_scale   = libbcmath.MIN(n1.n_scale, n2.n_scale);
-		'diff        = libbcmath.bc_new_num(diff_len, libbcmath.MAX(diff_scale, scale_min));
+		' Allocate temporary storage.
+		diff_len = Math.Max(n1.length, n2.length)
+		diff_scale = Math.Max(n1.scale, n2.scale)
+		min_len = Math.Min(n1.length, n2.length)
+		min_scale = Math.Min(n1.scale, n2.scale)
+		diff = new_num(diff_len, Math.Max(diff_scale, scale_min))
 
-		'/* Not needed?
-		'// Zero extra digits made by scale_min.
+		' Not needed? [Still in JavaScript and C++]
+		' Zero extra digits made by scale_min
 		'if (scale_min > diff_scale) {
 		'	diffptr = (char *) (diff->n_value + diff_len + diff_scale);
 		'	for (count = scale_min - diff_scale; count > 0; count--) {
 		'		*diffptr++ = 0;
 		'	}
 		'}
-		'*/
 
-		'// Initialize the subtract.
-		'n1ptr   = (n1.n_len + n1.n_scale -1);
-		'n2ptr   = (n2.n_len + n2.n_scale -1);
-		'diffptr = (diff_len + diff_scale -1);
+		' Initialize the subtract.
+		n1ptr = n1.length + n1.scale - 1
+		n2ptr = n2.length + n2.scale - 1
+		diffptr = diff_len + diff_scale - 1
 
-		'// Subtract the numbers.
-		'borrow = 0;
+		' Subtract the numbers
+		borrow = 0
 
-		'// Take care of the longer scaled number.
+		' Take care of the longer scaled number.
 		'if (n1.n_scale != min_scale) {
 		'	// n1 has the longer scale
 		'	for (count = n1.n_scale - min_scale; count > 0; count--) {
@@ -170,7 +168,7 @@
 		'	}
 		'}
 
-		'// Now do the equal length scale and integer parts.
+		' Now do the equal length scale and integer parts.
 		'for (count = 0; count < min_len + min_scale; count++) {
 		'	val = n1.n_value[n1ptr--] - n2.n_value[n2ptr--] - borrow;
 		'	//val = *n1ptr-- - *n2ptr-- - borrow;
@@ -184,7 +182,7 @@
 		'	//*diffptr-- = val;
 		'}
 
-		'// If n1 has more digits then n2, we now do that subtract.
+		' If n1 has more digits then n2, we now do that subtract.
 		'if (diff_len != min_len) {
 		'	for (count = diff_len - min_len; count > 0; count--) {
 		'		val = n1.n_value[n1ptr--] - borrow;
@@ -199,8 +197,8 @@
 		'	}
 		'}
 
-		'// Clean up and return.
-		'libbcmath._bc_rm_leading_zeros(diff);
-		'return diff;
+		' Clean up and return.
+		RemoveLeadingZeros(diff)
+		Return diff
 	End Function
 End Class
