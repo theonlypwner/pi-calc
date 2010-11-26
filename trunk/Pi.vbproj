@@ -80,7 +80,6 @@
     <Import Include="System.Management" />
     <Import Include="System.Threading" />
     <Import Include="System.Windows.Forms" />
-    <Import Include="W3b.Sine" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BC Math Lib\libbcmath.compare.vb" />
