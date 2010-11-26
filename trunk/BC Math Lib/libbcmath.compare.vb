@@ -6,6 +6,11 @@
 		Return DoCompareAdvanced(n1, n2, True, False)
 	End Function
 
+	''' <summary>Raw compare of two arbitrary precision numbers</summary>
+	''' <param name="n1">The first number (1 if larger)</param>
+	''' <param name="n2">The second number (-1 if larger)</param>
+	''' <param name="use_sign">Check the signs, only magnitude is checked if false</param>
+	''' <param name="ignore_last">Whether or not to ignore the last digit</param>
 	Protected Shared Function DoCompareAdvanced(ByRef n1 As BCNum, ByRef n2 As BCNum, ByVal use_sign As Boolean, ByVal ignore_last As Boolean) As SByte
 		Dim n1ptr As Integer = 0, n2ptr As Integer = 0, count As Integer = 0
 
