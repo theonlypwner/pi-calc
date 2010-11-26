@@ -2,35 +2,27 @@
 	''' <summary>Adds two arbitrary precision numbers</summary>
 	''' <param name="base">The first number</param>
 	''' <param name="addend">The number to add onto it</param>
-	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum) As BCNum
-		'var sum, cmp_res, res_scale;
-
-		'if (n1.n_sign === n2.n_sign) {
-		'	sum = libbcmath._bc_do_add(n1, n2, scale_min);
-		'	sum.n_sign = n1.n_sign;
-		'} else {
-		'	/* subtraction must be done. */
-		'	cmp_res = libbcmath._bc_do_compare(n1, n2, false, false); /* Compare magnitudes. */
-		'	switch (cmp_res) {
-		'		case -1:
-		'			/* n1 is less than n2, subtract n1 from n2. */
-		'			sum = libbcmath._bc_do_sub(n2, n1, scale_min);
-		'			sum.n_sign = n2.n_sign;
-		'			break;
-
-		'		case  0:
-		'			/* They are equal! return zero with the correct scale! */
-		'			res_scale = libbcmath.MAX(scale_min, libbcmath.MAX(n1.n_scale, n2.n_scale));
-		'			sum = libbcmath.bc_new_num(1, res_scale);
-		'			libbcmath.memset(sum.n_value, 0, 0, res_scale+1);
-		'			break;
-
-		'		case  1:
-		'			/* n2 is less than n1, subtract n2 from n1. */
-		'			sum = libbcmath._bc_do_sub(n1, n2, scale_min);
-		'			sum.n_sign = n1.n_sign;
-		'	}
-		'}
-		'return sum;
+	''' <param name="scale_min">The minimum scale for the result</param>
+	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+		Dim sum As New BCNum, cmp_res As Integer = -2
+		If base.sign = addend.sign Then	' Same sign; add
+			sum.sign = base.sign
+			sum = DoAdd(base, addend, scale_min)
+		Else ' subtraction must be done
+			cmp_res = DoCompareAdvanced(base, addend, False, False)
+			Select Case cmp_res
+				Case -1	' second number is bigger
+					sum.sign = addend.sign
+					sum = libbcmath.DoSub(addend, base, scale_min)
+				Case 0 ' equal numbers
+					sum = new_num(1, Math.Max(scale_min, Math.Max(base.scale, addend.scale)))
+					memset(sum.value, 0, 0, sum.scale + 1)
+				Case 1 ' first number is bigger
+					sum.sign = base.sign
+					sum = libbcmath.DoSub(base, addend, scale_min)
+			End Select
+		End If
+		' Return our final answer
+		Return sum
 	End Function
 End Class

@@ -2,6 +2,7 @@
 	' Constants
 	Public Const PLUS As Char = "+"c
 	Public Const MINUS As Char = "-"c
+	Public Const BASE As Byte = 10
 	Public Const defaultScale As Integer = 0
 
 	''' <summary>Basic Number Structure</summary>
@@ -160,5 +161,11 @@
 			count -= 1
 		End While
 		Return count = 0
+	End Function
+
+	''' <summary>Inverts the sign (- => +, + => -)</summary>
+	''' <param name="sign">The character with the sign to invert</param>
+	Public Shared Function InvertSign(ByVal sign As Char) As Char
+		Return If(sign = PLUS, MINUS, PLUS)
 	End Function
 End Class

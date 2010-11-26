@@ -2,39 +2,29 @@
 	''' <summary>Subtracts two arbitrary precision numbers</summary>
 	''' <param name="minuend">The big (base) number</param>
 	''' <param name="subtrahend">The number to subtract from it</param>
-	Public Shared Function Subtract(ByRef minuend As BCNum, ByRef subtrahend As BCNum) As BCNum
-		'var diff; // bc_num
-		'var cmp_res, res_scale; //int
-		'if (n1.n_sign != n2.n_sign) {
-		'	diff = libbcmath._bc_do_add (n1, n2, scale_min);
-		'	diff.n_sign = n1.n_sign;
-		'} else {
-		'	/* subtraction must be done. */
-		'	/* Compare magnitudes. */
-		'	cmp_res = libbcmath._bc_do_compare(n1, n2, false, false);
-		'	switch (cmp_res) {
-		'		case -1:
-		'			/* n1 is less than n2, subtract n1 from n2. */
-		'			diff = libbcmath._bc_do_sub(n2, n1, scale_min);
-		'			diff.n_sign = (n2.n_sign == libbcmath.PLUS ? libbcmath.MINUS : libbcmath.PLUS);
-		'			break;
-		'		case  0:
-		'			/* They are equal! return zero! */
-		'			res_scale = libbcmath.MAX(scale_min, libbcmath.MAX(n1.n_scale, n2.n_scale));
-		'			diff = libbcmath.bc_new_num(1, res_scale);
-		'			libbcmath.memset(diff.n_value, 0, 0, res_scale+1);
-		'			break;
-		'		case  1:
-		'			/* n2 is less than n1, subtract n2 from n1. */
-		'			diff = libbcmath._bc_do_sub(n1, n2, scale_min);
-		'			diff.n_sign = n1.n_sign;
-		'			break;
-		'	}
-		'}
-
-		'/* Clean up and return. */
-		'//bc_free_num (result);
-		'//*result = diff;
-		'return diff;
+	Public Shared Function Subtract(ByRef minuend As BCNum, ByRef subtrahend As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+		Dim diff As New BCNum
+		Dim cmp_res As Integer = 0, res_scale As Integer = 0
+		If minuend.sign <> subtrahend.sign Then
+			diff = DoAdd(minuend, subtrahend, scale_min)
+			diff.sign = minuend.sign
+		Else ' subtraction must be done
+			' Compare magnitudes
+			cmp_res = DoCompareAdvanced(minuend, subtrahend, False, False)
+			Select Case cmp_res
+				Case -1	' The minuend is less than the subtrahend, subtract the minuend from the subtrahend.
+					diff = DoSub(subtrahend, minuend, scale_min)
+					diff.sign = InvertSign(minuend.sign)
+				Case 0 ' They are equal! Return zero!
+					res_scale = Math.Max(scale_min, Math.Max(minuend.scale, subtrahend.scale))
+					diff = new_num(1, res_scale)
+					memset(diff.value, 0, 0, res_scale + 1)
+				Case 1 ' The subtrahend is less than the minuend, subtract the subtrahend from the minuend.
+					diff = DoSub(minuend, subtrahend, scale_min)
+					diff.sign = minuend.sign
+			End Select
+		End If
+		' Return the difference
+		Return diff
 	End Function
 End Class
