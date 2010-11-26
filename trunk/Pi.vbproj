@@ -83,6 +83,7 @@
     <Import Include="W3b.Sine" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BC Math Lib\libbcmath.compare.vb" />
     <Compile Include="BC Math\BCMath.vb" />
     <Compile Include="BC Math Lib\libbcmath.add.vb" />
     <Compile Include="BC Math Lib\libbcmath.das.vb" />
