@@ -183,17 +183,17 @@
 
 		' If n1 has more digits then n2, we now do that subtract.
 		If diff_len <> min_len Then
-			'	for (count = diff_len - min_len; count > 0; count--) {
-			'		val = n1.n_value[n1ptr--] - borrow;
-			'		// val = *n1ptr-- - borrow;
-			'		if (val < 0) {
-			'			val += libbcmath.BASE;
-			'			borrow = 1;
-			'		} else {
-			'			borrow = 0;
-			'		}
-			'		diff.n_value[diffptr--] = val;
-			'	}
+			For count = diff_len - min_len To 1 Step -1
+				val = n1.value(n1ptr) - borrow ' val = *n1ptr-- - borrow;
+				n1ptr -= 1
+				If val < 0 Then
+					val += BASE
+					borrow = 1
+				Else : borrow = 0
+				End If
+				diff.value(diffptr) = CByte(val)
+				diffptr -= 1
+			Next
 		End If
 
 		' Clean up and return.
