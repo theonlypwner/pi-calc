@@ -15,7 +15,7 @@
 					sum.sign = addend.sign
 					sum = libbcmath.DoSub(addend, base, scale_min)
 				Case 0 ' equal numbers
-					sum = new_num(1, Math.Max(scale_min, Math.Max(base.scale, addend.scale)))
+					sum = NewNum(1, Math.Max(scale_min, Math.Max(base.scale, addend.scale)))
 					memset(sum.value, 0, 0, sum.scale + 1)
 				Case 1 ' first number is bigger
 					sum.sign = base.sign
