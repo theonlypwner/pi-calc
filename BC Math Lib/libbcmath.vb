@@ -2,7 +2,7 @@
 	' Constants
 	Public Const PLUS As Char = "+"c
 	Public Const MINUS As Char = "-"c
-	Public Const BASE As Byte = 10
+	Public Const BASE As Byte = 10 ' must be 10
 	Public Const defaultScale As Integer = 0
 
 	''' <summary>Basic Number Structure</summary>
@@ -35,7 +35,7 @@
 	''' <summary>Creates a new instance of a structure representing an arbitrary precision number</summary>
 	''' <param name="length">The length before the decimal</param>
 	''' <param name="scale">The length after the decimal</param>
-	Public Shared Function new_num(ByVal length As Integer, ByVal scale As Integer) As BCNum
+	Public Shared Function NewNum(ByVal length As Integer, ByVal scale As Integer) As BCNum
 		Dim temp As New BCNum
 		temp.sign = PLUS
 		temp.length = length
@@ -46,8 +46,8 @@
 	End Function
 
 	''' <summary>Create a new arbitrary precision number</summary>
-	Shared Function init_num() As BCNum
-		Return libbcmath.new_num(1, 0)
+	Shared Function InitNum() As BCNum
+		Return libbcmath.NewNum(1, 0)
 	End Function
 
 	''' <summary>Strips zeros until there is only one left</summary>
@@ -92,7 +92,7 @@
 		End While
 
 		If str(ptr) <> Nothing Or digits + strscale = 0 Then
-			Return init_num() ' invalid number, return zero
+			Return InitNum() ' invalid number, return zero
 		End If
 
 		' Adjust numbers and allocate storage and initialize fields.
@@ -102,7 +102,7 @@
 			digits = 1
 		End If
 
-		num = new_num(digits, strscale)
+		num = NewNum(digits, strscale)
 
 		' Build the whole number
 		ptr = 1

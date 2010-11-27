@@ -13,7 +13,7 @@
 		' Prepare sum.
 		sum_scale = Math.Max(n1.scale, n2.scale)
 		sum_digits = Math.Max(n1.length, n2.length) + 1
-		sum = new_num(sum_digits, Math.Max(sum_scale, scale_min))
+		sum = NewNum(sum_digits, Math.Max(sum_scale, scale_min))
 
 
 		' Not needed? [Still in C++]
@@ -126,7 +126,7 @@
 		diff_scale = Math.Max(n1.scale, n2.scale)
 		min_len = Math.Min(n1.length, n2.length)
 		min_scale = Math.Min(n1.scale, n2.scale)
-		diff = new_num(diff_len, Math.Max(diff_scale, scale_min))
+		diff = NewNum(diff_len, Math.Max(diff_scale, scale_min))
 
 		' Not needed? [Still in JavaScript and C++]
 		' Zero extra digits made by scale_min
