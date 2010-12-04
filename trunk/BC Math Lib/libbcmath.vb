@@ -163,6 +163,16 @@
 		Return count = 0
 	End Function
 
+	''' <summary>Determine if the arbitrary precision number specified is one</summary>
+	''' <param name="num">The number to check</param>
+	Public Shared Function IsOne(ByRef num As BCNum) As Boolean
+		' HACK: check where scale > 0 too.. (IsZero - add IsOne function)
+		If num.scale = 0 And num.length = 1 And num.value(0) = 1 Then
+			Return True
+		End If
+		Return False
+	End Function
+
 	''' <summary>Inverts the sign (- => +, + => -)</summary>
 	''' <param name="sign">The character with the sign to invert</param>
 	Public Shared Function InvertSign(ByVal sign As Char) As Char
