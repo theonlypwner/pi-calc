@@ -166,11 +166,14 @@
 	''' <summary>Determine if the arbitrary precision number specified is one</summary>
 	''' <param name="num">The number to check</param>
 	Public Shared Function IsOne(ByRef num As BCNum) As Boolean
-		' HACK: check where scale > 0 too.. (IsZero - add IsOne function)
-		If num.scale = 0 And num.length = 1 And num.value(0) = 1 Then
-			Return True
-		End If
-		Return False
+		Dim i As Integer
+		For i = num.length To num.length + num.scale - 1
+			If num.value(i) <> 0 Then Return False ' Decimal found
+		Next
+		For i = 0 To num.length - 2
+			If num.value(i) <> 0 Then Return False ' Non-zero before last number
+		Next
+		Return num.value(num.length - 1) = 1 ' If the last digit is one
 	End Function
 
 	''' <summary>Inverts the sign (- => +, + => -)</summary>
