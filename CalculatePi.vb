@@ -1,4 +1,6 @@
-﻿''' <summary>Responsible for calculating pi</summary>
+﻿Imports Pi.BCMath
+
+''' <summary>Responsible for calculating pi</summary>
 Public Class CalculatePi
 	''' <summary>CR &amp; LF = Windows New Line</summary>
 	Public Const CrLf As String = Chr(13) & Chr(10) ' CR & LF = Windows New Line
@@ -9,7 +11,7 @@ Public Class CalculatePi
 	Public progressUpdateInterval As UInteger
 
 	''' <summary>Result storage variable</summary>
-	Protected Friend result As String
+	Protected Friend result As libbcmath.BCNum
 
 	''' <summary>Ticks when calculation started</summary>
 	Protected Friend startTicks As Long
@@ -25,35 +27,32 @@ Public Class CalculatePi
 	Public Sub New(ByVal p As Integer)
 		precision = p + 3
 		progressUpdateInterval = CUInt(Math.Floor(precision / 200))
-		result = "0"
 	End Sub
 
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
 		Dim limit As Integer = CInt(Math.Round(precision / 14 - 1))
 		For k As Integer = 0 To limit
-			' result
-			'bcdiv(
-			'	bcmul(
-			'		bcadd(13591409,
-			'			bcmul(545140134, $k)
-			'		),
-			'		bcmul(bcpow(-1, $k), bcfact(6*$k))
-			'	),
-			'	bcmul(
-			'		bcmul(
-			'			bcpow('640320',3*$k+1),
-			'			bcsqrt('640320')
-			'		),
-			'		bcmul(
-			'			bcfact(3*$k),
-			'			bcpow(bcfact($k),3)
-			'		)
-			'	)
-			')
+			result = bcdiv( _
+				bcmul( _
+					bcadd(13591409, _
+						bcmul(545140134, k) _
+					), _
+					bcmul(if(k Mod 2 = 1, -1, 1), bcfact(6*k)) _
+				), _
+				bcmul( _
+					bcmul( _
+						bcpow('640320',3*k+1), _
+						bcsqrt('640320') _
+					), _
+					bcmul( _
+						bcfact(3*k), _
+						bcpow(bcfact(k),3) _
+					) _
+				) _
+			)
 		Next
-		' finisher
-		' return bcdiv(1,(bcmul(12,($num))),$precision)
+		result = bcdiv(1, (bcmul(12, (result))), precision)
 		RaiseEvent onComplete(Me, New EventArgs)
 	End Sub
 

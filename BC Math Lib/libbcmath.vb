@@ -1,4 +1,4 @@
-﻿Partial Public Class libbcmath
+﻿Partial Public NotInheritable Class libbcmath
 	' Constants
 	Public Const PLUS As Char = "+"c
 	Public Const MINUS As Char = "-"c
