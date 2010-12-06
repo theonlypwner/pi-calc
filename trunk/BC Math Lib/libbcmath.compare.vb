@@ -29,7 +29,7 @@
 		' If we get here, they have the same number of integer digits.
 		' Check the integer part and the equal length part of the fraction.
 		count = n1.length + Math.Min(n1.scale, n2.scale)
-		While (count > 0) And (n1.value(n1ptr) = n2.value(n2ptr))
+		While (count > 0) And (n1(n1ptr) = n2(n2ptr))
 			n1ptr += 1
 			n2ptr += 1
 			count -= 1
@@ -38,7 +38,7 @@
 		If ignore_last And (count = 1) And (n1.scale = n2.scale) Then Return 0
 
 		If count <> 0 Then
-			If n1.value(n1ptr) > n2.value(n2ptr) Then : Return CSByte(If((Not use_sign) Or n1.sign = PLUS, 1, -1))
+			If n1(n1ptr) > n2(n2ptr) Then : Return CSByte(If((Not use_sign) Or n1.sign = PLUS, 1, -1))
 			Else : Return CSByte(If((Not use_sign) Or n1.sign = PLUS, -1, 1))
 			End If
 		End If
@@ -46,14 +46,14 @@
 		' They are equal up to the last part of the equal part of the fraction.
 		If n1.scale > n2.scale Then
 			For count = (n1.scale - n2.scale) To 1 Step -1
-				If (n1.value(n1ptr) <> 0) Then
+				If (n1(n1ptr) <> 0) Then
 					Return CSByte(If((Not use_sign) Or n1.sign = PLUS, 1, -1))
 				End If
 				n1ptr += 1
 			Next
 		ElseIf n1.scale < n2.scale Then
 			For count = (n2.scale - n1.scale) To 1 Step -1
-				If (n2.value(n2ptr) <> 0) Then
+				If (n2(n2ptr) <> 0) Then
 					Return CSByte(If((Not use_sign) Or n1.sign = PLUS, -1, 1))
 				End If
 				n2ptr += 1

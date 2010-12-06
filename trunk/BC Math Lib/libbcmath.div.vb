@@ -23,13 +23,12 @@
 		' /*
 		'If DoCompare(n1, n2) = 0 Then
 		'	quot = NewNum(1, scale)
-		'	quot.value(0) = 1
+		'	quot(0) = 1
 		'	Return quot
 		'End If
 		' */
 
 		' Test for divide by 1.  If it is we must truncate.
-		' TODO: Make divide by one result work
 		If IsOne(divisor) Then
 			qval = NewNum(dividend.length, scale)	' qval = bc_new_num (n1->n_len, scale);
 			qval.sign = If(dividend.sign = divisor.sign, PLUS, MINUS)
@@ -44,7 +43,7 @@
 		' Remember, zeros on the end of num2 are wasted effort for dividing.
 		scale2 = divisor.scale ' scale2 = n2->n_scale;
 		n2ptr = divisor.length + scale2 - 1	' n2ptr = (unsigned char *) n2.n_value+n2.n_len+scale2-1;
-		While scale2 > 0 And divisor.value(n2ptr) = 0
+		While scale2 > 0 And divisor(n2ptr) = 0
 			n2ptr -= 1
 			scale2 -= 1
 		End While
@@ -101,7 +100,7 @@
 		If Not zero Then
 			'  Normalize
 			' //norm = libbcmath.cint(10 / (libbcmath.cint(n2.n_value[n2ptr]) + 1)); //norm =  10 / ((int)*n2ptr + 1);
-			norm = CByte(Math.Floor(10 / (divisor.value(n2ptr) + 1)))	' norm =  10 / ((int)*n2ptr + 1);
+			norm = CByte(Math.Floor(10 / (divisor(n2ptr) + 1)))	' norm =  10 / ((int)*n2ptr + 1);
 			If norm <> 1 Then
 				OneMult(num1, 0, len1 + scale1 + extra + 1, norm, num1, 0) ' libbcmath._one_mult(num1, len1+scale1+extra+1, norm, num1);
 				' UNDONE: @CHECK Is the pointer affected by the call? if so, maybe need to adjust points on return?
@@ -116,16 +115,16 @@
 			' Loop
 			Do While qdig <= len1 + scale - len2
 				' Calculate the quotient digit guess.
-				If divisor.value(n2ptr) = num1(qdig) Then : qguess = 9
-				Else : qguess = CByte(Math.Floor((num1(qdig) * 10 + num1(qdig + 1)) / divisor.value(n2ptr)))
+				If divisor(n2ptr) = num1(qdig) Then : qguess = 9
+				Else : qguess = CByte(Math.Floor((num1(qdig) * 10 + num1(qdig + 1)) / divisor(n2ptr)))
 				End If
 				' Test qguess.
 				' if (n2ptr[1]*qguess > (num1[qdig]*10 + num1[qdig+1] - *n2ptr*qguess)*10 + num1[qdig+2]) {
-				If divisor.value(n2ptr + 1) * qguess > (num1(qdig) * 10 + num1(qdig + 1) - divisor.value(n2ptr) * qguess) * 10 + num1(qdig + 2) Then
+				If divisor(n2ptr + 1) * qguess > (num1(qdig) * 10 + num1(qdig + 1) - divisor(n2ptr) * qguess) * 10 + num1(qdig + 2) Then
 					qguess -= CByte(1)
 					' And again.
 					' if (n2ptr[1]*qguess > (num1[qdig]*10 + num1[qdig+1] - *n2ptr*qguess)*10 + num1[qdig+2])
-					If divisor.value(n2ptr + 1) * qguess > (num1(qdig) * 10 + num1(qdig + 1) - divisor.value(n2ptr) * qguess) * 10 + num1(qdig + 2) Then
+					If divisor(n2ptr + 1) * qguess > (num1(qdig) * 10 + num1(qdig + 1) - divisor(n2ptr) * qguess) * 10 + num1(qdig + 2) Then
 						qguess -= CByte(1)
 					End If
 				End If
@@ -172,7 +171,7 @@
 							val = num1(ptr1) + 0 + carry ' val = (int) *ptr1 + (int) *ptr2-- + carry;
 						Else
 							' val = libbcmath.cint(num1[ptr1]) + libbcmath.cint(n2.n_value[ptr2--]) + carry; //val = (int) *ptr1 + (int) *ptr2-- + carry;
-							val = num1(ptr1) + divisor.value(ptr2) + carry ' val = (int) *ptr1 + (int) *ptr2-- + carry;
+							val = num1(ptr1) + divisor(ptr2) + carry ' val = (int) *ptr1 + (int) *ptr2-- + carry;
 							ptr2 -= 1
 						End If
 						If val > 9 Then
@@ -191,7 +190,7 @@
 				End If
 
 				' We now know the quotient digit.
-				qval.value(qptr) = qguess ' *qptr++ =  qguess;
+				qval(qptr) = qguess	' *qptr++ =  qguess;
 				qptr += 1
 				qdig += 1
 			Loop

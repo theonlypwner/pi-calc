@@ -30,6 +30,21 @@
 			End If
 			Return r
 		End Function
+
+		''' <summary>Get or set the value from a specific index in the value list</summary>
+		''' <param name="i">The index of the location</param>
+		Default Property Item(ByVal i As Integer) As Byte
+			Get
+				Return value.Item(i)
+			End Get
+			Set(ByVal val As Byte)
+				value.Item(i) = val
+			End Set
+		End Property
+
+		Shared Widening Operator CType(ByVal i As Integer) As BCNum
+			Return BCMath.IntToNum(i)
+		End Operator
 	End Structure
 
 	''' <summary>Creates a new instance of a structure representing an arbitrary precision number</summary>
@@ -54,7 +69,7 @@
 	''' <param name="num">The arbitrary precision number to strip the zeros from</param>
 	Public Shared Sub RemoveLeadingZeros(ByRef num As BCNum)
 		' We can move value to point to the first non zero digit!
-		While num.value(0) = 0 And num.length > 1
+		While num(0) = 0 And num.length > 1
 			num.value.RemoveAt(0)
 			num.length -= 1
 		End While
@@ -120,12 +135,12 @@
 		' Everything before the decimal
 		nptr = 0 ' destination pointer
 		If zero_int Then
-			num.value(0) = 0
+			num(0) = 0
 			nptr += 1
 			digits = 0
 		End If
 		While digits > 0
-			num.value(nptr) = CByte(Val(str(ptr)))
+			num(nptr) = CByte(Val(str(ptr)))
 			nptr += 1
 			ptr += 1
 			digits -= 1
@@ -135,7 +150,7 @@
 		If strscale > 0 Then
 			ptr += 1 ' skip the decimal point!
 			While strscale > 0
-				num.value(nptr) = CByte(Val(str(ptr)))
+				num(nptr) = CByte(Val(str(ptr)))
 				nptr += 1
 				ptr += 1
 				strscale -= 1
@@ -156,7 +171,7 @@
 	''' <param name="num">The number to check</param>
 	Public Shared Function IsZero(ByRef num As BCNum) As Boolean
 		Dim count As Integer = num.length + num.scale, nptr As Integer = 0
-		While count > 0 And num.value(nptr) = 0
+		While count > 0 And num(nptr) = 0
 			nptr += 1
 			count -= 1
 		End While
@@ -168,12 +183,12 @@
 	Public Shared Function IsOne(ByRef num As BCNum) As Boolean
 		Dim i As Integer
 		For i = num.length To num.length + num.scale - 1
-			If num.value(i) <> 0 Then Return False ' Decimal found
+			If num(i) <> 0 Then Return False ' Decimal found
 		Next
 		For i = 0 To num.length - 2
-			If num.value(i) <> 0 Then Return False ' Non-zero before last number
+			If num(i) <> 0 Then Return False ' Non-zero before last number
 		Next
-		Return num.value(num.length - 1) = 1 ' If the last digit is one
+		Return num(num.length - 1) = 1 ' If the last digit is one
 	End Function
 
 	''' <summary>Inverts the sign (- => +, + => -)</summary>

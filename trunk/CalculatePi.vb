@@ -32,22 +32,31 @@ Public Class CalculatePi
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
 		Dim limit As Integer = CInt(Math.Round(precision / 14 - 1))
+		' Declare the reused numbers now to save time
+		Dim p1 As libbcmath.BCNum = 1
+		Dim p3 As libbcmath.BCNum = 3
+		Dim n1 As libbcmath.BCNum = -1
+		Dim p640320 As libbcmath.BCNum = 640320
+		Dim p13591409 As libbcmath.BCNum = 13591409
+		Dim p545140134 As libbcmath.BCNum = 545140134
+		Dim s640320 As libbcmath.BCNum = bcsqrt(640320)
+
 		For k As Integer = 0 To limit
 			result = bcdiv( _
 				bcmul( _
-					bcadd(13591409, _
-						bcmul(545140134, k) _
+					bcadd(p13591409, _
+						bcmul(p545140134, k) _
 					), _
-					bcmul(if(k Mod 2 = 1, -1, 1), bcfact(6*k)) _
+					bcmul(if(k Mod 2 = 1, n1, p1), bcfact(6 * k)) _
 				), _
 				bcmul( _
 					bcmul( _
-						bcpow('640320',3*k+1), _
-						bcsqrt('640320') _
+						bcpow(p640320,3 * k + 1), _
+						s640320 _
 					), _
 					bcmul( _
-						bcfact(3*k), _
-						bcpow(bcfact(k),3) _
+						bcfact(3 * k), _
+						bcpow(bcfact(k), p3) _
 					) _
 				) _
 			)
@@ -83,10 +92,10 @@ Public Class CalculatePi
 		If n = ResultType.First2K And precision - 3 > MainForm.KprecisionP * 2 Then
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
-
-		For i As UInteger = 1 To CUInt( _
-		 If(n = ResultType.First2K And precision > MainForm.KprecisionP * 2, Math.Min(result.Length, MainForm.KprecisionP * 2), result.Length) - 3)
-			ret.s &= CStr(result.GetValue(CInt(i)))
+		Dim max As Integer = CInt( _
+		 If(n = ResultType.First2K And precision > MainForm.KprecisionP * 2, Math.Min(result.length, MainForm.KprecisionP * 2), result.length) - 3)
+		For i As Integer = 1 To max
+			ret.s &= CStr(result(CInt(i)))
 		Next
 		Return ret
 	End Function
