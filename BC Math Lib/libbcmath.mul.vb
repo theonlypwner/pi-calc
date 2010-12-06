@@ -65,15 +65,15 @@
 			n1ptr = n1end - Math.Max(0, indx - n2len + 1) ' (char *) (n1end - MAX(0, indx-n2len+1));
 			n2ptr = n2end - Math.Min(indx, n2len - 1) ' (char *) (n2end - MIN(indx, n2len-1));
 			While n1ptr >= 0 And n2ptr <= n2end
-				sum += n1.value(n1ptr) * n2.value(n2ptr) ' sum += *n1ptr-- * *n2ptr++;
+				sum += n1(n1ptr) * n2(n2ptr) ' sum += *n1ptr-- * *n2ptr++;
 				n1ptr -= 1
 				n2ptr += 1
 			End While
-			prod.value(pvptr) = CByte(Math.Floor(sum Mod libbcmath.BASE)) ' *pvptr-- = sum % BASE;
+			prod(pvptr) = CByte(Math.Floor(sum Mod libbcmath.BASE))	' *pvptr-- = sum % BASE;
 			pvptr -= 1
 			sum = CInt(Math.Floor(sum / BASE))	' sum = sum / BASE;
 		Next
-		prod.value(pvptr) = CByte(sum)	' *pvptr = sum;
+		prod(pvptr) = CByte(sum)	' *pvptr = sum;
 		Return prod
 	End Function
 
@@ -93,7 +93,7 @@
 		Dim carry As Byte
 
 		count = val.length
-		If val.value(0) = 0 Then count -= 1
+		If val(0) = 0 Then count -= 1
 
 		' assert (accum->n_len+accum->n_scale >= shift+count);
 		If accum.length + accum.scale < shift + count Then
@@ -109,11 +109,11 @@
 			' Subtraction; carry is really borrow.
 			While count > 0
 				count -= 1
-				accum.value(accp) -= val.value(valp) + carry	' *accp -= *valp-- + carry;
+				accum(accp) -= val(valp) + carry	' *accp -= *valp-- + carry;
 				valp -= 1
-				If accum.value(accp) < 0 Then ' if (*accp < 0)
+				If accum(accp) < 0 Then	' if (*accp < 0)
 					carry = 1
-					accum.value(accp) += BASE	' *accp-- += BASE;
+					accum(accp) += BASE	' *accp-- += BASE;
 					' accp -= 1 ' see below
 				Else
 					carry = 0
@@ -122,9 +122,9 @@
 				accp -= 1 ' either way, it needs to decrement this
 			End While
 			While carry > 0
-				accum.value(accp) -= carry ' *accp -= carry;
-				If (accum.value(accp) < 0) Then	' if (*accp < 0)
-					accum.value(accp) += BASE ' *accp-- += BASE;
+				accum(accp) -= carry ' *accp -= carry;
+				If (accum(accp) < 0) Then	' if (*accp < 0)
+					accum(accp) += BASE	' *accp-- += BASE;
 					accp -= 1
 				Else
 					carry = 0
@@ -134,11 +134,11 @@
 			' Addition
 			While count > 0
 				count -= 1
-				accum.value(accp) += CByte(val.value(valp) + carry)	' *accp += *valp-- + carry;
+				accum(accp) += CByte(val(valp) + carry)	' *accp += *valp-- + carry;
 				valp -= 1
-				If accum.value(accp) > BASE - 1 Then ' if (*accp > (BASE-1))
+				If accum(accp) > BASE - 1 Then ' if (*accp > (BASE-1))
 					carry = 1
-					accum.value(accp) -= BASE ' *accp-- -= BASE;
+					accum(accp) -= BASE	' *accp-- -= BASE;
 					' accp -=1 ' see below
 				Else
 					carry = 0
@@ -147,9 +147,9 @@
 				accp -= 1 ' either way, it needs to be decremented
 			End While
 			While carry > 0
-				accum.value(accp) += carry ' *accp += carry;
-				If accum.value(accp) > BASE - 1 Then ' if (*accp > (BASE-1))
-					accum.value(accp) -= BASE ' *accp-- -= BASE;
+				accum(accp) += carry ' *accp += carry;
+				If accum(accp) > BASE - 1 Then ' if (*accp > (BASE-1))
+					accum(accp) -= BASE	' *accp-- -= BASE;
 					accp -= 1
 				Else : carry = 0
 				End If

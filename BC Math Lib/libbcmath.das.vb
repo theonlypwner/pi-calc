@@ -34,14 +34,14 @@
 		' Add the fraction part. First copy the longer fraction (ie when adding 1.2345 to 1 we know .2345 is correct already) .
 		If n1bytes > n2bytes Then ' n1 has more decimals then n2
 			While n1bytes > n2bytes
-				sum.value(sumptr) = n1.value(n1ptr)
+				sum(sumptr) = n1(n1ptr)
 				sumptr -= 1
 				n1ptr -= 1
 				n1bytes -= 1
 			End While
 		ElseIf n2bytes > n1bytes Then ' n2 has more decimals then n1
 			While n2bytes > n1bytes
-				sum.value(sumptr) = n2.value(n2ptr)
+				sum(sumptr) = n2(n2ptr)
 				sumptr -= 1
 				n2ptr -= 1
 				n2bytes -= 1
@@ -54,7 +54,7 @@
 		carry = 0
 		While n1bytes > 0 And n2bytes > 0
 			' Add the two numbers together
-			tmp = n1.value(n1ptr) + n2.value(n2ptr) + carry	' *sumptr = *n1ptr-- + *n2ptr-- + carry;
+			tmp = n1(n1ptr) + n2(n2ptr) + carry	' *sumptr = *n1ptr-- + *n2ptr-- + carry;
 			n1ptr -= 1
 			n2ptr -= 1
 
@@ -63,7 +63,7 @@
 				tmp -= BASE	' subtract 10, add a carry
 			Else : carry = 0
 			End If
-			sum.value(sumptr) = tmp
+			sum(sumptr) = tmp
 			sumptr -= 1
 			n1bytes -= 1
 			n2bytes -= 1
@@ -74,35 +74,35 @@
 			' n2 is a bigger number then n1
 			While n2bytes > 0
 				n2bytes -= 1
-				tmp = n2.value(n2ptr) + carry ' *sumptr = *n2ptr-- + carry;
+				tmp = n2(n2ptr) + carry	' *sumptr = *n2ptr-- + carry;
 				n2ptr -= 1
 				If tmp > BASE Then
 					carry = 1
 					tmp -= BASE
 				Else : carry = 0
 				End If
-				sum.value(sumptr) = tmp
+				sum(sumptr) = tmp
 				sumptr -= 1
 			End While
 		Else
 			' n1 is bigger than n2
 			While n1bytes > 0
 				n1bytes -= 1
-				tmp = n1.value(n1ptr) + carry ' *sumptr = *n1ptr-- + carry;
+				tmp = n1(n1ptr) + carry	' *sumptr = *n1ptr-- + carry;
 				n1ptr -= 1
 				If tmp > BASE Then
 					carry = 1
 					tmp -= BASE
 				Else : carry = 0
 				End If
-				sum.value(sumptr) = tmp
+				sum(sumptr) = tmp
 				sumptr -= 1
 			End While
 		End If
 
 		' Set final carry.
 		If carry = 1 Then
-			sum.value(sumptr) += CByte(1) ' *sumptr += 1;
+			sum(sumptr) += CByte(1)	' *sumptr += 1;
 		End If
 
 		' Adjust sum and return.
@@ -148,20 +148,20 @@
 		' Take care of the longer scaled number.
 		If n1.scale <> min_scale Then ' n1 has the longer scale
 			For count = n1.scale - min_scale To 1 Step -1
-				diff.value(diffptr) = n1.value(n1ptr) ' *diffptr-- = *n1ptr--;
+				diff(diffptr) = n1(n1ptr) ' *diffptr-- = *n1ptr--;
 				diffptr -= 1
 				n1ptr -= 1
 			Next
 		Else ' n2 has the longer scale
 			For count = n2.scale - min_scale To 1 Step -1
-				val = n2.value(n2ptr) - borrow ' val = - *n2ptr-- - borrow;
+				val = n2(n2ptr) - borrow ' val = - *n2ptr-- - borrow;
 				n2ptr -= 1
 				If val < 0 Then
 					val += BASE
 					borrow = 1
 				Else
 					borrow = 0
-					diff.value(diffptr) = CByte(val) ' *diffptr-- = val;
+					diff(diffptr) = CByte(val) ' *diffptr-- = val;
 					diffptr -= 1
 				End If
 			Next
@@ -169,7 +169,7 @@
 
 		' Now do the equal length scale and integer parts.
 		For count = 0 To min_len + min_scale - 1
-			val = n1.value(n1ptr) - n2.value(n2ptr) - borrow ' val = *n1ptr-- - *n2ptr-- - borrow;
+			val = n1(n1ptr) - n2(n2ptr) - borrow ' val = *n1ptr-- - *n2ptr-- - borrow;
 			n1ptr -= 1
 			n2ptr -= 1
 			If val < 0 Then
@@ -177,21 +177,21 @@
 				borrow = 1
 			Else : borrow = 0
 			End If
-			diff.value(diffptr) = CByte(val) ' *diffptr-- = val;
+			diff(diffptr) = CByte(val) ' *diffptr-- = val;
 			diffptr -= 1
 		Next
 
 		' If n1 has more digits then n2, we now do that subtract.
 		If diff_len <> min_len Then
 			For count = diff_len - min_len To 1 Step -1
-				val = n1.value(n1ptr) - borrow ' val = *n1ptr-- - borrow;
+				val = n1(n1ptr) - borrow ' val = *n1ptr-- - borrow;
 				n1ptr -= 1
 				If val < 0 Then
 					val += BASE
 					borrow = 1
 				Else : borrow = 0
 				End If
-				diff.value(diffptr) = CByte(val)
+				diff(diffptr) = CByte(val)
 				diffptr -= 1
 			Next
 		End If

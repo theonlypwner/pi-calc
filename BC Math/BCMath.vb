@@ -12,7 +12,7 @@ Public NotInheritable Class BCMath
 	''' <param name="right">The right/second operand</param>
 	''' <param name="scale">The scale to use</param>
 	''' <param name="callback">The callback to use to process the numbers</param>
-	Protected Shared Function bcstd(ByRef left As BCNum, ByRef right As BCNum, ByVal scale As Integer, ByVal callback As BCStdOp) As BCNum
+	Protected Shared Function bcstd(ByVal left As BCNum, ByVal right As BCNum, ByVal scale As Integer, ByVal callback As BCStdOp) As BCNum
 		Dim scale_min As Integer = If(scale < 0, 0, scale)
 		Dim result As BCNum = callback(left, right, scale_min)
 		If result.scale > scale Then result.scale = scale
@@ -23,7 +23,7 @@ Public NotInheritable Class BCMath
 	''' <param name="base">The left operand</param>
 	''' <param name="addend">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
-	Public Shared Function bcadd(ByRef base As BCNum, ByRef addend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+	Public Shared Function bcadd(ByVal base As BCNum, ByVal addend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Return bcstd(base, addend, scale, AddressOf Add)
 	End Function
 
@@ -31,7 +31,7 @@ Public NotInheritable Class BCMath
 	''' <param name="minuend">The left operand</param>
 	''' <param name="subtrahend">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
-	Public Shared Function bcsub(ByRef minuend As BCNum, ByRef subtrahend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+	Public Shared Function bcsub(ByVal minuend As BCNum, ByVal subtrahend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Return bcstd(minuend, subtrahend, scale, AddressOf Subtract)
 	End Function
 
@@ -41,7 +41,7 @@ Public NotInheritable Class BCMath
 	''' </summary>
 	''' <param name="left_operand">The first operand</param>
 	''' <param name="right_operand">The second operand</param>
-	Function bccmp(ByRef left_operand As BCNum, ByRef right_operand As BCNum) As SByte
+	Function bccmp(ByVal left_operand As BCNum, ByVal right_operand As BCNum) As SByte
 		Return DoCompare(left_operand, right_operand)
 	End Function
 
@@ -60,7 +60,7 @@ Public NotInheritable Class BCMath
 	''' <param name="dividend">The left operand</param>
 	''' <param name="divisor">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
-	Public Shared Function bcdiv(ByRef dividend As BCNum, ByRef divisor As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+	Public Shared Function bcdiv(ByVal dividend As BCNum, ByVal divisor As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Return bcstd(dividend, divisor, scale, AddressOf Divide)
 	End Function
 
@@ -68,15 +68,39 @@ Public NotInheritable Class BCMath
 	''' <param name="factor">The left operand</param>
 	''' <param name="multiplier">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
-	Public Shared Function bcmul(ByRef factor As BCNum, ByRef multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+	Public Shared Function bcmul(ByVal factor As BCNum, ByVal multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Return bcstd(factor, multiplier, scale, AddressOf Multiply)
 	End Function
 
-	''' <summary>Convert to an arbitrary precision detecting the proper scale</summary>
+	''' <summary>Get the square root of an arbitrary precision</summary>
+	''' <param name="num">The number</param>
+	''' <param name="scale">This sets the scale after the decimal place</param>
+	Public Shared Function bcsqrt(ByVal num As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+		Dim tmp As BCNum = num
+		SquareRoot(num, scale)
+		Return num
+	End Function
+
+	''' <summary>Convert a string to an arbitrary precision detecting the proper scale</summary>
 	''' <param name="str">The string to convert</param>
 	Public Shared Function StrToNum(ByVal str As String) As BCNum
 		Dim result As BCNum = InitNum()
 		result = str2num(str)
 		Return result
+	End Function
+
+	''' <summary>Convert an integer to arbitrary precision</summary>
+	''' <param name="int">The integer to convert</param>
+	Public Shared Function IntToNum(ByVal int As Integer) As BCNum
+		Dim result As BCNum = InitNum()
+		result = str2num(int.ToString)
+		Return result
+	End Function
+
+	''' <summary>Calculate a factorial</summary>
+	''' <param name="int">The number to calculate a factorial of</param>
+	Public Shared Function bcfact(ByVal int As BCNum) As BCNum
+		int.scale = 0 ' integers only now
+		Return If(IsZero(int) Or IsOne(int), int, bcmul(int, bcsub(int, IntToNum(1))))
 	End Function
 End Class
