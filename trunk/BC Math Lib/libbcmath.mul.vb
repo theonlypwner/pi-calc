@@ -45,7 +45,7 @@
 	''' <param name="n1len">Length of first number</param>
 	''' <param name="n2">Second number</param>
 	''' <param name="n2len">Length of second number</param>
-	Protected Shared Function SimpMul(ByRef n1 As BCNum, ByVal n1len As Integer, ByRef n2 As BCNum, ByVal n2len As Integer) As BCNum
+	Private Shared Function SimpMul(ByRef n1 As BCNum, ByVal n1len As Integer, ByRef n2 As BCNum, ByVal n2len As Integer) As BCNum
 		Dim prod As New BCNum
 		Dim n1ptr, n2ptr, pvptr As Integer ' char *n1ptr, *n2ptr, *pvptr;
 		Dim n1end, n2end As Integer	' char *n1end, *n2end; ' To the end of n1 and n2.
@@ -170,7 +170,7 @@
 	''' <param name="v">The second number</param>
 	''' <param name="vlen">The length of the second number</param>
 	''' <param name="full_scale">The full scale</param>
-	Protected Shared Function RecMul(ByRef u As BCNum, ByVal ulen As Integer, ByRef v As BCNum, ByVal vlen As Integer, ByVal full_scale As Integer) As BCNum
+	Private Shared Function RecMul(ByRef u As BCNum, ByVal ulen As Integer, ByRef v As BCNum, ByVal vlen As Integer, ByVal full_scale As Integer) As BCNum
 		Dim prod As New BCNum ' @return
 		Dim u0, u1, v0, v1 As New BCNum
 		Dim u0len, v0len As Integer

@@ -67,7 +67,7 @@
 
 	''' <summary>Strips zeros until there is only one left</summary>
 	''' <param name="num">The arbitrary precision number to strip the zeros from</param>
-	Public Shared Sub RemoveLeadingZeros(ByRef num As BCNum)
+	Friend Shared Sub RemoveLeadingZeros(ByRef num As BCNum)
 		' We can move value to point to the first non zero digit!
 		While num(0) = 0 And num.length > 1
 			num.value.RemoveAt(0)
