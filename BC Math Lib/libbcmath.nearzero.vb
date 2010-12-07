@@ -6,7 +6,7 @@
 	''' </summary>
 	''' <param name="num">The number to check</param>
 	''' <param name="scale">The last digit</param>
-	Protected Shared Function IsNearZero(ByVal num As BCNum, ByVal scale As Integer) As Boolean
+	Public Shared Function IsNearZero(ByVal num As BCNum, ByVal scale As Integer) As Boolean
 		Dim count, nptr As Integer
 
 		' Error checking

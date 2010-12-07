@@ -3,7 +3,7 @@
 	''' <param name="size">The size of each block in bytes</param>
 	''' <param name="len">The number of blocks</param>
 	''' <param name="extra">The extra bytes to allocate</param>
-	Public Shared Function safe_emalloc(ByVal size As Integer, Optional ByVal len As Integer = 1, Optional ByVal extra As Integer = 0) As List(Of Byte)
+	Private Shared Function safe_emalloc(ByVal size As Integer, Optional ByVal len As Integer = 1, Optional ByVal extra As Integer = 0) As List(Of Byte)
 		Return New List(Of Byte)(size * len + extra)
 	End Function
 
@@ -12,7 +12,7 @@
 	''' <param name="ptr">The starting point to start the set</param>
 	''' <param name="chr">The character (byte) to fill the data</param>
 	''' <param name="len">The length to fill</param>
-	Public Shared Sub memset(ByRef src As List(Of Byte), ByVal ptr As Integer, ByVal chr As Byte, ByVal len As Integer)
+	Private Shared Sub memset(ByRef src As List(Of Byte), ByVal ptr As Integer, ByVal chr As Byte, ByVal len As Integer)
 		Dim fill(len) As Byte
 		For i As Integer = 0 To len - 1
 			fill(i) = chr
@@ -27,7 +27,7 @@
 	''' <param name="src">The source to read from</param>
 	''' <param name="srcptr">The offset of <paramref name="src" /></param>
 	''' <param name="len">The number of bytes to copy</param>
-	Public Shared Sub memcpy(ByRef dest As List(Of Byte), ByVal ptr As Integer, ByVal src As List(Of Byte), ByRef srcptr As Integer, ByVal len As Integer)
+	Private Shared Sub memcpy(ByRef dest As List(Of Byte), ByVal ptr As Integer, ByVal src As List(Of Byte), ByRef srcptr As Integer, ByVal len As Integer)
 		dest.RemoveRange(ptr, len)
 		dest.InsertRange(ptr, src.GetRange(srcptr, len))
 	End Sub

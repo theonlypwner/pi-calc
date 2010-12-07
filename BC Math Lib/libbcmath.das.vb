@@ -3,7 +3,7 @@
 	''' <param name="n1">The base number</param>
 	''' <param name="n2">The addend to add to the base</param>
 	''' <param name="scale_min">The smallest scale to use</param>
-	Protected Shared Function DoAdd(ByRef n1 As BCNum, ByRef n2 As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+	Private Shared Function DoAdd(ByRef n1 As BCNum, ByRef n2 As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
 		Dim sum As New BCNum
 		Dim sum_scale, sum_digits As Integer
 		Dim n1ptr, n2ptr, sumptr As Integer
@@ -114,7 +114,7 @@
 	''' <param name="n1">The big number to subtract from</param>
 	''' <param name="n2">The small number to subtract</param>
 	''' <param name="scale_min">The minimum scale to use</param>
-	Protected Shared Function DoSub(ByRef n1 As BCNum, ByRef n2 As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+	Private Shared Function DoSub(ByRef n1 As BCNum, ByRef n2 As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
 		Dim diff As New BCNum
 		Dim diff_scale, diff_len As Integer
 		Dim min_scale, min_len As Integer
