@@ -6,7 +6,7 @@
 	''' <param name="factor">The first factor</param>
 	''' <param name="multiplier">The second factor</param>
 	''' <param name="scale">The minimum scale to use</param>
-	Public Shared Function Multiply(ByRef factor As BCNum, ByRef multiplier As BCNum, Optional ByVal scale As Integer = 0) As BCNum
+	Public Shared Function Multiply(ByRef factor As BCNum, ByRef multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Dim pval As New BCNum
 		Dim len1, len2 As Integer
 		Dim full_scale, prod_scale As Integer

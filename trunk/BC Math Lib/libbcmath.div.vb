@@ -2,6 +2,7 @@
 	''' <summary>Divides two arbitrary precision numbers</summary>
 	''' <param name="dividend">The big (base) number</param>
 	''' <param name="divisor">The number to divide it by</param>
+	''' <param name="scale">The minimum scale to use</param>
 	Public Shared Function Divide(ByRef dividend As BCNum, ByRef divisor As BCNum, ByVal scale As Integer) As BCNum
 		Dim quot, qval As New BCNum	' @return qout
 		Dim num1, num2, mval As List(Of Byte) ' string
