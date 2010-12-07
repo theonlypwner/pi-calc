@@ -3,7 +3,7 @@
 	''' <param name="base">The first number</param>
 	''' <param name="addend">The number to add onto it</param>
 	''' <param name="scale_min">The minimum scale for the result</param>
-	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum, Optional ByVal scale_min As Integer = 0) As BCNum
+	Public Shared Function Add(ByRef base As BCNum, ByRef addend As BCNum, Optional ByVal scale_min As Integer = defaultScale) As BCNum
 		Dim sum As New BCNum, cmp_res As Integer = -2
 		If base.sign = addend.sign Then	' Same sign; add
 			sum.sign = base.sign
