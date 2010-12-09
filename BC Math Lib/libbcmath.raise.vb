@@ -73,8 +73,11 @@
 		End If
 	End Sub
 
+	''' <summary>The maximum long to return, which fits into an Integer</summary>
 	Public Const LONG_MAX As Integer = &H7FFFFFF
 
+	''' <summary>Converts an arbitrary precision number to a Long</summary>
+	''' <param name="num">The arbitrary precision number to convert</param>
 	Public Shared Function num2long(ByVal num As BCNum) As Long
 		Dim val As Long = 0
 		Dim nptr, index As Integer ' char *, int
