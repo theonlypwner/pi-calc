@@ -109,7 +109,7 @@ Public Class CalculatePi
 	End Property
 
 	''' <summary>Calculate a Factorial</summary>
-	Protected Function ArrayFactorial(ByRef baseNumber As ULong) As ULong
+	Protected Function ArrayFactorial(ByVal baseNumber As ULong) As ULong
 		Return If(baseNumber = 0 Or baseNumber = 1, CULng(1), baseNumber * ArrayFactorial(CULng(baseNumber - 1)))
 	End Function
 End Class

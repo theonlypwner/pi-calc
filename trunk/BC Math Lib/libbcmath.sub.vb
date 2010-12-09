@@ -2,7 +2,7 @@
 	''' <summary>Subtracts two arbitrary precision numbers</summary>
 	''' <param name="minuend">The big (base) number</param>
 	''' <param name="subtrahend">The number to subtract from it</param>
-	Public Shared Function Subtract(ByRef minuend As BCNum, ByRef subtrahend As BCNum, Optional ByVal scale_min As Integer = defaultScale) As BCNum
+	Public Shared Function Subtract(ByVal minuend As BCNum, ByVal subtrahend As BCNum, Optional ByVal scale_min As Integer = defaultScale) As BCNum
 		Dim diff As New BCNum
 		Dim cmp_res As Integer = 0, res_scale As Integer = 0
 		If minuend.sign <> subtrahend.sign Then

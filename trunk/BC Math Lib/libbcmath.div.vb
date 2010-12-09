@@ -3,7 +3,7 @@
 	''' <param name="dividend">The big (base) number</param>
 	''' <param name="divisor">The number to divide it by</param>
 	''' <param name="scale">The minimum scale to use</param>
-	Public Shared Function Divide(ByRef dividend As BCNum, ByRef divisor As BCNum, ByVal scale As Integer) As BCNum
+	Public Shared Function Divide(ByVal dividend As BCNum, ByVal divisor As BCNum, ByVal scale As Integer) As BCNum
 		Dim quot, qval As New BCNum	' @return qout
 		Dim num1, num2, mval As List(Of Byte) ' string
 		Dim ptr1, ptr2, n2ptr, qptr As Integer ' pointers
@@ -218,8 +218,8 @@
 	''' <param name="digit">The digit to multiply it by</param>
 	''' <param name="result">A reference to the result array</param>
 	''' <param name="r_ptr">The offset of the second array</param>
-	Protected Shared Sub OneMult(ByRef num As List(Of Byte), ByVal n_ptr As Integer, ByVal size As Integer, _
-			 ByVal digit As Byte, ByRef result As List(Of Byte), ByVal r_ptr As Integer)
+	Protected Shared Sub OneMult(ByVal num As List(Of Byte), ByVal n_ptr As Integer, ByVal size As Integer, _
+			ByVal digit As Byte, ByRef result As List(Of Byte), ByVal r_ptr As Integer)
 		Dim carry, value As Byte
 		Dim nptr, rptr As Integer ' pointers
 		If digit = 0 Then : memset(result, r_ptr, 0, size) ' memset (result, 0, size);
