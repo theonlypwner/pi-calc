@@ -14,10 +14,10 @@
 	''' <param name="len">The length to fill</param>
 	Private Shared Sub memset(ByRef src As List(Of Byte), ByVal ptr As Integer, ByVal chr As Byte, ByVal len As Integer)
 		Dim fill(len) As Byte
-		For i As Integer = 0 To len - 1
+		For i As Integer = ptr To len + ptr - 1
 			fill(i) = chr
 		Next
-		src.RemoveRange(ptr, len)
+		src.RemoveRange(ptr, len - 1)
 		src.InsertRange(ptr, fill)
 	End Sub
 

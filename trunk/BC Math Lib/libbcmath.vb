@@ -104,20 +104,23 @@
 		If str(0) = PLUS Or s(0) = MINUS Then ' skip sign
 			ptr += 1 ' next
 		End If
-		While str(ptr) = "0"c ' skip leading zeros
+		Do While ptr < str.Length ' don't evaluate both sides of 'And'
+			If str(ptr) <> "0"c Then Exit Do ' skip leading zeros
 			ptr += 1 'next
-		End While
-		While Char.IsDigit(str(ptr)) ' count digits
+		Loop
+		Do While ptr < str.Length ' count digits
+			If Not Char.IsDigit(str(ptr)) Then Exit Do ' VB .NET process both And's sides for some reason
 			ptr += 1 ' next
 			digits += 1	' counted a digit
-		End While
-		If str(ptr) = "."c Then ptr += 1 ' skip decimal point
-		While (Char.IsDigit(str(ptr))) ' count digits after decimal point
+		Loop
+		If ptr < str.Length Then If str(ptr) = "."c Then ptr += 1 ' skip decimal point
+		Do While ptr < str.Length ' count digits after decimal point
+			If Not Char.IsDigit(str(ptr)) Then Exit Do
 			ptr += 1 ' next character
 			strscale += 1 ' digits after decimal point
-		End While
+		Loop
 
-		If str(ptr) <> Nothing Or digits + strscale = 0 Then
+		If str.Length < ptr Or digits + strscale = 0 Then
 			Return InitNum() ' invalid number, return zero
 		End If
 
