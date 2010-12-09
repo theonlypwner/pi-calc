@@ -27,7 +27,7 @@
 	''' <param name="src">The source to read from</param>
 	''' <param name="srcptr">The offset of <paramref name="src" /></param>
 	''' <param name="len">The number of bytes to copy</param>
-	Private Shared Sub memcpy(ByRef dest As List(Of Byte), ByVal ptr As Integer, ByVal src As List(Of Byte), ByRef srcptr As Integer, ByVal len As Integer)
+	Private Shared Sub memcpy(ByRef dest As List(Of Byte), ByVal ptr As Integer, ByVal src As List(Of Byte), ByVal srcptr As Integer, ByVal len As Integer)
 		dest.RemoveRange(ptr, len)
 		dest.InsertRange(ptr, src.GetRange(srcptr, len))
 	End Sub

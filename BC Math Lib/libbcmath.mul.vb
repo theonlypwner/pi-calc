@@ -6,7 +6,7 @@
 	''' <param name="factor">The first factor</param>
 	''' <param name="multiplier">The second factor</param>
 	''' <param name="scale">The minimum scale to use</param>
-	Public Shared Function Multiply(ByRef factor As BCNum, ByRef multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+	Public Shared Function Multiply(ByVal factor As BCNum, ByVal multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
 		Dim pval As New BCNum
 		Dim len1, len2 As Integer
 		Dim full_scale, prod_scale As Integer
@@ -87,7 +87,7 @@
 	''' <param name="val">The other number that will be used in calculation, but be unaltered</param>
 	''' <param name="shift">Offset of digits to skip</param>
 	''' <param name="subtract">Subtract the numers</param>
-	Protected Shared Sub Shift_AddSub(ByRef accum As BCNum, ByRef val As BCNum, ByVal shift As Integer, ByVal subtract As Boolean)
+	Protected Shared Sub Shift_AddSub(ByRef accum As BCNum, ByVal val As BCNum, ByVal shift As Integer, ByVal subtract As Boolean)
 		Dim accp, valp As Integer ' signed char *accp, *valp;
 		Dim count As Integer ' int  count, carry;
 		Dim carry As Byte
@@ -170,7 +170,7 @@
 	''' <param name="v">The second number</param>
 	''' <param name="vlen">The length of the second number</param>
 	''' <param name="full_scale">The full scale</param>
-	Private Shared Function RecMul(ByRef u As BCNum, ByVal ulen As Integer, ByRef v As BCNum, ByVal vlen As Integer, ByVal full_scale As Integer) As BCNum
+	Private Shared Function RecMul(ByVal u As BCNum, ByVal ulen As Integer, ByVal v As BCNum, ByVal vlen As Integer, ByVal full_scale As Integer) As BCNum
 		Dim prod As New BCNum ' @return
 		Dim u0, u1, v0, v1 As New BCNum
 		Dim u0len, v0len As Integer

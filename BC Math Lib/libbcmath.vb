@@ -31,6 +31,17 @@
 			Return r
 		End Function
 
+		''' <summary>Gets a shallow copy of this instance of BCNum</summary>
+		Public Function GetShallowCopy() As BCNum
+			Return CreateShallowCopy(Me)
+		End Function
+
+		''' <summary>Creates a shallow copy (memberwise clone) of a BCNum</summary>
+		''' <param name="obj">An instance of BCNum</param>
+		Public Shared Function CreateShallowCopy(ByVal obj As BCNum) As BCNum
+			Return CType(obj.MemberwiseClone, BCNum)
+		End Function
+
 		''' <summary>Get or set the value from a specific index in the value list</summary>
 		''' <param name="i">The index of the location</param>
 		Default Property Item(ByVal i As Integer) As Byte
@@ -169,7 +180,7 @@
 
 	''' <summary>Determine if the arbitrary precision number specified is zero or not</summary>
 	''' <param name="num">The number to check</param>
-	Public Shared Function IsZero(ByRef num As BCNum) As Boolean
+	Public Shared Function IsZero(ByVal num As BCNum) As Boolean
 		Dim count As Integer = num.length + num.scale, nptr As Integer = 0
 		While count > 0 And num(nptr) = 0
 			nptr += 1
@@ -180,7 +191,7 @@
 
 	''' <summary>Determine if the arbitrary precision number specified is one</summary>
 	''' <param name="num">The number to check</param>
-	Public Shared Function IsOne(ByRef num As BCNum) As Boolean
+	Public Shared Function IsOne(ByVal num As BCNum) As Boolean
 		Dim i As Integer
 		For i = num.length To num.length + num.scale - 1
 			If num(i) <> 0 Then Return False ' Decimal found

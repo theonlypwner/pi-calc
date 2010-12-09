@@ -5,14 +5,14 @@ Public NotInheritable Class BCMath
 	''' <param name="left">The left/first operand</param>
 	''' <param name="right">The right/second operand</param>
 	''' <param name="scale_min"></param>
-	Public Delegate Function BCStdOp(ByRef left As BCNum, ByRef right As BCNum, ByVal scale_min As Integer) As BCNum
+	Public Delegate Function BCStdDelegate(ByVal left As BCNum, ByVal right As BCNum, ByVal scale_min As Integer) As BCNum
 
 	''' <summary>Function to handle most lazy subroutines</summary>
 	''' <param name="left">The left/first operand</param>
 	''' <param name="right">The right/second operand</param>
 	''' <param name="scale">The scale to use</param>
 	''' <param name="callback">The callback to use to process the numbers</param>
-	Protected Shared Function bcstd(ByVal left As BCNum, ByVal right As BCNum, ByVal scale As Integer, ByVal callback As BCStdOp) As BCNum
+	Protected Shared Function BCStd(ByVal left As BCNum, ByVal right As BCNum, ByVal scale As Integer, ByVal callback As BCStdDelegate) As BCNum
 		Dim scale_min As Integer = If(scale < 0, 0, scale)
 		Dim result As BCNum = callback(left, right, scale_min)
 		If result.scale > scale Then result.scale = scale
@@ -24,7 +24,7 @@ Public NotInheritable Class BCMath
 	''' <param name="addend">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
 	Public Shared Function bcadd(ByVal base As BCNum, ByVal addend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
-		Return bcstd(base, addend, scale, AddressOf Add)
+		Return BCStd(base, addend, scale, AddressOf Add)
 	End Function
 
 	''' <summary>Subtract one arbitrary precision number from another</summary>
@@ -32,7 +32,7 @@ Public NotInheritable Class BCMath
 	''' <param name="subtrahend">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
 	Public Shared Function bcsub(ByVal minuend As BCNum, ByVal subtrahend As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
-		Return bcstd(minuend, subtrahend, scale, AddressOf Subtract)
+		Return BCStd(minuend, subtrahend, scale, AddressOf Subtract)
 	End Function
 
 	''' <summary>
@@ -61,7 +61,7 @@ Public NotInheritable Class BCMath
 	''' <param name="divisor">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
 	Public Shared Function bcdiv(ByVal dividend As BCNum, ByVal divisor As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
-		Return bcstd(dividend, divisor, scale, AddressOf Divide)
+		Return BCStd(dividend, divisor, scale, AddressOf Divide)
 	End Function
 
 	''' <summary>Multiply two arbitrary precision numbers</summary>
@@ -69,9 +69,16 @@ Public NotInheritable Class BCMath
 	''' <param name="multiplier">The right operand</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
 	Public Shared Function bcmul(ByVal factor As BCNum, ByVal multiplier As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
-		Return bcstd(factor, multiplier, scale, AddressOf Multiply)
+		Return BCStd(factor, multiplier, scale, AddressOf Multiply)
 	End Function
 
+	''' <summary>Raise an arbitrary precision number to a power of another arbitrary power</summary>
+	''' <param name="base">The base number</param>
+	''' <param name="power">The power to raise the base to</param>
+	''' <param name="scale">The minimum scale to use</param>
+	Public Shared Function bcpow(ByVal base As BCNum, ByVal power As BCNum, Optional ByVal scale As Integer = defaultScale) As BCNum
+		Return BCStd(base, power, scale, AddressOf Raise)
+	End Function
 	''' <summary>Get the square root of an arbitrary precision</summary>
 	''' <param name="num">The number</param>
 	''' <param name="scale">This sets the scale after the decimal place</param>
