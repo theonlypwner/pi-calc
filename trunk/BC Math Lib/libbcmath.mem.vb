@@ -17,7 +17,7 @@
 		For i As Integer = ptr To len + ptr - 1
 			fill(i) = chr
 		Next
-		src.RemoveRange(ptr, len - 1)
+		src.RemoveRange(ptr, Math.Min(src.Count - ptr, len))
 		src.InsertRange(ptr, fill)
 	End Sub
 
@@ -28,7 +28,7 @@
 	''' <param name="srcptr">The offset of <paramref name="src" /></param>
 	''' <param name="len">The number of bytes to copy</param>
 	Private Shared Sub memcpy(ByRef dest As List(Of Byte), ByVal ptr As Integer, ByVal src As List(Of Byte), ByVal srcptr As Integer, ByVal len As Integer)
-		dest.RemoveRange(ptr, len)
+		dest.RemoveRange(ptr, Math.Min(dest.Count - ptr, len))
 		dest.InsertRange(ptr, src.GetRange(srcptr, len))
 	End Sub
 End Class

@@ -68,7 +68,7 @@
 		'	libbcmath.bc_out_of_memory();
 		'}
 		memcpy(num2, 0, divisor.value, 0, len2)	' memcpy (num2, n2.n_value, len2);
-		num2(len2) = 0 ' *(num2+len2) = 0;
+		' num2(len2) = 0 ' *(num2+len2) = 0;
 		n2ptr = 0 ' n2ptr = num2;
 
 		While num2(n2ptr) = 0 ' while (*n2ptr == 0)
@@ -133,7 +133,7 @@
 				' Multiply and subtract.
 				borrow = 0
 				If qguess <> 0 Then
-					mval(0) = 0	' UNDONE: @CHECK is this to fix ptr2 < 0? ' *mval = 0; 
+					' mval(0) = 0	' UNDONE: @CHECK is this to fix ptr2 < 0? ' *mval = 0; 
 					OneMult(divisor.value, n2ptr, len2, qguess, mval, 1)	' _one_mult (n2ptr, len2, qguess, mval+1)
 
 					ptr1 = qdig + len2 ' (unsigned char *) num1+qdig+len2;
