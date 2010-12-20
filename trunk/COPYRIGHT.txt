@@ -1,5 +1,10 @@
+This file is part of Pi Calculator
 pi-calc: Pi Calculator - Calculate Pi to as many digits as you want!
 Copyright (C) 2011 Victor Zheng
+
+==========CODE Licence==========
+The code is licenced under the LGPL version 3, or (at your option) any later version.
+Please see COPYRIGHT.LESSER(.txt) for the full licence.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -13,3 +18,21 @@ GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+==========CONTENT Licence==========
+The content, such as the logo, is licenced under the Creative Commons Attribution-ShareAlike 3.0.
+Please see COPYRIGHT.CC-BY-SA-3(.rtf) for the full licence.
+You are free to:
+  Share - to copy, distribute and transmit the work
+  Remix - to adapt the work
+Under the following conditions:
+  Attribution - You must attribute the work in a manner that does not suggest in any way that this project endorses you or your use of the work.
+  Share Alike - If you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
+With the understanding that
+  Wavier - Any of the above conditions can be waived if you get permission from the copyright holder, which in this case is the project leader's decision or using votes from the project members.
+  Public Domain - Where the work or any of its elements is in the public domain under applicable law, that status is in no way affected by the license.
+  Other Rights - In no way are any of the following rights affected by the license:
+    Your fair dealing or fair use rights, or other applicable copyright exceptions and limitations;
+	The author's moral rights;
+	Rights other persons may have either in the work itself or in how the work is used, such as publicity or privacy rights.
+  Notice - For any reuse or distribution, you must make clear to others the license terms of this work. The best way to do this is with a link to http://creativecommons.org/licenses/by-sa/3.0/.
