@@ -4,7 +4,7 @@ Copyright (C) 2011 Victor Zheng
 
 ==========CODE Licence==========
 The code is licenced under the LGPL version 3, or (at your option) any later version.
-Please see COPYRIGHT.LESSER(.txt) for the full licence.
+Please see COPYRIGHT.LESSER(.txt) for the full licence. See COPYRIGHT.GPL(.txt) for GPL v3.
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
