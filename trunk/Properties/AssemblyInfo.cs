@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Pi")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Pi Calculator")]
+[assembly: AssemblyDescription("Calculates Pi")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Microsoft")]
-[assembly: AssemblyProduct("Pi")]
-[assembly: AssemblyCopyright("Copyright © Microsoft 2010")]
+[assembly: AssemblyCompany("Victor")]
+[assembly: AssemblyProduct("Pi Calculator")]
+[assembly: AssemblyCopyright("Copyright © Victor 2010 - at the same time copyleft GNU General Public License v3")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
