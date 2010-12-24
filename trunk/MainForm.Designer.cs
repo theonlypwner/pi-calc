@@ -43,6 +43,8 @@
 			this.lblCalcTitle = new System.Windows.Forms.Label();
 			this.lblSep = new System.Windows.Forms.Label();
 			this.lblDisplay = new System.Windows.Forms.Label();
+			this.CopyInfoTextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+			this.copyTextBtn = new System.Windows.Forms.ToolStripMenuItem();
 			this.lblCalc = new System.Windows.Forms.Label();
 			this.lblDispTitle = new System.Windows.Forms.Label();
 			this.lblMemoryTitle = new System.Windows.Forms.Label();
@@ -59,13 +61,11 @@
 			this.StatusBar = new System.Windows.Forms.StatusStrip();
 			this.progressText = new System.Windows.Forms.ToolStripStatusLabel();
 			this.progress = new System.Windows.Forms.ToolStripProgressBar();
-			this.CopyInfoTextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.copyTextBtn = new System.Windows.Forms.ToolStripMenuItem();
 			this.SaveDialog = new System.Windows.Forms.SaveFileDialog();
 			this.MenuBar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numPrecision)).BeginInit();
-			this.StatusBar.SuspendLayout();
 			this.CopyInfoTextMenu.SuspendLayout();
+			this.StatusBar.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// MenuBar
@@ -95,12 +95,14 @@
             "Save as File"});
 			this.cmbBuffer.Name = "cmbBuffer";
 			this.cmbBuffer.Size = new System.Drawing.Size(150, 23);
+			cmbBuffer.SelectedIndex = 1;
 			// 
 			// menuClose
 			// 
 			this.menuClose.Name = "menuClose";
 			this.menuClose.Size = new System.Drawing.Size(48, 23);
 			this.menuClose.Text = "Close";
+			this.menuClose.Click += new System.EventHandler(this.menuClose_Click);
 			// 
 			// btnStop
 			// 
@@ -113,6 +115,7 @@
 			this.btnStop.TabIndex = 29;
 			this.btnStop.Text = "Break";
 			this.btnStop.UseVisualStyleBackColor = true;
+			this.btnStop.Click += new System.EventHandler(this.btnStop_Click);
 			// 
 			// txtResult
 			// 
@@ -136,6 +139,7 @@
 			this.btnGo.TabIndex = 30;
 			this.btnGo.Text = "Calculate";
 			this.btnGo.UseVisualStyleBackColor = true;
+			this.btnGo.Click += new System.EventHandler(this.btnGo_Click);
 			// 
 			// cmbPrecision
 			// 
@@ -172,6 +176,8 @@
 			this.cmbPrecision.Name = "cmbPrecision";
 			this.cmbPrecision.Size = new System.Drawing.Size(60, 24);
 			this.cmbPrecision.TabIndex = 27;
+			this.cmbPrecision.SelectedIndexChanged += new System.EventHandler(this.precisionComboChanged);
+			cmbPrecision.SelectedIndex = 7;
 			// 
 			// numPrecision
 			// 
@@ -194,6 +200,7 @@
             0,
             0,
             0});
+			this.numPrecision.ValueChanged += new System.EventHandler(this.numPrecision_ValueChanged);
 			// 
 			// lblDigits
 			// 
@@ -244,6 +251,21 @@
 			this.lblDisplay.TabIndex = 21;
 			this.lblDisplay.Text = "00s 000ms 000µs";
 			this.lblDisplay.TextAlign = System.Drawing.ContentAlignment.TopRight;
+			// 
+			// CopyInfoTextMenu
+			// 
+			this.CopyInfoTextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyTextBtn});
+			this.CopyInfoTextMenu.Name = "copyText";
+			this.CopyInfoTextMenu.Size = new System.Drawing.Size(128, 26);
+			this.CopyInfoTextMenu.Text = "CopyInfoTextMenu";
+			// 
+			// copyTextBtn
+			// 
+			this.copyTextBtn.Name = "copyTextBtn";
+			this.copyTextBtn.Size = new System.Drawing.Size(127, 22);
+			this.copyTextBtn.Text = "Copy Text";
+			this.copyTextBtn.Click += new System.EventHandler(this.copyTextBtn_Click);
 			// 
 			// lblCalc
 			// 
@@ -296,6 +318,8 @@
 			this.cmbDScale.Name = "cmbDScale";
 			this.cmbDScale.Size = new System.Drawing.Size(121, 24);
 			this.cmbDScale.TabIndex = 28;
+			this.cmbDScale.SelectedIndexChanged += new System.EventHandler(this.maxValChanged);
+			cmbDScale.SelectedIndex = 0;
 			// 
 			// lblPriorityTitle
 			// 
@@ -440,20 +464,6 @@
 			this.progress.Tag = "<width difference>";
 			this.progress.Value = 100;
 			// 
-			// CopyInfoTextMenu
-			// 
-			this.CopyInfoTextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.copyTextBtn});
-			this.CopyInfoTextMenu.Name = "copyText";
-			this.CopyInfoTextMenu.Size = new System.Drawing.Size(128, 26);
-			this.CopyInfoTextMenu.Text = "CopyInfoTextMenu";
-			// 
-			// copyTextBtn
-			// 
-			this.copyTextBtn.Name = "copyTextBtn";
-			this.copyTextBtn.Size = new System.Drawing.Size(127, 22);
-			this.copyTextBtn.Text = "Copy Text";
-			// 
 			// SaveDialog
 			// 
 			this.SaveDialog.DefaultExt = "txt";
@@ -491,17 +501,18 @@
 			this.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
 			this.MainMenuStrip = this.MenuBar;
-			this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+			this.Margin = new System.Windows.Forms.Padding(4);
 			this.MinimumSize = new System.Drawing.Size(567, 414);
 			this.Name = "MainForm";
 			this.Text = "Pi Calculator (changed in code at runtime)";
 			this.Load += new System.EventHandler(this.MainForm_Load);
+			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
 			this.MenuBar.ResumeLayout(false);
 			this.MenuBar.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numPrecision)).EndInit();
+			this.CopyInfoTextMenu.ResumeLayout(false);
 			this.StatusBar.ResumeLayout(false);
 			this.StatusBar.PerformLayout();
-			this.CopyInfoTextMenu.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
