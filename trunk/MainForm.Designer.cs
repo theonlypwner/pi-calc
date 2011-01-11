@@ -62,6 +62,7 @@
 			this.progressText = new System.Windows.Forms.ToolStripStatusLabel();
 			this.progress = new System.Windows.Forms.ToolStripProgressBar();
 			this.SaveDialog = new System.Windows.Forms.SaveFileDialog();
+			this.menuCredits = new System.Windows.Forms.ToolStripMenuItem();
 			this.MenuBar.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numPrecision)).BeginInit();
 			this.CopyInfoTextMenu.SuspendLayout();
@@ -73,6 +74,7 @@
 			this.MenuBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.menuBuffer,
             this.cmbBuffer,
+            this.menuCredits,
             this.menuClose});
 			this.MenuBar.Location = new System.Drawing.Point(0, 0);
 			this.MenuBar.Name = "MenuBar";
@@ -95,7 +97,7 @@
             "Save as File"});
 			this.cmbBuffer.Name = "cmbBuffer";
 			this.cmbBuffer.Size = new System.Drawing.Size(150, 23);
-			cmbBuffer.SelectedIndex = 1;
+			this.cmbBuffer.Text = "First 2000 to display";
 			// 
 			// menuClose
 			// 
@@ -177,7 +179,6 @@
 			this.cmbPrecision.Size = new System.Drawing.Size(60, 24);
 			this.cmbPrecision.TabIndex = 27;
 			this.cmbPrecision.SelectedIndexChanged += new System.EventHandler(this.precisionComboChanged);
-			cmbPrecision.SelectedIndex = 7;
 			// 
 			// numPrecision
 			// 
@@ -319,7 +320,6 @@
 			this.cmbDScale.Size = new System.Drawing.Size(121, 24);
 			this.cmbDScale.TabIndex = 28;
 			this.cmbDScale.SelectedIndexChanged += new System.EventHandler(this.maxValChanged);
-			cmbDScale.SelectedIndex = 0;
 			// 
 			// lblPriorityTitle
 			// 
@@ -469,6 +469,13 @@
 			this.SaveDialog.DefaultExt = "txt";
 			this.SaveDialog.Filter = "Text File|*.txt|Binary file|*.bin|Other|*.*";
 			// 
+			// menuCredits
+			// 
+			this.menuCredits.Name = "menuCredits";
+			this.menuCredits.Size = new System.Drawing.Size(56, 23);
+			this.menuCredits.Text = "Credits";
+			this.menuCredits.Click += new System.EventHandler(this.menuCredits_Click);
+			// 
 			// MainForm
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -552,6 +559,7 @@
 		internal System.Windows.Forms.ContextMenuStrip CopyInfoTextMenu;
 		internal System.Windows.Forms.ToolStripMenuItem copyTextBtn;
 		internal System.Windows.Forms.SaveFileDialog SaveDialog;
+		private System.Windows.Forms.ToolStripMenuItem menuCredits;
 	}
 }
 

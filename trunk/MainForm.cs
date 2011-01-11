@@ -169,5 +169,13 @@ namespace Pi
 		// calcProgress()...
 
 		private void menuClose_Click(object sender, EventArgs e) { this.Close(); }
+
+		public bool creditsShown = false;
+		private void menuCredits_Click(object sender, EventArgs e)
+		{
+			if (creditsShown) return;
+			Credits c = new Credits(this);
+			c.Show();
+		}
 	}
 }
