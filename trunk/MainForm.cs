@@ -65,6 +65,9 @@ namespace Pi
 			if(i > 1) maxValChanged(this, null); // popped elements, update maximum
 			// Store progress size difference
 			progress.Tag = this.Width - progress.Width;
+			// Looks like it's the stupid comboboxes once again!
+			cmbPrecision.SelectedIndex = 7; // 1K
+			cmbDScale.SelectedIndex = 0; // K; not k
 		}
 
 		/// <summary>Converts an integer to the number of threads (CPU thread count: 0, single, double, triple, quad, five...)</summary>
