@@ -178,6 +178,7 @@
 			this.cmbPrecision.Name = "cmbPrecision";
 			this.cmbPrecision.Size = new System.Drawing.Size(60, 24);
 			this.cmbPrecision.TabIndex = 27;
+			this.cmbPrecision.SelectedIndex = 6;
 			this.cmbPrecision.SelectedIndexChanged += new System.EventHandler(this.precisionComboChanged);
 			// 
 			// numPrecision
@@ -319,6 +320,7 @@
 			this.cmbDScale.Name = "cmbDScale";
 			this.cmbDScale.Size = new System.Drawing.Size(121, 24);
 			this.cmbDScale.TabIndex = 28;
+			this.cmbDScale.SelectedIndex = 0;
 			this.cmbDScale.SelectedIndexChanged += new System.EventHandler(this.maxValChanged);
 			// 
 			// lblPriorityTitle

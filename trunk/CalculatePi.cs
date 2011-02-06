@@ -9,6 +9,7 @@ namespace Pi
 	/// <summary>Calculates Pi with the BigDec as storage</summary>
 	public class CalculatePi
 	{
+		public long startTime;
 		public int precision;
 		public CalculatePi(int p) {
 			precision = p + 3;
