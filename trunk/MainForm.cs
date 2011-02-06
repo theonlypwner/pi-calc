@@ -169,8 +169,7 @@ namespace Pi
 			// update progress bar
 			progress.Value = 0;
 			progressText.Text = "0%";
-			// store start time
-			calc.startTime = DateTime.Now.Ticks;
+			
 			// create the thread
 			calc = new CalculatePi((int)numPrecision.Value);
 			calc.onProgress += new ByteHandler(calcProgress);
@@ -197,9 +196,38 @@ namespace Pi
 			progress.Value = 100;
 			// update progress text
 			progressText.Text = "Idle";
-			// delete threads
+			// delete thread
 			t.Abort();
 			t = null;
+			// retrieve data
+			/*
+			' retrieve data and delete piCalc
+		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 0, CalculatePi.ResultType.First2K, CalculatePi.ResultType.BufferOnly))
+		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & r.s
+		' ticks = 100-nanoseconds
+		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
+		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
+		 CStr(Math.Round(r.timeDiff.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		piCalc.diffTicks = New TimeSpan(Now.Ticks - piCalc.startTicks)
+		lblCalc.Text = piCalc.diffTicks.Hours.ToString.PadLeft(2, "0"c) & "h " & piCalc.diffTicks.Minutes.ToString.PadLeft(2, "0"c) & "m " & _
+		 piCalc.diffTicks.Seconds.ToString.PadLeft(2, "0"c) & "s " & piCalc.diffTicks.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
+		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
+		If cmbBuffer.SelectedIndex > 1 Then	' save to file
+			If sender Is btnStop Then
+				MsgBox("Calculation was stopped; not saving your calculation", MsgBoxStyle.Critical, "Cannot save file!")
+			Else
+				saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
+				If saveDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
+					Dim sPath As String = saveDialog.FileName
+					If sPath.Length > 33 Then sPath = "..." & sPath.Substring(sPath.Length - 30)
+					MsgBox(sPath, MsgBoxStyle.Information, "File saved to:")
+					r = piCalc.ResultData(CalculatePi.ResultType.All)
+					File.WriteAllText(saveDialog.FileName, r.s)
+				End If
+			End If
+		End If
+		*/
+			// delete calculator
 			calc = null;
 		}
 

@@ -6,6 +6,7 @@ namespace Pi
 {
 	static class Program
 	{
+		public static MainForm MainForm1;
 		/// <summary>
 		/// The main entry point for the application.
 		/// </summary>
@@ -14,7 +15,7 @@ namespace Pi
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);
-			Application.Run(new MainForm());
+			Application.Run(MainForm1 = new MainForm());
 		}
 	}
 }
