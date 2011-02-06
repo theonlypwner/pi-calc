@@ -5,41 +5,56 @@ using java.math;
 
 namespace Pi
 {
+	/// <summary>Provides an improved interface to BigDecimal.</summary>
 	class BigDec : BigDecimal
 	{
+		// members
+		/// <summary>The hardcoded type of rounding to use.</summary>
+		public const int roundType = ROUND_HALF_UP;
+
+		// constructs
+		/// <summary>Creates a BigDec with the value of zero.</summary>
 		public BigDec() : base(0) { }
 
-		// class definition
+		// class overrides
+		/// <summary>Compares a BigDec to this instance.</summary>
+		/// <param name="d">The BigDec to compare this to.</param>
+		/// <returns>True if the values are the same, false otherwise.</returns>
+		public bool Equals(BigDec d) { return this == d; }
+		public override bool Equals(object val) { return val is BigDec && this == (BigDec)val; }
+		public override int GetHashCode() { return intValue() ^ scale(); }
+
+		// conversions
 		public static implicit operator BigDec(int i)
 		{
 			BigDecimal r = new BigDecimal(i);
 			return (BigDec)r;
 		}
 
-		public static implicit operator BigDec(double d) {
+		public static implicit operator BigDec(double d)
+		{
 			BigDecimal r = new BigDecimal(d);
 			return (BigDec)r;
 		}
 
-		public bool Equals(BigDec d) { return this == d; }
-		public override bool Equals(object val) { return val is BigDec && this == (BigDec)val; }
-		public override int GetHashCode() { return intValue() ^ scale(); }
-
 		// comparison operators
 		public static bool operator ==(BigDec a, BigDec b){ return a.compareTo(b) == 0; }
-		public static bool operator !=(BigDec a, BigDec b) { return !(a == b); }
-
-		public static bool operator >(BigDec a, BigDec b) { return a.compareTo(b) == 1; }
 		public static bool operator <(BigDec a, BigDec b) { return a.compareTo(b) == -1; }
-		public static bool operator >=(BigDec a, BigDec b) { return a > b || a == b; }
-		public static bool operator <=(BigDec a, BigDec b) { return a < b || a == b; }
+		public static bool operator >(BigDec a, BigDec b) { return a.compareTo(b) == 1; }
+		// negate of the above
+		public static bool operator !=(BigDec a, BigDec b) { return !(a == b); }
+		public static bool operator >=(BigDec a, BigDec b) { return !(a < b); }
+		public static bool operator <=(BigDec a, BigDec b) { return !(a > b); }
 
-		// arithmetic operators
+		// unary plus
+		public static BigDec operator +(BigDec a){ return a; }
+		// negate
 		public static BigDec operator -(BigDec a){
 			BigDec result = a;
 			result.negate();
 			return result;
 		}
+		// arithmetic operators
 		public static BigDec operator +(BigDec a, BigDec b) {
 			BigDec result = a;
 			result.add(b);
@@ -51,11 +66,41 @@ namespace Pi
 			result.subtract(b);
 			return result;
 		}
+		public static BigDec operator *(BigDec a, BigDec b)
+		{
+			BigDec result = a;
+			result.multiply(b);
+			return result;
+		}
+		public static BigDec operator /(BigDec a, BigDec b)
+		{
+			BigDec result = a;
+			result.divide(b, roundType);
+			return result;
+		}
+		public static BigDec operator ^(BigDec a, int b)
+		{
+			// The ANSI standard X3.274-1996 algorithm
+			if (a == 0 || b == 1) return a; // zero raised to anything OR anything raised to one
+			if (b == 0) return 1;
+			BigDec ret = a;
+			int remaining = Math.Abs(b);
+			while (--remaining > 0) ret *= a;
+			if (b < 0) ret = 1 / ret;
+			return ret;
+		}
 
-		// factorial
+		/// <summary>Calculates a factorial based on an unsigned number.</summary>
+		/// <param name="i">The number to calculate the factorial of.</param>
+		/// <returns>A BigDec with the calculated factorial.</returns>
 		public static BigDec Factorial(ulong i)
 		{
-			return 1;
+			if (i <= 2) return i == 2 ? 2 : 1;
+			return i * Factorial(i - 1);
 		}
+		/// <summary>Converts the signed number to unsigned and calculates the factorial</summary>
+		/// <param name="i">The number</param>
+		/// <returns>The result of Factorial(i) where i is casted to (ulong)i</returns>
+		public static BigDec Factorial(long i) { return Factorial((ulong)i); }
 	}
 }
