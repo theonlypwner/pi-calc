@@ -63,17 +63,8 @@ namespace Pi
 			i2 = 0;
 			while ((i / (Math.Pow(1024, i2)) >= 1024) && sf.Length > i2) i2++;
 			lblMemory.Text = s + " " + (i / Math.Pow(1024 , i2)) + (i2 > 0 ? sf[i2 - 1].ToString() : "") + "B";
-			i2 = 0; // now counting elements to pop
-			if (i < 268435456) this.Close(); // You should have at least 256 MB of RAM
-			if (i <= 536870912) i2 = 5; // (256MB to 512MB) not suitable for more than 16M
-			i = i2 > 0 ? 1 : 0;
-			while (i2-- > 0) cmbPrecision.Items.RemoveAt(cmbPrecision.Items.Count - 1);
-			if(i > 1) maxValChanged(this, null); // popped elements, update maximum
 			// Store progress size difference
 			progress.Tag = this.Width - progress.Width;
-			// Looks like it's the stupid comboboxes once again!
-			cmbPrecision.SelectedIndex = 7; // 1K
-			cmbDScale.SelectedIndex = 0; // K; not k
 		}
 
 		/// <summary>Converts an integer to the number of threads (CPU thread count: 0, single, double, triple, quad, five...)</summary>
@@ -163,6 +154,7 @@ namespace Pi
 				l = (Convert.ToInt32(l) * KprecisionP()).ToString();
 			}
 			numPrecision.Maximum = Convert.ToDecimal(l);
+			precisionComboChanged(sender, e);
 		}
 
 		private void btnGo_Click(object sender, EventArgs e)
@@ -178,7 +170,7 @@ namespace Pi
 			progress.Value = 0;
 			progressText.Text = "0%";
 			// store start time
-			// calc.startTime = ?
+			calc.startTime = DateTime.Now.Ticks;
 			// create the thread
 			calc = new CalculatePi((int)numPrecision.Value);
 			calc.onProgress += new ByteHandler(calcProgress);
