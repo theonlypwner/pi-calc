@@ -41,6 +41,7 @@ namespace Pi
 		public static bool operator ==(BigDec a, BigDec b){ return a.compareTo(b) == 0; }
 		public static bool operator <(BigDec a, BigDec b) { return a.compareTo(b) == -1; }
 		public static bool operator >(BigDec a, BigDec b) { return a.compareTo(b) == 1; }
+		public static implicit operator bool(BigDec a) { return a != 0; }
 		// negate of the above
 		public static bool operator !=(BigDec a, BigDec b) { return !(a == b); }
 		public static bool operator >=(BigDec a, BigDec b) { return !(a < b); }
@@ -76,6 +77,7 @@ namespace Pi
 		public static BigDec operator /(BigDec a, BigDec b)
 		{
 			BigDec result = a;
+			if (b == 0) throw new ArithmeticException("Cannot divide " + (string)a + " by zero");
 			result.divide(b, defaultPrecision, roundType);
 			return result;
 		}
