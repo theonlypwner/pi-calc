@@ -11,7 +11,6 @@ namespace Pi
 		// members
 		/// <summary>The hardcoded type of rounding to use.</summary>
 		public const int roundType = ROUND_HALF_UP;
-		public const IFormatProvider formatter = null;
 		public static int defaultPrecision = 32;
 
 		// constructs
@@ -29,11 +28,10 @@ namespace Pi
 		public override int GetHashCode() { return intValue() ^ scale(); }
 
 		// conversions
-		public static implicit operator BigDec(long i) { return new BigDec(i); }
 		public static implicit operator BigDec(double i) { return new BigDec(i); }
 		public static explicit operator long(BigDec i) { return i.longValue(); }
 		public static explicit operator double(BigDec i) { return i.doubleValue(); }
-		public static explicit operator string(BigDec i) { return i.ToString(formatter); }
+		public static explicit operator string(BigDec i) { return ((double)i).ToString(); }
 
 		// comparison operators
 		public static bool operator ==(BigDec a, BigDec b){ return a.compareTo(b) == 0; }
@@ -75,7 +73,7 @@ namespace Pi
 		public static BigDec operator /(BigDec a, BigDec b)
 		{
 			BigDec result = a;
-			if (b == 0) throw new ArithmeticException("Cannot divide " + (string)a + " by zero");
+			if (b == 0) return a; //throw new ArithmeticException("Cannot divide " + (string)a + " by zero");
 			result.divide(b, defaultPrecision, roundType);
 			return result;
 		}
