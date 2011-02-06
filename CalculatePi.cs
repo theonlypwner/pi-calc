@@ -53,7 +53,7 @@ namespace Pi
 			buffer = null; // empty buffer
 			result = 1 / (result * Math.Sqrt(2) / 4900.5); // r * 2 / 9081 = r / 4900.5
 			// store result
-			final = result.ToString();
+			final = ((double)result).ToString();
 			result = null; // empty old result
 			if(onComplete != null) onComplete(this, null); // raised completion event
 		}
@@ -78,11 +78,11 @@ namespace Pi
 				return ret;
 			}
 			bool trimmed = false;
-			if (t == timedResult.resultType.First2K && precision - extraDigits > Program.MainForm1.KprecisionP() * 2) {
+			if (t == timedResult.resultType.First2K && final.Length > Program.MainForm1.KprecisionP() * 2) {
 				ret.s = "Result is trimmed" + CrLf;
 				trimmed = true;
 			}
-			if (trimmed) ret.s += final.Substring(0, Program.MainForm1.KprecisionP() * 2 + 2);
+			if (trimmed) ret.s += final.Substring(0, Program.MainForm1.KprecisionP() * 2);
 			else ret.s += final;
 			return ret;
 		}
