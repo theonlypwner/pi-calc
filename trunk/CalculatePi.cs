@@ -13,7 +13,7 @@ namespace Pi
 		/// <summary>The time at which the calculation started</summary>
 		public long startTime;
 		protected int precision;
-		public string final;
+		public string final = "";
 
 
 		public const int extraDigits = 3;
@@ -77,8 +77,8 @@ namespace Pi
 			}
 			if (t == timedResult.resultType.First2K && precision - extraDigits > Program.MainForm1.KprecisionP() * 2) {
 				ret.s = "Result is trimmed" + CrLf;
+				ret.s = ret.s.Substring(0, Program.MainForm1.KprecisionP() * 2 + 2);
 			}
-			ret.s = ret.s.Substring(0, Program.MainForm1.KprecisionP() * 2 + 2);
 			return ret;
 		}
 	}

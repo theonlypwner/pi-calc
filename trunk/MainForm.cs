@@ -7,6 +7,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Management;
 using System.Threading;
+using System.IO;
 
 namespace Pi
 {
@@ -199,34 +200,32 @@ namespace Pi
 			// delete thread
 			t.Abort();
 			t = null;
+			// calculation time
+			TimeSpan timeDiff = new TimeSpan(DateTime.Now.Ticks - calc.startTime);
+			lblCalc.Text = timeDiff.Hours.ToString().PadLeft(2, '0') + "h " + timeDiff.Minutes.ToString().PadLeft(2, '0') + "m " +
+				timeDiff.Seconds.ToString().PadLeft(2, '0') + "s " + timeDiff.Milliseconds.ToString().PadLeft(3, '0') + "ms " +
+				(Math.Round(timeDiff.Ticks * 10d) % 1000).ToString().PadLeft(3, '0') + "µs";
 			// retrieve data
-			/*
-			' retrieve data and delete piCalc
-		Dim r As CalculatePi.TimedResult = piCalc.ResultDataNoDelete(If(cmbBuffer.SelectedIndex > 0, CalculatePi.ResultType.First2K, CalculatePi.ResultType.BufferOnly))
-		txtResult.Text = If(sender Is btnStop, "Calculation was stopped" & CrLf, "") & r.s
-		' ticks = 100-nanoseconds
-		r.timeDiff = New TimeSpan(Now.Ticks - r.timeStart)
-		lblDisplay.Text = r.timeDiff.Seconds.ToString.PadLeft(2, "0"c) & "s " & r.timeDiff.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
-		 CStr(Math.Round(r.timeDiff.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
-		piCalc.diffTicks = New TimeSpan(Now.Ticks - piCalc.startTicks)
-		lblCalc.Text = piCalc.diffTicks.Hours.ToString.PadLeft(2, "0"c) & "h " & piCalc.diffTicks.Minutes.ToString.PadLeft(2, "0"c) & "m " & _
-		 piCalc.diffTicks.Seconds.ToString.PadLeft(2, "0"c) & "s " & piCalc.diffTicks.Milliseconds.ToString.PadLeft(3, "0"c) & "ms " & _
-		 CStr(Math.Round(piCalc.diffTicks.Ticks * 10) Mod 1000).PadLeft(3, "0"c) & "µs"
-		If cmbBuffer.SelectedIndex > 1 Then	' save to file
-			If sender Is btnStop Then
-				MsgBox("Calculation was stopped; not saving your calculation", MsgBoxStyle.Critical, "Cannot save file!")
-			Else
-				saveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop)
-				If saveDialog.ShowDialog = Windows.Forms.DialogResult.OK Then
-					Dim sPath As String = saveDialog.FileName
-					If sPath.Length > 33 Then sPath = "..." & sPath.Substring(sPath.Length - 30)
-					MsgBox(sPath, MsgBoxStyle.Information, "File saved to:")
-					r = piCalc.ResultData(CalculatePi.ResultType.All)
-					File.WriteAllText(saveDialog.FileName, r.s)
-				End If
-			End If
-		End If
-		*/
+			CalculatePi.timedResult r = calc.ResultData(cmbBuffer.SelectedIndex > 0 ? CalculatePi.timedResult.resultType.First2K : CalculatePi.timedResult.resultType.BufferOnly);
+			timeDiff = new TimeSpan(DateTime.Now.Ticks - r.timeStart);
+			txtResult.Text = sender == btnStop ? "Calculation was stopped" : "";
+			txtResult.Text += r.s;
+			lblDisplay.Text = timeDiff.Seconds.ToString().PadLeft(2, '0') + "s " + timeDiff.Milliseconds.ToString().PadLeft(3, '0') + "ms " +
+				(Math.Round(timeDiff.Ticks * 10d) % 1000).ToString().PadLeft(3, '0') + "µs";
+			if (cmbBuffer.SelectedIndex > 1) { // save to file
+				if (sender == btnStop)
+					MessageBox.Show("Calculation was stopped; not saving your calculation", "Cannot save file!", MessageBoxButtons.OK, MessageBoxIcon.Error);
+				else {
+					SaveDialog.InitialDirectory = Environment.GetFolderPath(Environment.SpecialFolder.Desktop);
+					if (SaveDialog.ShowDialog() == DialogResult.OK) {
+						string sPath = SaveDialog.FileName;
+						if (sPath.Length > 33) sPath = "..." + sPath.Substring(sPath.Length - 30);
+						r = calc.ResultData(CalculatePi.timedResult.resultType.All);
+						File.WriteAllText(SaveDialog.FileName, r.s);
+						MessageBox.Show(sPath, "File saved to:", MessageBoxButtons.OK, MessageBoxIcon.Information);
+					}
+				}
+			}
 			// delete calculator
 			calc = null;
 		}
