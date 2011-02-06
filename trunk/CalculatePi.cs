@@ -38,10 +38,7 @@ namespace Pi
 			int limit = (int)Math.Ceiling(precision / 2d - 1d), checkinterval = Math.Max(limit / 100, 1);
 			BigDec.defaultPrecision = limit;
 			// create buffers
-			BigDec result, buffer;
-			result = buffer = 0;
-			result.setScale(limit);
-			buffer.setScale(limit);
+			BigDec result = 0, buffer = 0;
 			// calculate
 			for (int i = 0; i < limit; i++) {
 				buffer = BigDec.Factorial(4 * i);
@@ -51,9 +48,11 @@ namespace Pi
 				if (onProgress != null && i % checkinterval == 0) onProgress((byte)(i * 100 / limit));
 			}
 			buffer = null; // empty buffer
-			result = 1 / (result * Math.Sqrt(2) / 4900.5); // r * 2 / 9081 = r / 4900.5
+			result *= Math.Sqrt(2) / 4900.5; // r * 2 / 9081 = r / 4900.5
+			result ^= -1;
 			// store result
-			final = ((double)result).ToString();
+			//final = (string)result;
+			final = result.scale().ToString();
 			result = null; // empty old result
 			if(onComplete != null) onComplete(this, null); // raised completion event
 		}
