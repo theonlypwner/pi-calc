@@ -11,14 +11,15 @@ namespace Pi
 		// members
 		/// <summary>The hardcoded type of rounding to use.</summary>
 		public const int roundType = ROUND_HALF_UP;
+		public static int defaultPrecision = 32;
 
 		// constructs
 		/// <summary>Creates a BigDec with the value of zero.</summary>
 		public BigDec() : base(0) { }
 		/// <summary>Creates a BigDec with the value of the specified long integer.</summary>
-		public BigDec(long i) : base(i) { }
+		public BigDec(long i) : base(i) { setScale(defaultPrecision, roundType);  }
 		/// <summary>Creates a BigDec with the value of the specified double-precision floating point.</summary>
-		public BigDec(double i) : base(i) { }
+		public BigDec(double i) : base(i) { setScale(defaultPrecision, roundType); }
 
 		// class overrides
 		/// <summary>Compares a BigDec to this instance.</summary>
@@ -72,7 +73,7 @@ namespace Pi
 		{
 			if (!b) return 0;
 			BigDec result = a;
-			result.divide(b, roundType);
+			result.divide(b, defaultPrecision, roundType);
 			return result;
 		}
 		public static BigDec operator ^(BigDec a, int b)
