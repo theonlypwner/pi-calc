@@ -516,6 +516,7 @@
 			this.Text = "Pi Calculator (changed in code at runtime)";
 			this.Load += new System.EventHandler(this.MainForm_Load);
 			this.SizeChanged += new System.EventHandler(this.MainForm_SizeChanged);
+			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainForm_OnFormClosing);
 			this.MenuBar.ResumeLayout(false);
 			this.MenuBar.PerformLayout();
 			((System.ComponentModel.ISupportInitialize)(this.numPrecision)).EndInit();

@@ -68,6 +68,13 @@ namespace Pi
 			progress.Tag = this.Width - progress.Width;
 		}
 
+		private void MainForm_OnFormClosing(object sender, FormClosingEventArgs e){
+			if (btnStop.Enabled){
+				e.Cancel = true;
+				btnStop_Click(sender, e);
+			}
+		}
+
 		/// <summary>Converts an integer to the number of threads (CPU thread count: 0, single, double, triple, quad, five...)</summary>
 		/// <param name="i">The integer to convert</param>
 		/// <param name="capital">If the result should be capital</param>
@@ -208,7 +215,7 @@ namespace Pi
 			// retrieve data
 			CalculatePi.timedResult r = calc.ResultData(cmbBuffer.SelectedIndex > 0 ? CalculatePi.timedResult.resultType.First2K : CalculatePi.timedResult.resultType.BufferOnly);
 			timeDiff = new TimeSpan(DateTime.Now.Ticks - r.timeStart);
-			txtResult.Text = sender == btnStop ? "Calculation was stopped" : "";
+			txtResult.Text = sender == btnStop ? "Calculation was stopped\r\n" : "";
 			txtResult.Text += r.s;
 			lblDisplay.Text = timeDiff.Seconds.ToString().PadLeft(2, '0') + "s " + timeDiff.Milliseconds.ToString().PadLeft(3, '0') + "ms " +
 				(Math.Round(timeDiff.Ticks * 10d) % 1000).ToString().PadLeft(3, '0') + "µs";
@@ -228,6 +235,8 @@ namespace Pi
 			}
 			// delete calculator
 			calc = null;
+			// check if abort needed
+			if (sender == this) Close();
 		}
 
 		protected void calcProgress(byte p) {

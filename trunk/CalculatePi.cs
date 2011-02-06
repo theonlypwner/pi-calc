@@ -36,7 +36,7 @@ namespace Pi
 			startTime = DateTime.Now.Ticks; // 1 tick = 100-nanoseconds = tenth-microsecond
 			// create buffers
 			BigDec result, buffer;
-			int limit = (int)Math.Ceiling(precision / 14d - 1d), checkinterval = Math.Max(limit / 100, 1);
+			int limit = (int)Math.Ceiling(precision / 2d - 1d), checkinterval = Math.Max(limit / 100, 1);
 			result = buffer = 0;
 			result.setScale(limit);
 			buffer.setScale(limit);
@@ -52,6 +52,7 @@ namespace Pi
 			result = 1 / (result * Math.Sqrt(2) / 4900.5); // r * 2 / 9081 = r / 4900.5
 			// store result
 			final = result.ToString();
+			System.Windows.Forms.MessageBox.Show(final);
 			result = null; // empty old result
 			if(onComplete != null) onComplete(this, null); // raised completion event
 		}
