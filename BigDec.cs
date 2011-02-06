@@ -17,8 +17,6 @@ namespace Pi
 		// constructs
 		/// <summary>Creates a BigDec with the value of zero.</summary>
 		public BigDec() : base(0) { }
-		/// <summary>Creates a BigDec with the value of the specified long integer.</summary>
-		public BigDec(long i) : base(i) { setScale(defaultPrecision, roundType);  }
 		/// <summary>Creates a BigDec with the value of the specified double-precision floating point.</summary>
 		public BigDec(double i) : base(i) { setScale(defaultPrecision, roundType); }
 
@@ -46,7 +44,7 @@ namespace Pi
 		public static bool operator !=(BigDec a, BigDec b) { return !(a == b); }
 		public static bool operator >=(BigDec a, BigDec b) { return !(a < b); }
 		public static bool operator <=(BigDec a, BigDec b) { return !(a > b); }
-		public static bool operator !(BigDec a) { return a == 0; }
+		public static bool operator !(BigDec a) { return a == false; }
 
 		// unary plus
 		public static BigDec operator +(BigDec a){ return a; }
