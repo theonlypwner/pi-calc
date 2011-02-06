@@ -6,11 +6,17 @@ using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
 using System.Management;
+using System.Threading;
 
 namespace Pi
 {
+
+
 	public partial class MainForm : Form
 	{
+		protected Thread t;
+		protected CalculatePi calc;
+
 		public MainForm()
 		{
 			InitializeComponent();
@@ -161,15 +167,55 @@ namespace Pi
 
 		private void btnGo_Click(object sender, EventArgs e)
 		{
-
+			// update GUI to allow stop
+			btnGo.Enabled = false;
+			btnStop.Enabled = true;
+			// lock GUI
+			numPrecision.Enabled = cmbDScale.Enabled = cmbPrecision.Enabled = false;
+			// say processing
+			txtResult.Text = "Processing";
+			// update progress bar
+			progress.Value = 0;
+			progressText.Text = "0%";
+			// store start time
+			// calc.startTime = ?
+			// create the thread
+			calc = new CalculatePi((int)numPrecision.Value);
+			calc.onProgress += new ByteHandler(calcProgress);
+			calc.onComplete += new EventHandler(btnStop_Click);
+			t = new Thread(calc.process);
+			t.Name = "Pi Calculator Calculation Thread";
+			// start thread
+			t.Start();
 		}
 
 		private void btnStop_Click(object sender, EventArgs e)
 		{
-
+			if (btnGo.Enabled || t == null) return;
+			if (InvokeRequired) {
+				Invoke(new EventHandler(btnStop_Click), sender, e);
+				return;
+			}
+			// update GUI to allow start
+			btnGo.Enabled = true;
+			btnStop.Enabled = false;
+			// unlock GUI
+			numPrecision.Enabled = cmbDScale.Enabled = cmbPrecision.Enabled = true;
+			// fill progress bar
+			progress.Value = 100;
+			// update progress text
+			progressText.Text = "Idle";
+			// delete threads
+			t.Abort();
+			t = null;
+			calc = null;
 		}
 
-		// calcProgress()...
+		protected void calcProgress(byte p) {
+			if (InvokeRequired) { Invoke(new ByteHandler(calcProgress), p); return; }
+			progress.Value = p;
+			progressText.Text = p.ToString().PadLeft(2, '0') + "%";
+		}
 
 		private void menuClose_Click(object sender, EventArgs e) { this.Close(); }
 
