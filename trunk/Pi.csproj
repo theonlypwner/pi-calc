@@ -67,6 +67,8 @@
     <Reference Include="vjslib" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigDec.cs" />
+    <Compile Include="CalculatePi.cs" />
     <Compile Include="Credits.cs">
       <SubType>Form</SubType>
     </Compile>
