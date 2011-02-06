@@ -15,6 +15,10 @@ namespace Pi
 		// constructs
 		/// <summary>Creates a BigDec with the value of zero.</summary>
 		public BigDec() : base(0) { }
+		/// <summary>Creates a BigDec with the value of the specified long integer.</summary>
+		public BigDec(long i) : base(i) { }
+		/// <summary>Creates a BigDec with the value of the specified double-precision floating point.</summary>
+		public BigDec(double i) : base(i) { }
 
 		// class overrides
 		/// <summary>Compares a BigDec to this instance.</summary>
@@ -25,17 +29,8 @@ namespace Pi
 		public override int GetHashCode() { return intValue() ^ scale(); }
 
 		// conversions
-		public static implicit operator BigDec(int i)
-		{
-			BigDecimal r = new BigDecimal(i);
-			return (BigDec)r;
-		}
-
-		public static implicit operator BigDec(double d)
-		{
-			BigDecimal r = new BigDecimal(d);
-			return (BigDec)r;
-		}
+		public static implicit operator BigDec(long i) { return new BigDec(i); }
+		public static implicit operator BigDec(double i) { return new BigDec(i); }
 
 		// comparison operators
 		public static bool operator ==(BigDec a, BigDec b){ return a.compareTo(b) == 0; }
@@ -45,6 +40,7 @@ namespace Pi
 		public static bool operator !=(BigDec a, BigDec b) { return !(a == b); }
 		public static bool operator >=(BigDec a, BigDec b) { return !(a < b); }
 		public static bool operator <=(BigDec a, BigDec b) { return !(a > b); }
+		public static bool operator !(BigDec a) { return a == 0; }
 
 		// unary plus
 		public static BigDec operator +(BigDec a){ return a; }
@@ -74,14 +70,14 @@ namespace Pi
 		}
 		public static BigDec operator /(BigDec a, BigDec b)
 		{
+			if (!b) return 0;
 			BigDec result = a;
 			result.divide(b, roundType);
 			return result;
 		}
 		public static BigDec operator ^(BigDec a, int b)
 		{
-			// The ANSI standard X3.274-1996 algorithm
-			if (a == 0 || b == 1) return a; // zero raised to anything OR anything raised to one
+			if (!a || b == 1) return a; // zero raised to anything OR anything raised to one
 			if (b == 0) return 1;
 			BigDec ret = a;
 			int remaining = Math.Abs(b);
