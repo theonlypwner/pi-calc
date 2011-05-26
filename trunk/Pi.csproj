@@ -64,7 +64,6 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="vjslib" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BigDec.cs" />
@@ -75,6 +74,17 @@
     <Compile Include="Credits.Designer.cs">
       <DependentUpon>Credits.cs</DependentUpon>
     </Compile>
+    <Compile Include="libbcmath\libbcmath.add.cs" />
+    <Compile Include="libbcmath\libbcmath.compare.cs" />
+    <Compile Include="libbcmath\libbcmath.cs" />
+    <Compile Include="libbcmath\libbcmath.das.cs" />
+    <Compile Include="libbcmath\libbcmath.div.cs" />
+    <Compile Include="libbcmath\libbcmath.mem.cs" />
+    <Compile Include="libbcmath\libbcmath.mul.cs" />
+    <Compile Include="libbcmath\libbcmath.nearzero.cs" />
+    <Compile Include="libbcmath\libbcmath.raise.cs" />
+    <Compile Include="libbcmath\libbcmath.sqrt.cs" />
+    <Compile Include="libbcmath\libbcmath.sub.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -130,6 +140,7 @@
   <ItemGroup>
     <Content Include="logo.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
