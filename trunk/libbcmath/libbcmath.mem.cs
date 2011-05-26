@@ -22,12 +22,7 @@ public partial class libbcmath
 	/// <param name="len">The length to fill</param>
 	private static void memset(ref List<byte> src, int ptr, byte chr, int len)
 	{
-		byte[] fill = new byte[len + 1];
-		for (int i = ptr; i <= len + ptr - 1; i++) {
-			fill[i] = chr;
-		}
-		src.RemoveRange(ptr, Math.Min(src.Count - ptr, len));
-		src.InsertRange(ptr, fill);
+		for (int i = ptr; i < len + ptr; i++) src[i] = chr;
 	}
 
 	/// <summary>Copys a block of memory data (from an array to another)</summary>
