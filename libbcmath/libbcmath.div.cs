@@ -82,7 +82,7 @@ public partial class libbcmath
 		// scale2 = n2->n_scale;
 		n2ptr = divisor.length + scale2 - 1;
 		// n2ptr = (unsigned char *) n2.n_value+n2.n_len+scale2-1;
-		while (scale2 > 0 & divisor(n2ptr) == 0) {
+		while (scale2 > 0 & divisor[n2ptr] == 0) {
 			n2ptr -= 1;
 			scale2 -= 1;
 		}
@@ -155,7 +155,7 @@ public partial class libbcmath
 		if (!zero) {
 			//  Normalize
 			// //norm = libbcmath.cint(10 / (libbcmath.cint(n2.n_value[n2ptr]) + 1)); //norm =  10 / ((int)*n2ptr + 1);
-			norm = Convert.ToByte(Math.Floor(10 / (divisor(n2ptr) + 1)));
+			norm = Convert.ToByte(Math.Floor(10 / (divisor[n2ptr] + 1)));
 			// norm =  10 / ((int)*n2ptr + 1);
 			if (norm != 1) {
 				OneMult(num1, 0, len1 + scale1 + extra + 1, norm, ref num1, 0);
@@ -176,18 +176,18 @@ public partial class libbcmath
 			// Loop
 			while (qdig <= len1 + scale - len2) {
 				// Calculate the quotient digit guess.
-				if (divisor(n2ptr) == num1[qdig]) {
+				if (divisor[n2ptr] == num1[qdig]) {
 					qguess = 9;
 				} else {
-					qguess = Convert.ToByte(Math.Floor((num1[qdig] * 10 + num1[qdig + 1]) / divisor(n2ptr)));
+					qguess = Convert.ToByte(Math.Floor((num1[qdig] * 10 + num1[qdig + 1]) / divisor[n2ptr]));
 				}
 				// Test qguess.
 				// if (n2ptr[1]*qguess > (num1[qdig]*10 + num1[qdig+1] - *n2ptr*qguess)*10 + num1[qdig+2]) {
-				if (divisor(n2ptr + 1) * qguess > (num1[qdig] * 10 + num1[qdig + 1] - divisor(n2ptr) * qguess) * 10 + num1[qdig + 2]) {
+				if (divisor[n2ptr + 1] * qguess > (num1[qdig] * 10 + num1[qdig + 1] - divisor[n2ptr] * qguess) * 10 + num1[qdig + 2]) {
 					qguess -= Convert.ToByte(1);
 					// And again.
 					// if (n2ptr[1]*qguess > (num1[qdig]*10 + num1[qdig+1] - *n2ptr*qguess)*10 + num1[qdig+2])
-					if (divisor(n2ptr + 1) * qguess > (num1[qdig] * 10 + num1[qdig + 1] - divisor(n2ptr) * qguess) * 10 + num1[qdig + 2]) {
+					if (divisor[n2ptr + 1] * qguess > (num1[qdig] * 10 + num1[qdig + 1] - divisor[n2ptr] * qguess) * 10 + num1[qdig + 2]) {
 						qguess -= Convert.ToByte(1);
 					}
 				}
@@ -243,7 +243,7 @@ public partial class libbcmath
 							// val = (int) *ptr1 + (int) *ptr2-- + carry;
 						} else {
 							// val = libbcmath.cint(num1[ptr1]) + libbcmath.cint(n2.n_value[ptr2--]) + carry; //val = (int) *ptr1 + (int) *ptr2-- + carry;
-							val = num1[ptr1] + divisor(ptr2) + carry;
+							val = num1[ptr1] + divisor[ptr2] + carry;
 							// val = (int) *ptr1 + (int) *ptr2-- + carry;
 							ptr2 -= 1;
 						}
