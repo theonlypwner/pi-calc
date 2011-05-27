@@ -179,7 +179,7 @@ public partial class libbcmath
 		// n1 has the longer scale
 		if (n1.scale != min_scale) {
 			for (count = n1.scale - min_scale; count >= 1; count += -1) {
-				diff(diffptr) = n1(n1ptr);
+				diff[diffptr] = n1(n1ptr);
 				// *diffptr-- = *n1ptr--;
 				diffptr -= 1;
 				n1ptr -= 1;
@@ -195,7 +195,7 @@ public partial class libbcmath
 					borrow = 1;
 				} else {
 					borrow = 0;
-					diff(diffptr) = Convert.ToByte(val);
+					diff[diffptr] = Convert.ToByte(val);
 					// *diffptr-- = val;
 					diffptr -= 1;
 				}
@@ -214,7 +214,7 @@ public partial class libbcmath
 			} else {
 				borrow = 0;
 			}
-			diff(diffptr) = Convert.ToByte(val);
+			diff[diffptr] = Convert.ToByte(val);
 			// *diffptr-- = val;
 			diffptr -= 1;
 		}
@@ -231,7 +231,7 @@ public partial class libbcmath
 				} else {
 					borrow = 0;
 				}
-				diff(diffptr) = Convert.ToByte(val);
+				diff[diffptr] = Convert.ToByte(val);
 				diffptr -= 1;
 			}
 		}
