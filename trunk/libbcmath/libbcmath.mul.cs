@@ -58,7 +58,7 @@ public partial class libbcmath
 	/// <param name="n1len">Length of first number</param>
 	/// <param name="n2">Second number</param>
 	/// <param name="n2len">Length of second number</param>
-	private static BCNum SimpMul(ref BCNum n1, int n1len, ref BCNum n2, int n2len)
+	private static BCNum SimpMul(BCNum n1, int n1len, BCNum n2, int n2len)
 	{
 		BCNum prod = new BCNum();
 		int n1ptr = 0;
@@ -118,7 +118,7 @@ public partial class libbcmath
 	/// <param name="val">The other number that will be used in calculation, but be unaltered</param>
 	/// <param name="shift">Offset of digits to skip</param>
 	/// <param name="subtract">Subtract the numers</param>
-	protected static void Shift_AddSub(ref BCNum accum, BCNum val, int shift, bool subtract)
+	protected static void Shift_AddSub(BCNum accum, BCNum val, int shift, bool subtract)
 	{
 		int accp = 0;
 		int valp = 0;
@@ -128,7 +128,7 @@ public partial class libbcmath
 		byte carry = 0;
 
 		count = val.length;
-		if (Conversion.Val(0) == 0)
+		if (val[0] == 0)
 			count -= 1;
 
 		// assert (accum->n_len+accum->n_scale >= shift+count);
@@ -149,7 +149,7 @@ public partial class libbcmath
 			// Subtraction; carry is really borrow.
 			while (count > 0) {
 				count -= 1;
-				accum[accp] -= Conversion.Val(valp) + carry;
+				accum[accp] -= val[valp] + carry;
 				// *accp -= *valp-- + carry;
 				valp -= 1;
 				// if (*accp < 0)
@@ -181,7 +181,7 @@ public partial class libbcmath
 			// Addition
 			while (count > 0) {
 				count -= 1;
-				accum[accp] += Convert.ToByte(Conversion.Val(valp) + carry);
+				accum[accp] += Convert.ToByte(val[valp] + carry);
 				// *accp += *valp-- + carry;
 				valp -= 1;
 				// if (*accp > (BASE-1))
