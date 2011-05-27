@@ -47,32 +47,32 @@ namespace Pi
 		// negate
 		public static BigDec operator -(BigDec a){
 			BigDec result = a;
-			result.negate();
+			result.val.sign = result.val.sign == libbcmath.PLUS ? libbcmath.MINUS : libbcmath.PLUS;
 			return result;
 		}
 		// arithmetic operators
 		public static BigDec operator +(BigDec a, BigDec b) {
 			BigDec result = a;
-			result.add(b);
+			libbcmath.Add(result.val, b.val);
 			return result;
 		}
 		public static BigDec operator -(BigDec a, BigDec b)
 		{
 			BigDec result = a;
-			result.subtract(b);
+			libbcmath.Subtract(result.val, b.val);
 			return result;
 		}
 		public static BigDec operator *(BigDec a, BigDec b)
 		{
 			BigDec result = a;
-			result.multiply(b);
+			libbcmath.Multiply(result.val, b.val);
 			return result;
 		}
 		public static BigDec operator /(BigDec a, BigDec b)
 		{
 			BigDec result = a;
 			if (b == 0) return a; //throw new ArithmeticException("Cannot divide " + (string)a + " by zero");
-			result.divide(b, defaultPrecision, roundType);
+			libbcmath.Divide(a.val, b.val, defaultPrecision);
 			return result;
 		}
 		public static BigDec operator ^(BigDec a, int b)
