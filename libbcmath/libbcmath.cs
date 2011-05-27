@@ -89,7 +89,7 @@ public sealed partial class libbcmath
 
 	/// <summary>Strips zeros until there is only one left</summary>
 	/// <param name="num">The arbitrary precision number to strip the zeros from</param>
-	static internal void RemoveLeadingZeros(ref BCNum num)
+	static internal void RemoveLeadingZeros(BCNum num)
 	{
 		// We can move value to point to the first non zero digit!
 		while (num[0] == 0 & num.length > 1) {
@@ -114,19 +114,13 @@ public sealed partial class libbcmath
 	{
 		char[] str = s.ToCharArray();
 		BCNum num = new BCNum();
-		dynamic ptr = 0;
-		dynamic digits = 0;
-		dynamic strscale = 0;
-		dynamic nptr = 0;
+		int ptr = 0, digits = 0, strscale = 0, nptr = 0;
 		bool zero_int = false;
 		// skip sign
-		if (Conversion.Str(0) == PLUS | s[0] == MINUS) {
-			ptr += 1;
-			// next
-		}
+		if (str[0] == PLUS | s[0] == MINUS) ptr++; // next
 		// don't evaluate both sides of 'And'
 		while (ptr < str.Length) {
-			if (Conversion.Str(ptr) != '0')
+			if (str[ptr] != '0')
 				break; // TODO: might not be correct. Was : Exit Do
 			// skip leading zeros
 			ptr += 1;
@@ -134,7 +128,7 @@ public sealed partial class libbcmath
 		}
 		// count digits
 		while (ptr < str.Length) {
-			if (!char.IsDigit(Conversion.Str(ptr)))
+			if (!char.IsDigit(str[ptr]))
 				break; // TODO: might not be correct. Was : Exit Do
 			// VB .NET process both And's sides for some reason
 			ptr += 1;
@@ -143,12 +137,12 @@ public sealed partial class libbcmath
 			// counted a digit
 		}
 		if (ptr < str.Length)
-			if (Conversion.Str(ptr) == '.')
+			if (str[ptr] == '.')
 				ptr += 1;
 		// skip decimal point
 		// count digits after decimal point
 		while (ptr < str.Length) {
-			if (!char.IsDigit(Conversion.Str(ptr)))
+			if (!char.IsDigit(str[ptr]))
 				break; // TODO: might not be correct. Was : Exit Do
 			ptr += 1;
 			// next character
@@ -172,17 +166,17 @@ public sealed partial class libbcmath
 
 		// Build the whole number
 		ptr = 1;
-		if (Conversion.Str(0) == MINUS) {
+		if (str[0] == MINUS) {
 			num.sign = MINUS;
 		} else {
 			num.sign = PLUS;
-			if (!(Conversion.Str(0) == PLUS))
+			if (!(str[0] == PLUS))
 				ptr = 0;
 		}
 
 		// now we start all over again with the counting :(
 		// skip leading zeros again
-		while (Conversion.Str(ptr) == '0') {
+		while (str[ptr] == '0') {
 			ptr += 1;
 		}
 
@@ -195,7 +189,7 @@ public sealed partial class libbcmath
 			digits = 0;
 		}
 		while (digits > 0) {
-			num[nptr] = Convert.ToByte(Conversion.Val(Conversion.Str(ptr)));
+			num[nptr] = (byte)str[ptr];
 			nptr += 1;
 			ptr += 1;
 			digits -= 1;
@@ -206,7 +200,7 @@ public sealed partial class libbcmath
 			ptr += 1;
 			// skip the decimal point!
 			while (strscale > 0) {
-				num[nptr] = Convert.ToByte(Conversion.Val(Conversion.Str(ptr)));
+				num[nptr] = (byte)str[ptr];
 				nptr += 1;
 				ptr += 1;
 				strscale -= 1;
