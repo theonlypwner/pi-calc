@@ -7,8 +7,8 @@ using System.Diagnostics;
 public partial class libbcmath
 {
 	public const byte MUL_BASE_DIGITS = 80;
-		// #define MUL_SMALL_DIGITS mul_base_digits/4
-	public const byte MUL_SMALL_DIGITS = Convert.ToByte(MUL_BASE_DIGITS / 4);
+	// #define MUL_SMALL_DIGITS mul_base_digits/4
+	public const byte MUL_SMALL_DIGITS = 20;
 
 	/// <summary>Multiplies two arbitrary precision numbers</summary>
 	/// <param name="factor">The first factor</param>
