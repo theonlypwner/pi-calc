@@ -20,7 +20,7 @@ public partial class libbcmath
 	/// <param name="ptr">The starting point to start the set</param>
 	/// <param name="chr">The character (byte) to fill the data</param>
 	/// <param name="len">The length to fill</param>
-	private static void memset(ref List<byte> src, int ptr, byte chr, int len)
+	private static void memset(List<byte> src, int ptr, byte chr, int len)
 	{
 		for (int i = ptr; i < len + ptr; i++) src[i] = chr;
 	}
@@ -31,7 +31,7 @@ public partial class libbcmath
 	/// <param name="src">The source to read from</param>
 	/// <param name="srcptr">The offset of <paramref name="src" /></param>
 	/// <param name="len">The number of bytes to copy</param>
-	private static void memcpy(ref List<byte> dest, int ptr, List<byte> src, int srcptr, int len)
+	private static void memcpy(List<byte> dest, int ptr, List<byte> src, int srcptr, int len)
 	{
 		for (int i = 0; i < len; i++) src[ptr + i] = src[srcptr + i];
 	}
