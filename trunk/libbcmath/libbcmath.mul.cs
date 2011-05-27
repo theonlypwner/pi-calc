@@ -92,7 +92,7 @@ public partial class libbcmath
 			n2ptr = n2end - Math.Min(indx, n2len - 1);
 			// (char *) (n2end - MIN(indx, n2len-1));
 			while (n1ptr >= 0 & n2ptr <= n2end) {
-				sum += n1(n1ptr) * n2(n2ptr);
+				sum += n1[n1ptr] * n2[n2ptr];
 				// sum += *n1ptr-- * *n2ptr++;
 				n1ptr -= 1;
 				n2ptr += 1;
