@@ -1,23 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using java.math;
 
 namespace Pi
 {
-	/// <summary>Provides an improved interface to BigDecimal.</summary>
-	class BigDec : BigDecimal
+	/// <summary>Provides an improved interface to libbcmath.BCNum.</summary>
+	class BigDec
 	{
 		// members
-		/// <summary>The hardcoded type of rounding to use.</summary>
-		public const int roundType = ROUND_HALF_UP;
+		private libbcmath.BCNum val;
 		public static int defaultPrecision = 32;
 
 		// constructs
-		/// <summary>Creates a BigDec with the value of zero.</summary>
-		public BigDec() : base(0) { }
+		/// <summary>Creates a BigDec with a value of zero.</summary>
+		public BigDec() { val = libbcmath.NewNum(1, 0); }
 		/// <summary>Creates a BigDec with the value of the specified double-precision floating point.</summary>
-		public BigDec(double i) : base(i) { setScale(defaultPrecision, roundType); }
+		public BigDec(double i) { setScale(defaultPrecision, roundType); }
 
 		// class overrides
 		/// <summary>Compares a BigDec to this instance.</summary>

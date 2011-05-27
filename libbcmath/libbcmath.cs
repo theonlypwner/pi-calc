@@ -6,11 +6,10 @@ using System.Data;
 using System.Diagnostics;
 public sealed partial class libbcmath
 {
-// Constants
+	// Constants
 	public const char PLUS = '+';
 	public const char MINUS = '-';
-		// must be 10
-	public const byte BASE = 10;
+	public const byte BASE = 10; // must be 10
 
 	public const int defaultScale = 0;
 	/// <summary>Basic Number Structure</summary>
@@ -62,7 +61,7 @@ public sealed partial class libbcmath
 			set { value.Item(i) = value; }
 		}
 
-		static implicit operator BCNum(int i)
+		public static implicit operator BCNum(int i)
 		{
 			return BCMath.IntToNum(i);
 		}
