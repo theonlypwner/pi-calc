@@ -58,7 +58,7 @@ public sealed partial class libbcmath
 		/// <param name="i">The index of the location</param>
 		public byte this[int i] {
 			get { return value[i]; }
-			set { value.Item(i) = value; }
+			set { this.value[i] = value; }
 		}
 
 		public static implicit operator BCNum(int i)
