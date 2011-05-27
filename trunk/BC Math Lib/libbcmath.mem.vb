@@ -13,9 +13,12 @@
 	''' <param name="chr">The character (byte) to fill the data</param>
 	''' <param name="len">The length to fill</param>
 	Private Shared Sub memset(ByRef src As List(Of Byte), ByVal ptr As Integer, ByVal chr As Byte, ByVal len As Integer)
+		Dim fill(len) As Byte
 		For i As Integer = ptr To len + ptr - 1
-			src(i) = chr
+			fill(i) = chr
 		Next
+		src.RemoveRange(ptr, Math.Min(src.Count - ptr, len))
+		src.InsertRange(ptr, fill)
 	End Sub
 
 	''' <summary>Copys a block of memory data (from an array to another)</summary>
