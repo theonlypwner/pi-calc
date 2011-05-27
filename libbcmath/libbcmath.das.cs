@@ -48,7 +48,7 @@ public partial class libbcmath
 		// n1 has more decimals then n2
 		if (n1bytes > n2bytes) {
 			while (n1bytes > n2bytes) {
-				sum(sumptr) = n1(n1ptr);
+				sum(sumptr) = n1[n1ptr];
 				sumptr -= 1;
 				n1ptr -= 1;
 				n1bytes -= 1;
@@ -56,7 +56,7 @@ public partial class libbcmath
 		// n2 has more decimals then n1
 		} else if (n2bytes > n1bytes) {
 			while (n2bytes > n1bytes) {
-				sum(sumptr) = n2(n2ptr);
+				sum(sumptr) = n2[n2ptr];
 				sumptr -= 1;
 				n2ptr -= 1;
 				n2bytes -= 1;
@@ -69,7 +69,7 @@ public partial class libbcmath
 		carry = 0;
 		while (n1bytes > 0 & n2bytes > 0) {
 			// Add the two numbers together
-			tmp = n1(n1ptr) + n2(n2ptr) + carry;
+			tmp = n1[n1ptr] + n2[n2ptr] + carry;
 			// *sumptr = *n1ptr-- + *n2ptr-- + carry;
 			n1ptr -= 1;
 			n2ptr -= 1;
@@ -92,7 +92,7 @@ public partial class libbcmath
 			// n2 is a bigger number then n1
 			while (n2bytes > 0) {
 				n2bytes -= 1;
-				tmp = n2(n2ptr) + carry;
+				tmp = n2[n2ptr] + carry;
 				// *sumptr = *n2ptr-- + carry;
 				n2ptr -= 1;
 				if (tmp > BASE) {
@@ -108,7 +108,7 @@ public partial class libbcmath
 			// n1 is bigger than n2
 			while (n1bytes > 0) {
 				n1bytes -= 1;
-				tmp = n1(n1ptr) + carry;
+				tmp = n1[n1ptr] + carry;
 				// *sumptr = *n1ptr-- + carry;
 				n1ptr -= 1;
 				if (tmp > BASE) {
@@ -179,7 +179,7 @@ public partial class libbcmath
 		// n1 has the longer scale
 		if (n1.scale != min_scale) {
 			for (count = n1.scale - min_scale; count >= 1; count += -1) {
-				diff[diffptr] = n1(n1ptr);
+				diff[diffptr] = n1[n1ptr];
 				// *diffptr-- = *n1ptr--;
 				diffptr -= 1;
 				n1ptr -= 1;
@@ -187,7 +187,7 @@ public partial class libbcmath
 		// n2 has the longer scale
 		} else {
 			for (count = n2.scale - min_scale; count >= 1; count += -1) {
-				val = n2(n2ptr) - borrow;
+				val = n2[n2ptr] - borrow;
 				// val = - *n2ptr-- - borrow;
 				n2ptr -= 1;
 				if (val < 0) {
@@ -204,7 +204,7 @@ public partial class libbcmath
 
 		// Now do the equal length scale and integer parts.
 		for (count = 0; count <= min_len + min_scale - 1; count++) {
-			val = n1(n1ptr) - n2(n2ptr) - borrow;
+			val = n1[n1ptr] - n2[n2ptr] - borrow;
 			// val = *n1ptr-- - *n2ptr-- - borrow;
 			n1ptr -= 1;
 			n2ptr -= 1;
@@ -222,7 +222,7 @@ public partial class libbcmath
 		// If n1 has more digits then n2, we now do that subtract.
 		if (diff_len != min_len) {
 			for (count = diff_len - min_len; count >= 1; count += -1) {
-				val = n1(n1ptr) - borrow;
+				val = n1[n1ptr] - borrow;
 				// val = *n1ptr-- - borrow;
 				n1ptr -= 1;
 				if (val < 0) {
