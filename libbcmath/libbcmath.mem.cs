@@ -33,7 +33,6 @@ public partial class libbcmath
 	/// <param name="len">The number of bytes to copy</param>
 	private static void memcpy(ref List<byte> dest, int ptr, List<byte> src, int srcptr, int len)
 	{
-		dest.RemoveRange(ptr, Math.Min(dest.Count - ptr, len));
-		dest.InsertRange(ptr, src.GetRange(srcptr, len));
+		for (int i = 0; i < len; i++) src[ptr + i] = src[srcptr + i];
 	}
 }
