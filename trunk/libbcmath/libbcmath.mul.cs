@@ -149,13 +149,13 @@ public partial class libbcmath
 			// Subtraction; carry is really borrow.
 			while (count > 0) {
 				count -= 1;
-				accum(accp) -= Conversion.Val(valp) + carry;
+				accum[accp] -= Conversion.Val(valp) + carry;
 				// *accp -= *valp-- + carry;
 				valp -= 1;
 				// if (*accp < 0)
-				if (accum(accp) < 0) {
+				if (accum[accp] < 0) {
 					carry = 1;
-					accum(accp) += BASE;
+					accum[accp] += BASE;
 					// *accp-- += BASE;
 				// accp -= 1 ' see below
 				} else {
@@ -166,11 +166,11 @@ public partial class libbcmath
 				// either way, it needs to decrement this
 			}
 			while (carry > 0) {
-				accum(accp) -= carry;
+				accum[accp] -= carry;
 				// *accp -= carry;
 				// if (*accp < 0)
-				if ((accum(accp) < 0)) {
-					accum(accp) += BASE;
+				if ((accum[accp] < 0)) {
+					accum[accp] += BASE;
 					// *accp-- += BASE;
 					accp -= 1;
 				} else {
@@ -181,13 +181,13 @@ public partial class libbcmath
 			// Addition
 			while (count > 0) {
 				count -= 1;
-				accum(accp) += Convert.ToByte(Conversion.Val(valp) + carry);
+				accum[accp] += Convert.ToByte(Conversion.Val(valp) + carry);
 				// *accp += *valp-- + carry;
 				valp -= 1;
 				// if (*accp > (BASE-1))
-				if (accum(accp) > BASE - 1) {
+				if (accum[accp] > BASE - 1) {
 					carry = 1;
-					accum(accp) -= BASE;
+					accum[accp] -= BASE;
 					// *accp-- -= BASE;
 				// accp -=1 ' see below
 				} else {
@@ -198,11 +198,11 @@ public partial class libbcmath
 				// either way, it needs to be decremented
 			}
 			while (carry > 0) {
-				accum(accp) += carry;
+				accum[accp] += carry;
 				// *accp += carry;
 				// if (*accp > (BASE-1))
-				if (accum(accp) > BASE - 1) {
-					accum(accp) -= BASE;
+				if (accum[accp] > BASE - 1) {
+					accum[accp] -= BASE;
 					// *accp-- -= BASE;
 					accp -= 1;
 				} else {
