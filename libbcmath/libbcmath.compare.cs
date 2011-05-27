@@ -43,7 +43,7 @@ public partial class libbcmath
 		// If we get here, they have the same number of integer digits.
 		// Check the integer part and the equal length part of the fraction.
 		count = n1.length + Math.Min(n1.scale, n2.scale);
-		while ((count > 0) & (n1(n1ptr) == n2(n2ptr))) {
+		while ((count > 0) & (n1[n1ptr] == n2[n2ptr])) {
 			n1ptr += 1;
 			n2ptr += 1;
 			count -= 1;
@@ -53,7 +53,7 @@ public partial class libbcmath
 			return 0;
 
 		if (count != 0) {
-			if (n1(n1ptr) > n2(n2ptr)) {
+			if (n1[n1ptr] > n2[n2ptr]) {
 				return Convert.ToSByte((!use_sign) | n1.sign == PLUS ? 1 : -1);
 			} else {
 				return Convert.ToSByte((!use_sign) | n1.sign == PLUS ? -1 : 1);
@@ -63,14 +63,14 @@ public partial class libbcmath
 		// They are equal up to the last part of the equal part of the fraction.
 		if (n1.scale > n2.scale) {
 			for (count = (n1.scale - n2.scale); count >= 1; count += -1) {
-				if ((n1(n1ptr) != 0)) {
+				if ((n1[n1ptr] != 0)) {
 					return Convert.ToSByte((!use_sign) | n1.sign == PLUS ? 1 : -1);
 				}
 				n1ptr += 1;
 			}
 		} else if (n1.scale < n2.scale) {
 			for (count = (n2.scale - n1.scale); count >= 1; count += -1) {
-				if ((n2(n2ptr) != 0)) {
+				if ((n2[n2ptr] != 0)) {
 					return Convert.ToSByte((!use_sign) | n1.sign == PLUS ? -1 : 1);
 				}
 				n2ptr += 1;
