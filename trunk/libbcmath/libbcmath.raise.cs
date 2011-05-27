@@ -106,7 +106,7 @@ public partial class libbcmath
 		// revising the for loop to work with VB
 		while ((index > 0) & (val <= (LONG_MAX / BASE))) {
 			index -= 1;
-			val = val * BASE + num(nptr);
+			val = val * BASE + num[nptr];
 			nptr += 1;
 		}
 

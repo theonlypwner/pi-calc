@@ -27,12 +27,12 @@ public partial class libbcmath
 		nptr = 0;
 
 		// The check
-		while (count > 0 & num(nptr) == 0) {
+		while (count > 0 & num[nptr] == 0) {
 			nptr += 1;
 			count -= 1;
 		}
 
 		nptr -= 1;
-		return count == 0 | (count == 1 & num(nptr) == 1);
+		return count == 0 | (count == 1 & num[nptr] == 1);
 	}
 }
