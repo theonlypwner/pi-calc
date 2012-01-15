@@ -234,7 +234,7 @@
 				size -= 1
 				value = num(nptr) * digit + carry ' value = *nptr-- * digit + carry;
 				nptr -= 1
-				result(rptr) = value Mod BASE	' @CHECK cint //*rptr-- = value % BASE;
+				If rptr >= 0 And result.Count + 1 < rptr Then result(rptr) = value Mod BASE ' @CHECK cint //*rptr-- = value % BASE;
 				rptr -= 1
 				carry = CByte(Math.Floor(value / BASE))	  ' @CHECK cint //carry = value / BASE;
 			End While
