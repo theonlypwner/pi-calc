@@ -32,9 +32,18 @@ Public Class CalculatePi
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
 		Dim limit As Integer = CInt(Math.Round(precision / 14 - 1))
-		' lol?
-		result = New BigNumber(precision)
-		result.ArcTan(4, 1)
+		' lol old method?
+		'result = New BigNumber(precision)
+		'result.ArcTan(4, 1)
+
+		' new better method
+		result = New BigNumber(1000)
+		Dim y = New BigNumber(1000)
+		result.ArcTan(16, 5)
+		y.ArcTan(4, 239)
+		result.Subtract(y)
+
+		' done!
 		RaiseEvent onComplete(Me, New EventArgs)
 	End Sub
 
