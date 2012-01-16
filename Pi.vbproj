@@ -83,18 +83,7 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BC Math Lib\libbcmath.compare.vb" />
-    <Compile Include="BC Math Lib\libbcmath.nearzero.vb" />
-    <Compile Include="BC Math Lib\libbcmath.raise.vb" />
-    <Compile Include="BC Math Lib\libbcmath.sqrt.vb" />
-    <Compile Include="BC Math\BCMath.vb" />
-    <Compile Include="BC Math Lib\libbcmath.add.vb" />
-    <Compile Include="BC Math Lib\libbcmath.das.vb" />
-    <Compile Include="BC Math Lib\libbcmath.div.vb" />
-    <Compile Include="BC Math Lib\libbcmath.mem.vb" />
-    <Compile Include="BC Math Lib\libbcmath.mul.vb" />
-    <Compile Include="BC Math Lib\libbcmath.sub.vb" />
-    <Compile Include="BC Math Lib\libbcmath.vb" />
+    <Compile Include="ApplicationEvents.vb" />
     <Compile Include="CalculatePi.vb" />
     <Compile Include="EventArgsAssist.vb" />
     <Compile Include="MainForm.vb">
@@ -162,6 +151,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BigNum.vb" />
     <Content Include="logo.ico" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

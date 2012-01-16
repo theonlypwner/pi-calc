@@ -1,4 +1,4 @@
-﻿Imports Pi.BCMath
+﻿' Imports Nothing
 
 ''' <summary>Responsible for calculating pi</summary>
 Public Class CalculatePi
@@ -11,7 +11,7 @@ Public Class CalculatePi
 	Public progressUpdateInterval As UInteger
 
 	''' <summary>Result storage variable</summary>
-	Protected Friend result As libbcmath.BCNum
+	Protected Friend result As BigNumber
 
 	''' <summary>Ticks when calculation started</summary>
 	Protected Friend startTicks As Long
@@ -32,36 +32,9 @@ Public Class CalculatePi
 	''' <summary>The Thread instance calls this function</summary>
 	Protected Friend Sub Process()
 		Dim limit As Integer = CInt(Math.Round(precision / 14 - 1))
-		' Declare the reused numbers now to save time
-		Dim p1 As libbcmath.BCNum = 1
-		Dim p3 As libbcmath.BCNum = 3
-		Dim n1 As libbcmath.BCNum = -1
-		Dim p640320 As libbcmath.BCNum = 640320
-		Dim p13591409 As libbcmath.BCNum = 13591409
-		Dim p545140134 As libbcmath.BCNum = 545140134
-		Dim s640320 As libbcmath.BCNum = bcsqrt(640320)
-
-		For k As Integer = 0 To limit
-			result = bcdiv( _
-				bcmul( _
-					bcadd(p13591409, _
-						bcmul(p545140134, k) _
-					), _
-					bcmul(if(k Mod 2 = 1, n1, p1), bcfact(6 * k)) _
-				), _
-				bcmul( _
-					bcmul( _
-						bcpow(p640320,3 * k + 1), _
-						s640320 _
-					), _
-					bcmul( _
-						bcfact(3 * k), _
-						bcpow(bcfact(k), p3) _
-					) _
-				) _
-			)
-		Next
-		result = bcdiv(1, (bcmul(12, (result))), precision)
+		' lol?
+		result = New BigNumber(precision)
+		result.ArcTan(4, 1)
 		RaiseEvent onComplete(Me, New EventArgs)
 	End Sub
 
@@ -93,7 +66,7 @@ Public Class CalculatePi
 			ret.s = "Result is trimmed" & CrLf & "3."
 		End If
 		Dim max As Integer = CInt( _
-		 If(n = ResultType.First2K And precision > MainForm.KprecisionP * 2, Math.Min(result.length, MainForm.KprecisionP * 2), result.length) - 3)
+		 If(n = ResultType.First2K And precision > MainForm.KprecisionP * 2, Math.Min(result.Length, MainForm.KprecisionP * 2), result.Length) - 3)
 		For i As Integer = 1 To max
 			ret.s &= CStr(result(CInt(i)))
 		Next
