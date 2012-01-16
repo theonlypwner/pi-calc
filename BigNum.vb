@@ -141,6 +141,12 @@
 		End While
 	End Sub
 
+	' limit the size
+	Public Sub Truncate(ByVal newsize As Integer)
+		If size <= newsize Then Return
+		size = newsize
+	End Sub
+
 	' stupid property macro hacks
 
 	Default ReadOnly Property Item(ByVal i As Integer) As UInteger
