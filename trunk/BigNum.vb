@@ -3,7 +3,7 @@
 	Private size As Integer
 	Private maxDigits As Integer
 
-	Public Sub New(maxDigits As Integer)
+	Public Sub New(ByVal maxDigits As Integer)
 		Me.maxDigits = maxDigits
 		Me.size = CInt(Math.Ceiling(CSng(maxDigits) * 0.104)) + 2
 		number = New Byte(size - 1) {}
@@ -37,7 +37,7 @@
 		Dim carry As UInt32 = 0
 		While index >= 0
 			Dim result As UInt64 = CType(number(index), UInt64) + value.number(index) + carry
-			number(index) = CByte(result)
+			number(index) = CByte(result Mod (Byte.MaxValue + 1))
 			If result >= &H100000000UL Then
 				carry = 1
 			Else
@@ -58,7 +58,7 @@
 		Dim borrow As UInt32 = 0
 		While index >= 0
 			Dim result As UInt64 = &H100000000UL + CType(number(index), UInt64) - value.number(index) - borrow
-			number(index) = CByte(result)
+			number(index) = CByte(result Mod (Byte.MaxValue + 1))
 			If result >= &H100000000UL Then
 				borrow = 0
 			Else
@@ -77,7 +77,7 @@
 		Dim carry As UInt32 = 0
 		While index >= 0
 			Dim result As UInt64 = CType(number(index), UInt64) * value + carry
-			number(index) = CByte(result)
+			number(index) = CByte(result Mod (Byte.MaxValue + 1))
 			carry = CType(result >> 32, UInt32)
 			index -= 1
 		End While
@@ -92,7 +92,7 @@
 		Dim carry As UInt32 = 0
 		While index < size
 			Dim result As UInt64 = CULng((number(index) + (CType(carry, UInt64) << 32)) / CType(value, UInt64))
-			number(index) = CByte(result) ' overflow?
+			number(index) = CByte(result Mod (Byte.MaxValue + 1))
 			carry = CType(result Mod CType(value, UInt64), UInt32)
 			index += 1
 		End While
