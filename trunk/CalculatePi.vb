@@ -39,10 +39,13 @@ Public Class CalculatePi
 		' new better method
 		result = New BigNumber(limit)
 		Dim y = New BigNumber(limit)
+
 		result.ArcTan(16, 5)
 		RaiseEvent onProgress(40)
+
 		y.ArcTan(4, 239)
 		RaiseEvent onProgress(80)
+
 		result.Subtract(y)
 
 		' truncate

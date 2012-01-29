@@ -126,7 +126,7 @@
 		While True
 			X.Divide(reciprocal)
 			term.Assign(X)
-			divisor = CUInt(divisor + 2)
+			divisor = CUInt(divisor + 1)
 			term.Divide(divisor)
 			If term.IsZero() Then
 				Exit While
