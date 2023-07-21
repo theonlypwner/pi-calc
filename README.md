@@ -22,15 +22,15 @@ Same as below, but 4·arctan(1⁄5) - arctan(1⁄239)
 
 ### Development Algorithm: Gregory and Leibniz formula
 
-![](http://chart.googleapis.com/chart?cht=tx&chs=80&chl=%5Cpi%20%3D%204%20%5Ccdot%20%5Carctan1%20%3D%204%20-%20%5Cfrac%7B4%20%5E%203%7D3%20%2B%20%5Cfrac%7B4%20%5E%205%7D3%20-%20%5Cfrac%7B4%20%5E%207%7D3%20%2B%20%5Cldots%20%3D%20%5Csum%5E%5Cinfty_%7Bk%3D1%7D%20%5Cfrac%7B2%20%5Ccdot%20(-1)%20%5E%20%7Bk%20%2B%201%7D%7D%7Bk-0.5%7D&.png)
+$$ \pi = 4 \cdot \arctan1 = 4 - \frac{4 ^ 3}3 + \frac{4 ^ 5}3 - \frac{4 ^ 7}3 + \ldots = \sum^\infty_{k=1} \frac{2 \cdot (-1) ^ {k + 1}}{k-0.5} $$
 
 ### Candidate Algorithm: Chudnovsky Algorithm
 
-![](https://chart.apis.google.com/chart?cht=tx&chs=80&chl=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%2012%20%5Csum%5E%5Cinfty_%7Bk%3D0%7D%20%5Cfrac%7B(-1)%5Ek%20(6k)!%20(13591409%20%2B%20545140134k)%7D%7B(3k)!(k!)%5E3%20640320%5E%7B3k%20%2B%203%2F2%7D%7D&.png)
+$$ \frac{1}{\pi} = 12 \sum^\infty_{k=0} \frac{(-1)^k (6k)! (13591409 + 545140134k)}{(3k)!(k!)^3 640320^{3k + 3/2}} $$
 
 ### Candidate Algorithm: Ramanujan's Formula
 
-![](https://chart.apis.google.com/chart?cht=tx&chs=105&chl=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%20%5Cfrac%7B2%5Csqrt%7B2%7D%7D%7B9801%7D%20%5Csum%5E%5Cinfty_%7Bk%3D0%7D%20%5Cfrac%7B(4k)!%20(1103%20%2B%2026390k)%7D%7B(k!%5C%20%5Ccdot%5C%20396%5Ek)%5E4%7D&.png)
+$$ \frac{1}{\pi} = \frac{2\sqrt{2}}{9801} \sum^\infty_{k=0} \frac{(4k)! (1103 + 26390k)}{(k!\ \cdot\ 396^k)^4} $$
 
 ## System Requirements
 
