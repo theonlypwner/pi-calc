@@ -32,14 +32,6 @@ Same as below, but 4·arctan(1⁄5) - arctan(1⁄239)
 
 ![](https://chart.apis.google.com/chart?cht=tx&chs=105&chl=%5Cfrac%7B1%7D%7B%5Cpi%7D%20%3D%20%5Cfrac%7B2%5Csqrt%7B2%7D%7D%7B9801%7D%20%5Csum%5E%5Cinfty_%7Bk%3D0%7D%20%5Cfrac%7B(4k)!%20(1103%20%2B%2026390k)%7D%7B(k!%5C%20%5Ccdot%5C%20396%5Ek)%5E4%7D&.png)
 
-## Download
-
-Look at the green box at the right called "Featured downloads"
-
-**OR**
-
-Click Downloads on the top of this page; for deprecated downloads, click on _all downloads_ then _search_.
-
 ## System Requirements
 
 1. It **requires** _Windows_ for _.NET Framework 2.0_. Too bad if you use Linux, UNIX, or any other operating system. Make your own C++ port if you want.
@@ -49,10 +41,12 @@ Click Downloads on the top of this page; for deprecated downloads, click on _all
 
 ## Install
 
-There is always no need to install a small program like this software. Just extract and run the standalone executable.
+There is no need to install portable programs like this software. Just extract and run the standalone executable.
 
 ## Licence
 
-See COPYRIGHT(.txt) for more information The code is licences under the GNU GPL3, Gnu's Not Unix General Public Licence version 3.0, allowing you to reuse and adapt the code.
+See COPYRIGHT(.txt) for more information.
 
-However, please note that the the content, such as the logo, are licensed under the Creative Commons Attribution-ShareAlike 3.0. You must attribute the work without suggesting that this project endorses your work. In addition to that, if you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
+The code is licenced under the GNU GPL3, allowing you to reuse and adapt the code.
+
+Content, such as the logo, is licensed under the Creative Commons Attribution-ShareAlike 3.0. You must attribute the work without suggesting that this project endorses your work. In addition to that, if you alter, transform, or build upon this work, you may distribute the resulting work only under the same or similar license to this one.
